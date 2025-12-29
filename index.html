@@ -1,95 +1,83 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>ykchive profile</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile</title>
 
-<style>
-body {
-  margin: 0;
-  background: #bfbfbf; /* 카톡 프로필 배경 */
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-}
+  <style>
+    body {
+      margin: 0;
+      background: #8e959c; /* 카톡 프로필 배경 느낌 */
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+    }
 
-/* 화면 전체 중앙 정렬 */
-.wrapper {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 80px; /* 너무 중앙 말고 살짝 위 */
-}
+    /* 전체 카드 */
+    .profile-card {
+      width: 92%;
+      max-width: 420px;
+      background: #8e959c;
+      border-radius: 30px;
+      padding-top: 80px;
+      margin-top: 60px; /* 위로 올림 */
+      text-align: center;
+    }
 
-/* 프로필 카드 */
-.card {
-  width: 500px;
-  background: #9e9e9e;
-  border-radius: 24px;
-  padding: 32px 20px 28px;
-  text-align: center;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-}
+    /* 프로필 이미지 */
+    .profile-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
 
-/* 프로필 사진 */
-.profile-img {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+    /* 이름 */
+    .name {
+      font-size: 28px;
+      font-weight: 600;
+      color: #fff;
+    }
 
-/* 이름 */
-.name {
-  margin-top: 18px;
-  font-size: 22px;
-  font-weight: 600;
-}
+    /* 하단 메뉴 */
+    .actions {
+      margin-top: 60px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      display: flex;
+      justify-content: space-around;
+    }
 
-/* 상태메시지 */
-.status {
-  margin-top: 8px;
-  font-size: 16px;
-  color: #555;
-}
-
-/* 하단 아이콘 영역 */
-.actions {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 28px;
-}
-
-/* 아이콘 버튼 (지금은 텍스트 없이 링크용) */
-.action-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #f2f2f2;
-  text-decoration: none;
-}
-</style>
+    .action-btn {
+      color: #fff;
+      text-decoration: none;
+      font-size: 28px;
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="wrapper">
-  <div class="card">
+  <div class="profile-card">
+    <!-- 프로필 이미지 -->
     <img
       class="profile-img"
       src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png"
       alt="profile"
-    >
+    />
 
-    <div class="name">강영현</div>
-    <div class="status">Stay happy, Stay healthy</div>
+    <!-- 이름 -->
+    <div class="name">필이</div>
 
+    <!-- 하단 아이콘 -->
     <div class="actions">
-      <a class="action-btn" href="chat.html"></a>
-      <a class="action-btn" href="#"></a>
-      <a class="action-btn" href="#"></a>
+      <a class="action-btn" href="chat.html">💬</a>
+      <a class="action-btn" href="#">📞</a>
+      <a class="action-btn" href="#">🎥</a>
     </div>
   </div>
-</div>
-
 </body>
 </html>
