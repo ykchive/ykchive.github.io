@@ -114,6 +114,30 @@
       font-size: 14px;
       cursor: pointer;
     }
+
+/* 하단 아이콘 */
+.actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #d6d6d6;
+}
+
+.action {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+}
+
+.action .material-icons {
+  font-size: 30px;
+}
+    
   </style>
 </head>
 <body>
@@ -131,6 +155,17 @@
       <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="profile">
       <div class="name">강영현</div>
       <div class="status">stay happy, stay healthy</div>
+    </div>
+        <div class="actions">
+      <a href="#" class="action">
+        <span class="material-icons">chat_bubble</span>
+      </a>
+      <a href="#" class="action">
+        <span class="material-icons">call</span>
+      </a>
+      <a href="#" class="action">
+        <span class="material-icons">photo</span>
+      </a>
     </div>
   </div>
 
