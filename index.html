@@ -15,22 +15,22 @@
       justify-content: center;
       align-items: flex-start;
       height: 100vh;
-      background: #ffffff; /* 박스 밖 흰색 */
+      background: #ffffff;
     }
 
     /* 프로필 박스 */
     .profile-box {
       width: 100%;
-      max-width: 380px;
-      margin-top: 60px;
+      max-width: 360px;              /* 전체 폭 살짝 축소 */
+      margin-top: 56px;
 
-      background: rgba(240, 240, 240, 0.9); /* 연한 회색 + 불투명 */
-      border-radius: 20px;
-      padding: 32px 20px 20px;
+      background: rgba(225, 225, 225, 0.95); /* 배경 더 짙게 */
+      border-radius: 14px;           /* 덜 둥글게 */
+      padding: 26px 18px 18px;       /* 내부 여백 축소 */
       box-sizing: border-box;
 
-      border: 1px solid #dcdcdc; /* 윤곽선 */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      border: 1px solid #cfcfcf;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
 
     .profile {
@@ -40,46 +40,46 @@
     }
 
     .profile img {
-      width: 120px;
-      height: 120px;
+      width: 108px;                  /* 사진 크기 축소 */
+      height: 108px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .name {
-      font-size: 24px;
-      font-weight: 600; /* 굵기 살짝 줄임 */
-      margin-bottom: 6px;
+      font-size: 22px;               /* 글자 크기 살짝 축소 */
+      font-weight: 600;
+      margin-bottom: 5px;
     }
 
     .status {
-      font-size: 15px;
+      font-size: 14px;
       color: #666;
-      font-style: italic; /* 기울임 */
+      font-style: italic;
     }
 
     /* 하단 아이콘 */
     .actions {
       display: flex;
       justify-content: space-around;
-      margin-top: 28px;
-      padding-top: 14px;
-      border-top: 1px solid #ddd;
+      margin-top: 24px;
+      padding-top: 12px;
+      border-top: 1px solid #d6d6d6;
     }
 
     .action {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 56px;
-      height: 56px;
+      width: 52px;
+      height: 52px;
       color: #333;
       text-decoration: none;
     }
 
     .action .material-icons {
-      font-size: 32px;
+      font-size: 30px;               /* 아이콘도 살짝 축소 */
     }
   </style>
 </head>
