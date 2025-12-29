@@ -9,132 +9,80 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
   background: #fff;
+  text-align: center;
 }
 
-/* 상단 헤더 */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 16px;
-  border-bottom: 1px solid #eee;
+/* 프로필 영역 */
+.profile {
+  margin-top: 80px;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.header-left img {
-  width: 56px;   /* 프사 크게 */
-  height: 56px;
+.profile img {
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 12px;
 }
 
-.header-name {
-  font-size: 18px;   /* 이름 크게 */
-  font-weight: 700;
+.name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 16px;
 }
 
-.header-id {
-  font-size: 14px;   /* 아이디 크게 */
-  color: #888;
-  margin-top: 2px;
-}
-
-/* 메뉴 버튼 */
-.menu-btn {
-  font-size: 26px;
-  cursor: pointer;
-}
-
-/* 드롭다운 메뉴 */
-.menu {
-  position: absolute;
-  top: 76px;
-  right: 16px;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 14px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-  display: none;
-}
-
-.menu a {
-  display: block;
-  padding: 14px 18px;
-  text-decoration: none;
-  color: #333;
+.status {
   font-size: 15px;
+  color: #666;
+  margin-top: 8px;
 }
 
-.menu a:hover {
-  background: #f5f5f5;
-}
-
-/* 대표 말풍선 */
-.bubble-wrap {
+/* 하단 버튼 */
+.bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #eee;
+  background: #fff;
   display: flex;
-  align-items: flex-start;
-  padding: 18px 16px;
+  justify-content: space-around;
+  padding: 14px 0 20px;
 }
 
-.bubble-wrap img {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 12px;
+.item {
+  font-size: 13px;
+  color: #333;
 }
 
-.bubble {
-  background: #4a90e2;
-  color: #fff;
-  padding: 16px 18px;
-  border-radius: 20px;
-  font-size: 16px;   /* 말풍선 글씨 키움 */
-  line-height: 1.5;
-  max-width: 260px;
+.icon {
+  font-size: 26px;
+  margin-bottom: 6px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 상단 -->
-<div class="header">
-  <div class="header-left">
-    <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-    <div>
-      <div class="header-name">강영현</div>
-      <div class="header-id">@from_youngk</div>
-    </div>
-  </div>
-  <div class="menu-btn" onclick="toggleMenu()">⋯</div>
-</div>
-
-<div class="menu" id="menu">
-  <a href="#">첫 버블</a>
-  <a href="#">날짜별 아카이브</a>
-  <a href="#">정보</a>
-</div>
-
-<!-- 말풍선 (프사 바로 옆) -->
-<div class="bubble-wrap">
+<div class="profile">
   <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-  <div class="bubble">
-    Stay happy, Stay healthy
-  </div>
+  <div class="name">돈덩이</div>
+  <div class="status">항상 고마워 🖤</div>
 </div>
 
-<script>
-function toggleMenu() {
-  const menu = document.getElementById("menu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-</script>
+<div class="bottom">
+  <div class="item">
+    <div class="icon">💬</div>
+    채팅
+  </div>
+  <div class="item">
+    <div class="icon">📞</div>
+    통화
+  </div>
+  <div class="item">
+    <div class="icon">🖼</div>
+    사진
+  </div>
+</div>
 
 </body>
 </html>
