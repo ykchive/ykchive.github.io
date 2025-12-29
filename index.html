@@ -5,32 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kakao Profile</title>
 
-  <!-- 아이콘용 -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
-      background: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       height: 100vh;
+      background: #121212;
     }
 
-    /* 전체 박스 */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 1;
+    }
+
     .profile-box {
+      position: relative;
+      z-index: 2;
       width: 100%;
-      max-width: 420px;
-      margin-top: 80px; /* 위로 올림 */
-      background: #f3f4f6;
-      border-radius: 24px;
-      padding: 40px 24px 28px;
+      max-width: 380px;
+      margin-top: 60px;
+      background: rgba(243, 244, 246, 0.95);
+      border-radius: 20px;
+      padding: 32px 20px 20px; /* 하단 여백 줄임 */
       box-sizing: border-box;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
-    /* 프로필 영역 */
     .profile {
       display: flex;
       flex-direction: column;
@@ -38,51 +47,51 @@
     }
 
     .profile img {
-      width: 140px;
-      height: 140px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .name {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .status {
-      font-size: 16px;
+      font-size: 15px;
       color: #666;
     }
 
-    /* 하단 버튼 */
+    /* 하단 아이콘 영역 */
     .actions {
       display: flex;
       justify-content: space-around;
-      margin-top: 36px;
-      padding-top: 20px;
+      margin-top: 28px;
+      padding-top: 14px;
       border-top: 1px solid #ddd;
     }
 
     .action {
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
       color: #333;
       text-decoration: none;
     }
 
     .action .material-icons {
-      font-size: 36px;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .action span {
-      font-size: 14px;
+      font-size: 32px;
     }
   </style>
 </head>
 <body>
+
+  <div class="overlay"></div>
 
   <div class="profile-box">
     <div class="profile">
@@ -94,15 +103,12 @@
     <div class="actions">
       <a href="chat.html" class="action">
         <span class="material-icons">chat_bubble</span>
-        <span>채팅</span>
       </a>
       <a href="#" class="action">
         <span class="material-icons">call</span>
-        <span>통화</span>
       </a>
       <a href="#" class="action">
         <span class="material-icons">photo</span>
-        <span>사진</span>
       </a>
     </div>
   </div>
