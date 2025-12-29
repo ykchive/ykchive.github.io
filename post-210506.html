@@ -78,10 +78,27 @@
       border-radius: 16px;
       display: block;
     }
+
+    /* 뒤로가기 버튼 */
+.back-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  font-size: 22px;
+  color: #555;
+  cursor: pointer;
+  z-index: 1000;
+  user-select: none;
+}
+    
   </style>
 </head>
 <body>
-
+<!-- 뒤로가기 버튼 -->
+<div class="back-btn" onclick="history.back()">
+  &lt;
+</div>
+  
   <!-- 날짜 -->
   <div class="date">2021년 5월 6일 목요일</div>
 
