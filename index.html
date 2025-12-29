@@ -16,7 +16,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 26px;
+  padding: 18px 16px;
   border-bottom: 1px solid #eee;
 }
 
@@ -26,51 +26,48 @@ body {
 }
 
 .header-left img {
-  width: 46px;
-  height: 46px;
+  width: 56px;   /* 프사 크게 */
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 20px;
-}
-
-.header-text {
-  line-height: 1.2;
+  margin-right: 12px;
 }
 
 .header-name {
-  font-size: 34px;
-  font-weight: 600;
+  font-size: 18px;   /* 이름 크게 */
+  font-weight: 700;
 }
 
 .header-id {
-  font-size: 22px;
+  font-size: 14px;   /* 아이디 크게 */
   color: #888;
+  margin-top: 2px;
 }
 
 /* 메뉴 버튼 */
 .menu-btn {
-  font-size: 22px;
+  font-size: 26px;
   cursor: pointer;
 }
 
 /* 드롭다운 메뉴 */
 .menu {
   position: absolute;
-  top: 56px;
+  top: 76px;
   right: 16px;
   background: #fff;
   border: 1px solid #eee;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
   display: none;
 }
 
 .menu a {
   display: block;
-  padding: 12px 16px;
+  padding: 14px 18px;
   text-decoration: none;
   color: #333;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .menu a:hover {
@@ -78,30 +75,43 @@ body {
 }
 
 /* 대표 말풍선 */
+.bubble-wrap {
+  display: flex;
+  align-items: flex-start;
+  padding: 18px 16px;
+}
+
+.bubble-wrap img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
 .bubble {
-  margin: 40px auto;
-  max-width: 280px;
   background: #4a90e2;
   color: #fff;
-  padding: 14px 18px;
-  border-radius: 18px;
-  font-size: 15px;
-  line-height: 1.4;
+  padding: 16px 18px;
+  border-radius: 20px;
+  font-size: 16px;   /* 말풍선 글씨 키움 */
+  line-height: 1.5;
+  max-width: 260px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- 상단 -->
 <div class="header">
   <div class="header-left">
     <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-    <div class="header-text">
+    <div>
       <div class="header-name">강영현</div>
       <div class="header-id">@from_youngk</div>
     </div>
   </div>
-
   <div class="menu-btn" onclick="toggleMenu()">⋯</div>
 </div>
 
@@ -111,8 +121,12 @@ body {
   <a href="#">정보</a>
 </div>
 
-<div class="bubble">
-  Stay happy, Stay healthy
+<!-- 말풍선 (프사 바로 옆) -->
+<div class="bubble-wrap">
+  <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+  <div class="bubble">
+    Stay happy, Stay healthy
+  </div>
 </div>
 
 <script>
