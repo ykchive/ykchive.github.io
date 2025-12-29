@@ -27,13 +27,29 @@
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
-      z-index: 1000;
+      z-index: 1001;
     }
 
     .menu-btn span {
       height: 2px;
       background: #333;
       border-radius: 2px;
+    }
+
+    /* 딤 배경 */
+    .dim {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 998;
+    }
+
+    .dim.show {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* 프로필 박스 */
@@ -78,6 +94,29 @@
       font-style: italic;
     }
 
+    /* 하단 아이콘 */
+    .actions {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #d6d6d6;
+    }
+
+    .action {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+
+    .action .material-icons {
+      font-size: 30px;
+    }
+
     /* 사이드 메뉴 */
     .side-menu {
       position: fixed;
@@ -88,9 +127,11 @@
       background: #fff;
       box-shadow: -2px 0 8px rgba(0,0,0,0.1);
       transition: right 0.3s ease;
-      padding: 20px;
+      padding: 36px 20px 20px;
       box-sizing: border-box;
       z-index: 999;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .side-menu.open {
@@ -98,8 +139,36 @@
     }
 
     .menu-title {
+      position: sticky;
+      top: 0;
+      background: #fff;
       font-weight: 600;
-      margin-bottom: 16px;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      z-index: 10;
+    }
+
+    .month .date-list {
+      display: none;
+    }
+
+    .month-title {
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 0;
+      font-size: 15px;
+    }
+
+    .arrow {
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .month-title.open .arrow {
+      transform: rotate(90deg);
     }
 
     .date-list {
@@ -109,56 +178,17 @@
     }
 
     .date-list li {
-      padding: 12px 0;
+      padding: 14px 0;
       border-bottom: 1px solid #eee;
       font-size: 14px;
       cursor: pointer;
     }
 
-/* 하단 아이콘 */
-.actions {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid #d6d6d6;
-}
-
-.action {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255,255,255,0.8);
-  text-decoration: none;
-}
-
-.action .material-icons {
-  font-size: 30px;
-}
-
-.month .date-list {
-  display: none;
-}
-
-  .month-title {
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.arrow {
-  font-size: 12px;
-  transition: transform 0.2s ease;
-}
-
-.month-title.open .arrow {
-  transform: rotate(90deg);
-}
-    
+    @media (max-width: 420px) {
+      .profile-box {
+        margin: 70px 12px 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -170,23 +200,21 @@
     <span></span>
   </div>
 
-  <!-- 프로필 박스 -->
+  <!-- 딤 -->
+  <div class="dim" id="dim" onclick="toggleMenu()"></div>
+
+  <!-- 프로필 -->
   <div class="profile-box">
     <div class="profile">
-      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="profile">
+      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="name">강영현</div>
       <div class="status">stay happy, stay healthy</div>
     </div>
-        <div class="actions">
-      <a href="#" class="action">
-        <span class="material-icons">chat_bubble</span>
-      </a>
-      <a href="#" class="action">
-        <span class="material-icons">call</span>
-      </a>
-      <a href="#" class="action">
-        <span class="material-icons">photo</span>
-      </a>
+
+    <div class="actions">
+      <a href="#" class="action"><span class="material-icons">chat_bubble</span></a>
+      <a href="#" class="action"><span class="material-icons">call</span></a>
+      <a href="#" class="action"><span class="material-icons">photo</span></a>
     </div>
   </div>
 
@@ -196,10 +224,7 @@
 
   <!-- 2021.05 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.05
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">2021.05</div>
     <ul class="date-list">
       <li onclick="location.href='post-210506.html'">2021.05.06</li>
       <li onclick="location.href='post-210507.html'">2021.05.07</li>
@@ -223,10 +248,7 @@
 
   <!-- 2021.06 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.06
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">2021.06</div>
     <ul class="date-list">
       <li onclick="location.href='post-210601.html'">2021.06.01</li>
       <li onclick="location.href='post-210602.html'">2021.06.02</li>
@@ -253,10 +275,7 @@
 
   <!-- 2021.07 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.07
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">2021.07</div>
     <ul class="date-list">
       <li onclick="location.href='post-210701.html'">2021.07.01</li>
       <li onclick="location.href='post-210705.html'">2021.07.05</li>
@@ -282,10 +301,7 @@
 
   <!-- 2021.08 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.08
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">2021.08</div>
     <ul class="date-list">
       <li onclick="location.href='post-210802.html'">2021.08.02</li>
       <li onclick="location.href='post-210803.html'">2021.08.03</li>
@@ -314,10 +330,7 @@
 
   <!-- 2021.09 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.09
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">2021.09</div>
     <ul class="date-list">
       <li onclick="location.href='post-210901.html'">2021.09.01</li>
       <li onclick="location.href='post-210902.html'">2021.09.02</li>
@@ -345,10 +358,7 @@
 
   <!-- 2021.10 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.10
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">2021.10</div>
     <ul class="date-list">
       <li onclick="location.href='post-211004.html'">2021.10.04</li>
       <li onclick="location.href='post-211005.html'">2021.10.05</li>
@@ -363,20 +373,21 @@
   </div>
 
 </div>
-<script>
-  function toggleMenu() {
-    document.getElementById('sideMenu').classList.toggle('open');
-  }
 
-function toggleMonth(el) {
-  const list = el.nextElementSibling;
-  const isOpen = list.style.display === 'block';
+  <script>
+    function toggleMenu() {
+      document.getElementById('sideMenu').classList.toggle('open');
+      document.getElementById('dim').classList.toggle('show');
+    }
 
-  list.style.display = isOpen ? 'none' : 'block';
-  el.classList.toggle('open', !isOpen);
-}
-</script>
-  
+    function toggleMonth(el) {
+      const list = el.nextElementSibling;
+      const isOpen = list.style.display === 'block';
+
+      list.style.display = isOpen ? 'none' : 'block';
+      el.classList.toggle('open', !isOpen);
+    }
+  </script>
 
 </body>
 </html>
