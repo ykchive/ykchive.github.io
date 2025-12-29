@@ -2,60 +2,78 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>ykchive</title>
+<title>ykchive profile</title>
 
 <style>
 body {
   margin: 0;
+  background: #bfbfbf;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-  background: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 상단 닫기 */
+.top {
+  padding: 16px;
+  font-size: 22px;
+  color: #fff;
+}
+
+/* 중앙 프로필 */
+.center {
   text-align: center;
+  color: #fff;
 }
 
-/* 프로필 영역 */
-.profile {
-  margin-top: 80px;
-}
-
-.profile img {
-  width: 140px;
-  height: 140px;
+.center img {
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
+  margin-bottom: 14px;
+}
+
+.badge {
+  display: inline-block;
+  background: #4a90e2;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-bottom: 6px;
 }
 
 .name {
-  font-size: 22px;
-  font-weight: bold;
-  margin-top: 16px;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .status {
-  font-size: 15px;
-  color: #666;
-  margin-top: 8px;
+  font-size: 14px;
+  opacity: 0.85;
+  margin-top: 6px;
 }
 
 /* 하단 버튼 */
 .bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-top: 1px solid #eee;
   background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 16px 0 24px;
   display: flex;
   justify-content: space-around;
-  padding: 14px 0 20px;
 }
 
-.item {
-  font-size: 13px;
+.action {
+  text-align: center;
+  font-size: 12px;
   color: #333;
 }
 
 .icon {
-  font-size: 26px;
+  font-size: 22px;
   margin-bottom: 6px;
 }
 </style>
@@ -63,23 +81,26 @@ body {
 
 <body>
 
-<div class="profile">
+<div class="top">✕</div>
+
+<div class="center">
   <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-  <div class="name">돈덩이</div>
-  <div class="status">항상 고마워 🖤</div>
+  <div class="badge">ARTIST</div>
+  <div class="name">필이 ❤️</div>
+  <div class="status">myday ❤️🌸</div>
 </div>
 
 <div class="bottom">
-  <div class="item">
+  <div class="action">
     <div class="icon">💬</div>
     채팅
   </div>
-  <div class="item">
+  <div class="action">
     <div class="icon">📞</div>
     통화
   </div>
-  <div class="item">
-    <div class="icon">🖼</div>
+  <div class="action">
+    <div class="icon">🖼️</div>
     사진
   </div>
 </div>
