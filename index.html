@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kakao Profile</title>
+  <title>Kakao Archive</title>
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -11,19 +11,17 @@
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
       background: #ffffff;
+      height: 100vh;
       position: relative;
+      overflow: hidden;
     }
 
     /* 상단 메뉴 버튼 */
     .menu-button {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 18px;
+      left: 18px;
       width: 36px;
       height: 36px;
       display: flex;
@@ -38,15 +36,13 @@
       font-size: 28px;
     }
 
-    /* 프로필 박스 */
+    /* ===== 프로필 카드 ===== */
     .profile-box {
-      width: 100%;
       max-width: 380px;
-      margin-top: 72px;
-      background: rgba(163, 163, 163, 0.95);
+      margin: 80px auto 0;
+      background: rgba(163,163,163,0.95);
       border-radius: 14px;
       padding: 28px 20px 16px;
-      box-sizing: border-box;
       border: 1px solid #cfcfcf;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
@@ -65,62 +61,38 @@
       object-fit: cover;
       margin-bottom: 14px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-      border: 1px solid rgba(255,255,255,0.25);
     }
 
     .name {
       font-size: 22px;
       font-weight: 650;
       color: #fff;
-      margin-bottom: 2px;
     }
 
     .status {
       font-size: 14px;
       color: rgba(255,255,255,0.7);
       font-style: italic;
-      margin-bottom: 8px;
+      margin-top: 4px;
     }
 
-    .actions {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 8px;
-      padding-top: 16px;
-      border-top: 1px solid #d6d6d6;
-    }
-
-    .action {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-    }
-
-    .action .material-icons {
-      font-size: 30px;
-    }
-
-    /* 사이드 메뉴 */
+    /* ===== 사이드 메뉴 (날짜 목록) ===== */
     .side-menu {
       position: fixed;
       top: 0;
-      right: -300px;
-      width: 280px;
+      left: -300px;
+      width: 260px;
       height: 100vh;
       background: #f5f5f5;
-      box-shadow: -4px 0 10px rgba(0,0,0,0.15);
-      transition: right 0.3s ease;
+      box-shadow: 4px 0 10px rgba(0,0,0,0.15);
+      transition: left 0.3s ease;
       padding: 16px;
       box-sizing: border-box;
       z-index: 1000;
     }
 
     .side-menu.open {
-      right: 0;
+      left: 0;
     }
 
     .side-header {
@@ -146,148 +118,189 @@
       margin-top: 4px;
     }
 
-    /* 채팅 화면 */
-    .chat-view {
+    /* ===== 전체화면 채팅 ===== */
+    .chat-full {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #f7f7f7;
       display: none;
-      height: 100%;
+      flex-direction: column;
+      z-index: 2000;
     }
 
     .chat-header {
+      height: 56px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
+      padding: 0 12px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
     }
 
-    .chat-header .material-icons {
+    .chat-header .back {
+      font-size: 24px;
       cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .chat-header img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 8px;
+    }
+
+    .chat-header .chat-name {
+      font-size: 15px;
+      font-weight: 600;
     }
 
     .chat-body {
-      height: calc(100vh - 80px);
+      flex: 1;
+      padding: 16px;
       overflow-y: auto;
     }
 
-    .message {
-      max-width: 70%;
-      padding: 8px 12px;
-      margin-bottom: 8px;
-      border-radius: 12px;
+    .chat-date {
+      text-align: center;
+      font-size: 13px;
+      color: #999;
+      margin: 16px 0;
+    }
+
+    .chat-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 8px;
+    }
+
+    .chat-content {
+      max-width: 65%;
+    }
+
+    .chat-content .name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 4px;
+    }
+
+    .bubble {
+      background: #fff;
+      padding: 10px 14px;
+      border-radius: 16px;
       font-size: 14px;
+      border: 1px solid #e5e5e5;
     }
 
-    .message.you {
-      background: #e0e0e0;
+    .photo-bubble {
+      width: 220px;
+      border-radius: 16px;
+      display: block;
     }
 
-    .message.me {
-      background: #cfcfcf;
-      margin-left: auto;
+    .time {
+      font-size: 11px;
+      color: #999;
+      align-self: flex-end;
+      margin-left: 6px;
     }
   </style>
 </head>
 <body>
 
   <!-- 메뉴 버튼 -->
-  <div class="menu-button">
+  <div class="menu-button" onclick="toggleMenu()">
     <span class="material-icons">menu</span>
   </div>
 
   <!-- 사이드 메뉴 -->
   <div class="side-menu" id="sideMenu">
+    <div class="side-header">게시물</div>
 
-    <!-- 날짜 목록 -->
-    <div id="postList">
-      <div class="side-header">게시물</div>
-
-      <div class="post-item" onclick="openChat('210506')">
-        <div class="post-title">210506</div>
-        <div class="post-preview">그날의 대화</div>
-      </div>
-
-      <div class="post-item" onclick="openChat('210507')">
-        <div class="post-title">210507</div>
-        <div class="post-preview">사진을 보낸 날</div>
-      </div>
-
-      <div class="post-item" onclick="openChat('210508')">
-        <div class="post-title">210508</div>
-        <div class="post-preview">짧은 통화</div>
-      </div>
-    </div>
-
-    <!-- 채팅창 -->
-    <div class="chat-view" id="chatView">
-      <div class="chat-header">
-        <span id="chatTitle"></span>
-        <span class="material-icons" onclick="closeChat()">arrow_back</span>
-      </div>
-      <div class="chat-body"></div>
+    <div class="post-item" onclick="openChat('210916')">
+      <div class="post-title">210916</div>
+      <div class="post-preview">가을 하늘</div>
     </div>
   </div>
 
-  <!-- 프로필 카드 -->
+  <!-- 프로필 -->
   <div class="profile-box">
     <div class="profile">
-      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="profile">
+      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="name">강영현</div>
       <div class="status">stay happy, stay healthy</div>
     </div>
+  </div>
 
-    <div class="actions">
-      <a class="action"><span class="material-icons">chat_bubble</span></a>
-      <a class="action"><span class="material-icons">call</span></a>
-      <a class="action"><span class="material-icons">photo</span></a>
+  <!-- 채팅 -->
+  <div class="chat-full" id="chatFull">
+    <div class="chat-header">
+      <span class="material-icons back" onclick="closeChat()">arrow_back</span>
+      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <span class="chat-name">강영현</span>
     </div>
+
+    <div class="chat-body" id="chatBody"></div>
   </div>
 
   <script>
-    const menuBtn = document.querySelector('.menu-button');
     const sideMenu = document.getElementById('sideMenu');
-    const postList = document.getElementById('postList');
-    const chatView = document.getElementById('chatView');
-    const chatTitle = document.getElementById('chatTitle');
-    const chatBody = document.querySelector('.chat-body');
+    const chatFull = document.getElementById('chatFull');
+    const chatBody = document.getElementById('chatBody');
 
     const chatData = {
-      "210506": [
-        { type: "you", text: "안녕" },
-        { type: "me", text: "어, 오랜만이네" },
-        { type: "you", text: "잘 지냈어?" }
-      ],
-      "210507": [
-        { type: "you", text: "사진 보냈어" },
-        { type: "me", text: "봤어 ㅋㅋ" }
-      ],
-      "210508": [
-        { type: "me", text: "오늘 통화 가능?" }
+      "210916": [
+        { type: "text", text: "후후 오늘도 알찬 하루군용", time: "오후 08:13" },
+        { type: "image", src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470", time: "오후 08:17" },
+        { type: "text", text: "아까 아침에 찍었어용 ㅋㅋㅋ", time: "오후 08:17" },
+        { type: "text", text: "오늘 근데 진짜 날씨 너무 좋았어요 ㅎㅎ", time: "오후 08:23" }
       ]
     };
 
-    menuBtn.addEventListener('click', () => {
+    function toggleMenu() {
       sideMenu.classList.toggle('open');
-      closeChat();
-    });
+    }
 
     function openChat(date) {
-      postList.style.display = 'none';
-      chatView.style.display = 'block';
-      chatTitle.innerText = date;
-      chatBody.innerHTML = "";
+      sideMenu.classList.remove('open');
+      chatFull.style.display = 'flex';
+      chatBody.innerHTML = `<div class="chat-date">2021년 9월 16일 목요일</div>`;
 
       chatData[date].forEach(msg => {
-        const div = document.createElement("div");
-        div.className = `message ${msg.type}`;
-        div.innerText = msg.text;
-        chatBody.appendChild(div);
+        const item = document.createElement('div');
+        item.className = 'chat-item';
+
+        item.innerHTML = `
+          <img class="avatar" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+          <div class="chat-content">
+            <div class="name">강영현</div>
+            ${
+              msg.type === "text"
+                ? `<div class="bubble">${msg.text}</div>`
+                : `<img class="photo-bubble" src="${msg.src}">`
+            }
+          </div>
+          <div class="time">${msg.time}</div>
+        `;
+        chatBody.appendChild(item);
       });
     }
 
     function closeChat() {
-      chatView.style.display = 'none';
-      postList.style.display = 'block';
+      chatFull.style.display = 'none';
     }
   </script>
 
