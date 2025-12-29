@@ -16,6 +16,27 @@
       align-items: flex-start;
       height: 75vh;
       background: #ffffff;
+      position: relative; /* 메뉴 버튼 기준 */
+    }
+
+    /* 오른쪽 상단 메뉴 버튼 */
+    .menu-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: #444;
+      cursor: pointer;
+    }
+
+    .menu-button .material-icons {
+      font-size: 28px;
     }
 
     .profile-box {
@@ -24,7 +45,7 @@
       margin-top: 60px;
       background: rgba(163, 163, 163, 0.95);
       border-radius: 14px;
-      padding: 28px 20px 16px;   /* 하단 패딩 살짝 줄임 */
+      padding: 28px 20px 16px;
       box-sizing: border-box;
       border: 1px solid #cfcfcf;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -34,7 +55,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 50px;         /* ✅ 프로필 사진 위 여백 추가 */
+      padding-top: 50px;
     }
 
     .profile img {
@@ -59,14 +80,14 @@
       color: rgba(255, 255, 255, 0.7);
       font-style: italic;
       margin-top: 2px;
-      margin-bottom: 6px;        /* ✅ 하단 아이콘과 간격 줄이기 */
+      margin-bottom: 6px;
     }
 
     .actions {
       display: flex;
       justify-content: space-around;
-      margin-top: 8px;           /* ✅ 간격 많이 줄임 */
-      padding-top: 10px;          /* ✅ 구분선 위 여백 축소 */
+      margin-top: 8px;
+      padding-top: 10px;
       border-top: 1px solid #d6d6d6;
     }
 
@@ -76,9 +97,9 @@
       justify-content: center;
       width: 48px;
       height: 48px;
-      color: rgba(255,255,255,0.8);            /* ✅ 아이콘 짙은 회색 */
+      color: rgba(255,255,255,0.8);
       text-decoration: none;
-      margin-bottom: 2px
+      margin-bottom: 2px;
     }
 
     .action .material-icons {
@@ -87,6 +108,11 @@
   </style>
 </head>
 <body>
+
+  <!-- 가로 선 3개 메뉴 버튼 -->
+  <div class="menu-button">
+    <span class="material-icons">menu</span>
+  </div>
 
   <div class="profile-box">
     <div class="profile">
