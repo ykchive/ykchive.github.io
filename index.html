@@ -18,17 +18,14 @@
       background: #ffffff;
     }
 
-    /* 프로필 박스 */
     .profile-box {
       width: 100%;
-      max-width: 360px;              /* 전체 폭 살짝 축소 */
+      max-width: 360px;
       margin-top: 56px;
-
-      background: rgba(163, 163, 163, 0.95); /* 배경 더 짙게 */
-      border-radius: 14px;           /* 덜 둥글게 */
-      padding: 26px 18px 18px;       /* 내부 여백 축소 */
+      background: rgba(163, 163, 163, 0.95);
+      border-radius: 14px;
+      padding: 26px 18px 14px;   /* 하단 패딩 살짝 줄임 */
       box-sizing: border-box;
-
       border: 1px solid #cfcfcf;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
@@ -37,19 +34,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 25px
+      padding-top: 32px;         /* ✅ 프로필 사진 위 여백 추가 */
     }
 
     .profile img {
-      width: 108px;                  /* 사진 크기 축소 */
+      width: 108px;
       height: 108px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .name {
-      font-size: 22px;               /* 글자 크기 살짝 축소 */
+      font-size: 22px;
       font-weight: 650;
       margin-bottom: 1px;
       color: #ffffff;
@@ -59,16 +56,15 @@
       font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
       font-style: italic;
-      margin-top: 4px
-      margin-bottom: 1px
+      margin-top: 2px;
+      margin-bottom: 4px;        /* ✅ 하단 아이콘과 간격 줄이기 */
     }
 
-    /* 하단 아이콘 */
     .actions {
       display: flex;
       justify-content: space-around;
-      margin-top: 24px;
-      padding-top: 12px;
+      margin-top: 8px;           /* ✅ 간격 많이 줄임 */
+      padding-top: 6px;          /* ✅ 구분선 위 여백 축소 */
       border-top: 1px solid #d6d6d6;
     }
 
@@ -78,12 +74,12 @@
       justify-content: center;
       width: 52px;
       height: 52px;
-      color: #ffffff;
+      color: #444444;            /* ✅ 아이콘 짙은 회색 */
       text-decoration: none;
     }
 
     .action .material-icons {
-      font-size: 30px;               /* 아이콘도 살짝 축소 */
+      font-size: 30px;
     }
   </style>
 </head>
