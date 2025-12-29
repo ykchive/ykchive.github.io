@@ -7,101 +7,85 @@
 <style>
 body {
   margin: 0;
-  background: #bfbfbf;
+  background: #bdbdbd;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-  height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-/* 상단 닫기 */
-.top {
-  padding: 16px;
-  font-size: 22px;
-  color: #fff;
-}
-
-/* 중앙 프로필 */
-.center {
+/* 전체 카드 */
+.card {
+  width: 320px;
+  background: #9e9e9e;
+  border-radius: 24px;
+  padding: 40px 24px 24px;
+  box-sizing: border-box;
   text-align: center;
-  color: #fff;
 }
 
-.center img {
+/* 프로필 이미지 */
+.profile-img {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 14px;
+  margin: 0 auto;
 }
 
-.badge {
-  display: inline-block;
-  background: #4a90e2;
-  color: #fff;
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 8px;
-  margin-bottom: 6px;
-}
-
+/* 이름 */
 .name {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
+  margin-top: 16px;
+  color: #fff;
 }
 
+/* 상태메시지 */
 .status {
-  font-size: 14px;
-  opacity: 0.85;
+  font-size: 16px;
+  color: #eaeaea;
   margin-top: 6px;
 }
 
-/* 하단 버튼 */
-.bottom {
-  background: #fff;
-  border-radius: 20px 20px 0 0;
-  padding: 16px 0 24px;
+/* 하단 버튼 영역 */
+.actions {
   display: flex;
   justify-content: space-around;
+  margin-top: 36px;
 }
 
-.action {
-  text-align: center;
-  font-size: 12px;
+.action-btn {
+  width: 56px;
+  height: 56px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  text-decoration: none;
   color: #333;
-}
-
-.icon {
-  font-size: 22px;
-  margin-bottom: 6px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top">✕</div>
+<div class="card">
+  <img
+    class="profile-img"
+    src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png"
+  >
 
-<div class="center">
-  <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-  <div class="badge">ARTIST</div>
-  <div class="name">필이 ❤️</div>
-  <div class="status">myday ❤️🌸</div>
-</div>
+  <div class="name">필이</div>
+  <div class="status">myday</div>
 
-<div class="bottom">
-  <div class="action">
-    <div class="icon">💬</div>
-    채팅
-  </div>
-  <div class="action">
-    <div class="icon">📞</div>
-    통화
-  </div>
-  <div class="action">
-    <div class="icon">🖼️</div>
-    사진
+  <div class="actions">
+    <a class="action-btn" href="chat.html">💬</a>
+    <a class="action-btn" href="#">📞</a>
+    <a class="action-btn" href="#">🖼️</a>
   </div>
 </div>
 
