@@ -102,6 +102,53 @@
     .action .material-icons {
       font-size: 30px;
     }
+
+/* ===== 게시물 사이드 메뉴 (오른쪽) ===== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -260px;              /* 처음엔 화면 밖 */
+  width: 240px;
+  height: 100vh;
+  background: #f5f5f5;
+  box-shadow: -4px 0 10px rgba(0,0,0,0.15);
+  transition: right 0.3s ease;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  z-index: 999;
+}
+
+.side-menu.open {
+  right: 0;                  /* 열릴 때 */
+}
+
+.side-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.post-item {
+  padding: 12px 8px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.post-item:hover {
+  background: #eaeaea;
+}
+
+.post-date {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.post-preview {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+    
   </style>
 </head>
 <body>
@@ -132,5 +179,29 @@
     </div>
   </div>
 
+<!-- 게시물 메뉴 -->
+<div class="side-menu" id="sideMenu">
+  <div class="side-title">게시물</div>
+
+  <div class="post-item">
+    <div class="post-date">210506</div>
+    <div class="post-preview">첫 번째 버블</div>
+  </div>
+
+  <div class="post-item">
+    <div class="post-date">210916</div>
+    <div class="post-preview">가을 하늘</div>
+  </div>
+</div>
+
+  <script>
+  const menuBtn = document.querySelector('.menu-button');
+  const sideMenu = document.getElementById('sideMenu');
+
+  menuBtn.addEventListener('click', () => {
+    sideMenu.classList.toggle('open');
+  });
+</script>
+  
 </body>
 </html>
