@@ -12,11 +12,42 @@
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
     }
 
+    /* 상단바 */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-btn {
+      position: absolute;
+      left: 14px;
+      font-size: 28px;
+      font-weight: 300;
+      color: #333;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .chat-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
+
     /* 날짜 */
     .date {
       text-align: center;
-      margin-top: 50px;
-      margin-bottom: 25px
+      margin-top: 80px;
+      margin-bottom: 22px;
       font-size: 10px;
       color: #999;
     }
@@ -33,8 +64,8 @@
     }
 
     .profile {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       margin-right: 10px;
       flex-shrink: 0;
@@ -50,7 +81,6 @@
       margin-bottom: 4px;
     }
 
-    /* 말풍선 + 시간 묶음 */
     .bubble-row {
       display: flex;
       align-items: flex-end;
@@ -58,11 +88,10 @@
 
     .bubble {
       background: #ededed;
-      padding: 10px 12px;
+      padding: 10px 13px;
       border-radius: 16px;
-      font-size: 13px;
+      font-size: 12.5px;
       line-height: 1.45;
-      display: inline-block;
       font-weight: 400;
     }
 
@@ -73,55 +102,40 @@
       white-space: nowrap;
     }
 
-    /* 사진 메시지 */
     .photo {
-      width: 90%;
+      width: 85%;
       border-radius: 16px;
       display: block;
     }
-
-    /* 뒤로가기 버튼 */
-.back-btn {
-  position: fixed;
-  top: 18px;
-  left: 14px;
-  font-size: 28px;        /* ⬅ 얇고 예쁜 꺾쇠 */
-  font-weight: 300;
-  color: #555;
-  cursor: pointer;
-  z-index: 1000;
-  user-select: none;
-}
-    
   </style>
 </head>
 <body>
-<!-- 뒤로가기 버튼 -->
-<div class="back-btn" onclick="history.back()">‹</div>
-  &lt;
-</div>
-  
+
+  <!-- 상단바 -->
+  <div class="top-bar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+    <div class="chat-title">강영현</div>
+  </div>
+
   <!-- 날짜 -->
   <div class="date">2021년 5월 6일 목요일</div>
 
   <!-- 채팅 -->
   <div class="chat">
 
-    <!-- 텍스트 메시지 -->
+    <!-- 텍스트 -->
     <div class="message">
       <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
-          <div class="bubble">
-            우리 함께 재미있게 놀아 봅시다!! 꺄핳
-          </div>
+          <div class="bubble">우리 함께 재미있게 놀아 봅시다!! 꺄핳</div>
           <div class="time">오후 06:02</div>
         </div>
       </div>
     </div>
 
-    <!-- 사진 메시지 -->
+    <!-- 사진 -->
     <div class="message">
       <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="content">
@@ -133,15 +147,13 @@
       </div>
     </div>
 
-    <!-- 텍스트 메시지 -->
+    <!-- 텍스트 -->
     <div class="message">
       <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
-          <div class="bubble">
-            오늘 오랜만에 하늘이 멋지더라구요잉
-          </div>
+          <div class="bubble">오늘 오랜만에 하늘이 멋지더라구요잉</div>
           <div class="time">오후 07:49</div>
         </div>
       </div>
