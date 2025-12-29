@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kakao Archive</title>
+  <title>Kakao Profile</title>
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -12,45 +12,48 @@
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
       background: #ffffff;
-      height: 100vh;
-      overflow: hidden;
+      display: flex;
+      justify-content: center;
     }
 
-    /* ===== 메뉴 버튼 ===== */
-    .menu-button {
+    /* 메뉴 버튼 */
+    .menu-btn {
       position: fixed;
-      top: 18px;
-      right: 18px;
-      width: 36px;
-      height: 36px;
+      top: 20px;
+      right: 20px;
+      width: 22px;
+      height: 16px;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-between;
       cursor: pointer;
-      color: #444;
       z-index: 1000;
     }
 
-    .menu-button .material-icons {
-      font-size: 28px;
+    .menu-btn span {
+      height: 2px;
+      background: #333;
+      border-radius: 2px;
     }
 
-    /* ===== 프로필 박스 ===== */
+    /* 프로필 박스 */
     .profile-box {
+      width: 100%;
       max-width: 380px;
-      margin: 90px auto 0;
-      background: rgba(163,163,163,0.95);
+      margin-top: 80px;
+      background: rgba(163, 163, 163, 0.95);
       border-radius: 14px;
       padding: 28px 20px 16px;
       border: 1px solid #cfcfcf;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-sizing: border-box;
     }
 
     .profile {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 50px;
+      padding-top: 40px;
     }
 
     .profile img {
@@ -58,14 +61,14 @@
       height: 105px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
 
     .name {
       font-size: 22px;
       font-weight: 650;
-      color: #ffffff;
+      color: #fff;
       margin-bottom: 2px;
     }
 
@@ -75,263 +78,77 @@
       font-style: italic;
     }
 
-    .actions {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid #d6d6d6;
-    }
-
-    .action {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.8);
-    }
-
-    .action .material-icons {
-      font-size: 30px;
-    }
-
-    /* ===== 오른쪽 게시물 메뉴 ===== */
+    /* 사이드 메뉴 */
     .side-menu {
       position: fixed;
       top: 0;
       right: -260px;
-      width: 240px;
-      height: 100vh;
-      background: #f5f5f5;
-      box-shadow: -4px 0 10px rgba(0,0,0,0.15);
+      width: 260px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.1);
       transition: right 0.3s ease;
-      padding: 20px 16px;
+      padding: 20px;
       box-sizing: border-box;
-      z-index: 900;
+      z-index: 999;
     }
 
     .side-menu.open {
       right: 0;
     }
 
-    .side-title {
-      font-size: 16px;
+    .menu-title {
       font-weight: 600;
       margin-bottom: 16px;
     }
 
-    .post-item {
-      padding: 12px 6px;
-      border-bottom: 1px solid #ddd;
-      cursor: pointer;
+    .date-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .date-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
       font-size: 14px;
-      font-weight: 600;
-    }
-
-    .post-item:hover {
-      background: #eaeaea;
-    }
-
-    /* ===== 전체화면 채팅 ===== */
-    .chat-full {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #f7f7f7;
-      display: none;
-      flex-direction: column;
-      z-index: 2000;
-    }
-
-    .chat-header {
-      height: 56px;
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      background: #ffffff;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .chat-header .material-icons {
-      font-size: 24px;
       cursor: pointer;
-      margin-right: 10px;
-    }
-
-    .chat-header img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-
-    .chat-header .chat-name {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .chat-body {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-    }
-
-    .chat-date {
-      text-align: center;
-      font-size: 13px;
-      color: #999;
-      margin: 16px 0;
-    }
-
-    .chat-item {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 14px;
-    }
-
-    .chat-item img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-
-    .chat-content {
-      max-width: 70%;
-    }
-
-    .chat-content .name {
-      font-size: 13px;
-      font-weight: 600;
-      color: #000;
-      margin-bottom: 4px;
-    }
-
-    .bubble {
-      background: #ffffff;
-      padding: 10px 14px;
-      border-radius: 16px;
-      font-size: 14px;
-      border: 1px solid #e5e5e5;
-    }
-
-    .time {
-      font-size: 11px;
-      color: #999;
-      margin-left: 6px;
-      align-self: flex-end;
     }
   </style>
 </head>
 <body>
 
   <!-- 메뉴 버튼 -->
-  <div class="menu-button" id="menuBtn">
-    <span class="material-icons">menu</span>
+  <div class="menu-btn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
-  <!-- 프로필 -->
+  <!-- 프로필 박스 -->
   <div class="profile-box">
     <div class="profile">
-      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="profile">
       <div class="name">강영현</div>
       <div class="status">stay happy, stay healthy</div>
     </div>
-
-    <div class="actions">
-      <div class="action"><span class="material-icons">chat_bubble</span></div>
-      <div class="action"><span class="material-icons">call</span></div>
-      <div class="action"><span class="material-icons">photo</span></div>
-    </div>
   </div>
 
-  <!-- 게시물 메뉴 -->
+  <!-- 사이드 메뉴 -->
   <div class="side-menu" id="sideMenu">
-    <div class="side-title">게시물</div>
-    <div id="postList"></div>
-  </div>
-
-  <!-- 채팅 -->
-  <div class="chat-full" id="chatFull">
-    <div class="chat-header">
-      <span class="material-icons" onclick="closeChat()">arrow_back</span>
-      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-      <span class="chat-name">강영현</span>
-    </div>
-    <div class="chat-body" id="chatBody"></div>
+    <div class="menu-title">게시물</div>
+    <ul class="date-list">
+      <li onclick="location.href='post-210506.html'">2021.05.06</li>
+      <li onclick="location.href='post-210507.html'">2021.05.07</li>
+      <li onclick="location.href='post-210510.html'">2021.05.10</li>
+      <li onclick="location.href='post-210511.html'">2021.05.11</li>
+      <li onclick="location.href='post-210512.html'">2021.05.12</li>
+    </ul>
   </div>
 
   <script>
-    const posts = [
-      { id: "210506", label: "2021.05.06" },
-      { id: "210507", label: "2021.05.07" },
-      { id: "210510", label: "2021.05.10" },
-      { id: "210511", label: "2021.05.11" },
-      { id: "210512", label: "2021.05.12" }
-    ];
-
-    const chatData = {
-      "210506": [
-        { text: "오늘 하루도 수고했어요", time: "오후 9:12" },
-        { text: "잘 자요 🌙", time: "오후 10:01" }
-      ],
-      "210507": [
-        { text: "아침 공기 좋더라구요", time: "오전 8:03" }
-      ],
-      "210510": [
-        { text: "사진 보내주고 싶었어요", time: "오후 7:22" }
-      ],
-      "210511": [
-        { text: "오늘따라 말이 많네 ㅎㅎ", time: "오후 11:10" }
-      ],
-      "210512": [
-        { text: "이날 기억나요?", time: "오후 6:44" }
-      ]
-    };
-
-    const menuBtn = document.getElementById('menuBtn');
-    const sideMenu = document.getElementById('sideMenu');
-    const postList = document.getElementById('postList');
-    const chatFull = document.getElementById('chatFull');
-    const chatBody = document.getElementById('chatBody');
-
-    menuBtn.onclick = () => {
-      sideMenu.classList.toggle('open');
-    };
-
-    posts.forEach(post => {
-      const div = document.createElement('div');
-      div.className = 'post-item';
-      div.innerText = post.label;
-      div.onclick = () => openChat(post.id, post.label);
-      postList.appendChild(div);
-    });
-
-    function openChat(id, label) {
-      sideMenu.classList.remove('open');
-      chatFull.style.display = 'flex';
-      chatBody.innerHTML = `<div class="chat-date">${label}</div>`;
-
-      chatData[id].forEach(msg => {
-        const item = document.createElement('div');
-        item.className = 'chat-item';
-        item.innerHTML = `
-          <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-          <div class="chat-content">
-            <div class="name">강영현</div>
-            <div class="bubble">${msg.text}</div>
-          </div>
-          <div class="time">${msg.time}</div>
-        `;
-        chatBody.appendChild(item);
-      });
-    }
-
-    function closeChat() {
-      chatFull.style.display = 'none';
+    function toggleMenu() {
+      document.getElementById('sideMenu').classList.toggle('open');
     }
   </script>
 
