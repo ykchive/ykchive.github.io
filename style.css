@@ -1,0 +1,71 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =====================
+   Profile Box
+===================== */
+
+.profile-box {
+  width: 360px;
+  background: #7f8a93;
+  border-radius: 20px;
+  padding: 28px 24px 22px;
+}
+
+/* 상단 영역 */
+.profile-top {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.profile-img {
+  width: 88px;
+  height: 88px;
+  border-radius: 22px;
+  object-fit: cover;
+  margin-bottom: 14px;
+}
+
+.profile-name {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.profile-name .edit {
+  font-size: 14px;
+  margin-left: 6px;
+  opacity: 0.7;
+}
+
+/* =====================
+   Action Icons
+===================== */
+
+.profile-actions {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.action {
+  font-size: 22px;
+  color: #ffffff;
+  opacity: 0.95;
+}
