@@ -28,7 +28,7 @@
     .message {
       display: flex;
       align-items: flex-start;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .profile {
@@ -36,6 +36,7 @@
       height: 36px;
       border-radius: 50%;
       margin-right: 10px;
+      flex-shrink: 0;
     }
 
     .content {
@@ -46,6 +47,12 @@
       font-size: 13px;
       color: #555;
       margin-bottom: 4px;
+    }
+
+    /* 말풍선 + 시간 묶음 */
+    .bubble-row {
+      display: flex;
+      align-items: flex-end;
     }
 
     .bubble {
@@ -60,64 +67,75 @@
     .time {
       font-size: 11px;
       color: #aaa;
-      margin-top: 4px;
+      margin-left: 6px;
+      white-space: nowrap;
     }
 
     /* 사진 메시지 */
     .photo {
       width: 100%;
       border-radius: 16px;
-      margin-top: 4px;
+      display: block;
     }
   </style>
 </head>
 <body>
 
+  <!-- 날짜 -->
   <div class="date">2021년 5월 6일 목요일</div>
 
+  <!-- 채팅 -->
   <div class="chat">
 
-    <!-- 텍스트 -->
+    <!-- 텍스트 메시지 -->
     <div class="message">
       <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="content">
         <div class="name">강영현</div>
-        <div class="bubble">
-          우리 함께 재미있게 놀아 봅시다!! 꺄항
+        <div class="bubble-row">
+          <div class="bubble">
+            우리 함께 재미있게 놀아 봅시다!! 꺄핳
+          </div>
+          <div class="time">오후 06:02</div>
         </div>
-        <div class="time">오후 06:02</div>
       </div>
     </div>
 
-    <!-- 사진 -->
+    <!-- 사진 메시지 -->
     <div class="message">
       <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="content">
         <div class="name">강영현</div>
-        <img class="photo" src="https://i.postimg.cc/Y9fJ8p5k/sample1.jpg">
-        <div class="time">오후 07:43</div>
-      </div>
-    </div>
-
-    <!-- 텍스트 -->
-    <div class="message">
-      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-      <div class="content">
-        <div class="name">강영현</div>
-        <div class="bubble">
-          오늘 오랜만에 하늘이 멋지더라구잉
+        <div class="bubble-row">
+          <img class="photo" src="https://i.postimg.cc/Z5qB10L0/IMG-7513.jpg.jpg">
+          <div class="time">오후 07:43</div>
         </div>
-        <div class="time">오후 07:49</div>
       </div>
     </div>
 
-    <!-- 사진 -->
+    <!-- 텍스트 메시지 -->
     <div class="message">
       <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="content">
         <div class="name">강영현</div>
-        <img class="photo" src="https://i.postimg.cc/QtqF1dKk/sample2.jpg">
-        <div class="time">오후 08:17</div>
+        <div class="bubble-row">
+          <div class="bubble">
+            오늘 오랜만에 하늘이 멋지더라구요잉
+          </div>
+          <div class="time">오후 07:49</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 사진 메시지 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <img class="photo" src="https://i.postimg.cc/9XtD0y8T/IMG-7514.jpg">
+          <div class="time">오후 07:52</div>
+        </div>
       </div>
     </div>
 
