@@ -3,81 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profile</title>
-
+  <title>Kakao Profile</title>
   <style>
     body {
       margin: 0;
-      background: #8e959c; /* 카톡 프로필 배경 느낌 */
-      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      height: 100vh;
+      background: #ffffff;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
     }
 
-    /* 전체 카드 */
     .profile-card {
-      width: 92%;
-      max-width: 420px;
-      background: #8e959c;
-      border-radius: 30px;
-      padding-top: 80px;
-      margin-top: 60px; /* 위로 올림 */
-      text-align: center;
+      width: 90%;
+      max-width: 360px;
+      background: #9aa3aa;
+      border-radius: 28px;
+      padding: 40px 20px 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* 프로필 이미지 */
     .profile-img {
-      width: 160px;
-      height: 160px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 20px;
     }
 
-    /* 이름 */
     .name {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 600;
-      color: #fff;
+      color: #ffffff;
+      margin-bottom: 8px;
     }
 
-    /* 하단 메뉴 */
+    .status {
+      font-size: 15px;
+      color: #eaeaea;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
     .actions {
-      margin-top: 60px;
-      padding-top: 25px;
-      border-top: 1px solid rgba(255,255,255,0.3);
+      width: 100%;
       display: flex;
       justify-content: space-around;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.3);
     }
 
     .action-btn {
-      color: #fff;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #ffffff;
       text-decoration: none;
-      font-size: 28px;
     }
   </style>
 </head>
-
 <body>
+
   <div class="profile-card">
-    <!-- 프로필 이미지 -->
     <img
-      class="profile-img"
       src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png"
       alt="profile"
+      class="profile-img"
     />
 
-    <!-- 이름 -->
-    <div class="name">필이</div>
+    <div class="name">강영현</div>
+    <div class="status">stay happy, stay healthy</div>
 
-    <!-- 하단 아이콘 -->
     <div class="actions">
-      <a class="action-btn" href="chat.html">💬</a>
-      <a class="action-btn" href="#">📞</a>
-      <a class="action-btn" href="#">🎥</a>
+      <a href="chat.html" class="action-btn">💬</a>
+      <a href="#" class="action-btn">📞</a>
+      <a href="#" class="action-btn">📹</a>
     </div>
   </div>
+
 </body>
 </html>
