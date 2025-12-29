@@ -15,29 +15,22 @@
       justify-content: center;
       align-items: flex-start;
       height: 100vh;
-      background: #121212;
+      background: #ffffff; /* 박스 밖 흰색 */
     }
 
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(4px);
-      z-index: 1;
-    }
-
+    /* 프로필 박스 */
     .profile-box {
-      position: relative;
-      z-index: 2;
       width: 100%;
       max-width: 380px;
       margin-top: 60px;
-      background: rgba(243, 244, 246, 0.95);
+
+      background: rgba(240, 240, 240, 0.9); /* 연한 회색 + 불투명 */
       border-radius: 20px;
-      padding: 32px 20px 20px; /* 하단 여백 줄임 */
+      padding: 32px 20px 20px;
       box-sizing: border-box;
-      border: 1px solid #e0e0e0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+      border: 1px solid #dcdcdc; /* 윤곽선 */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     .profile {
@@ -56,16 +49,17 @@
 
     .name {
       font-size: 24px;
-      font-weight: 700;
+      font-weight: 600; /* 굵기 살짝 줄임 */
       margin-bottom: 6px;
     }
 
     .status {
       font-size: 15px;
       color: #666;
+      font-style: italic; /* 기울임 */
     }
 
-    /* 하단 아이콘 영역 */
+    /* 하단 아이콘 */
     .actions {
       display: flex;
       justify-content: space-around;
@@ -90,8 +84,6 @@
   </style>
 </head>
 <body>
-
-  <div class="overlay"></div>
 
   <div class="profile-box">
     <div class="profile">
