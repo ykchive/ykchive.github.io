@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>2021.06.10</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #f7f7f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    }
+
+    /* 상단바 */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+.back-btn {
+  position: absolute;
+  left: 14px;
+  font-size: 28px;
+  font-weight: 300;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none; /* ← 이거 추가 */
+}
+
+    .chat-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* 날짜 */
+    .date {
+      text-align: center;
+      margin-top: 80px;
+      margin-bottom: 22px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* 채팅 영역 */
+    .chat {
+      padding: 0 14px 40px;
+    }
+
+    .message {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .profile {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .content {
+      max-width: 85%;
+    }
+
+    .name {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .bubble-row {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .bubble {
+      background: #ededed;
+      padding: 12px 15px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .time {
+      font-size: 11px;
+      color: #aaa;
+      margin-left: 6px;
+      white-space: nowrap;
+    }
+
+    .photo {
+      width: 85%;
+      border-radius: 16px;
+      display: block;
+    }
+
+/* 음성 메시지 */
+.voice-bubble {
+  background: #ededed;
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 160px;
+}
+
+.voice-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.voice-wave {
+  flex: 1;
+  height: 18px;
+  background: linear-gradient(
+    to right,
+    #bbb 20%,
+    #ddd 20%,
+    #ddd 40%,
+    #bbb 40%,
+    #bbb 60%,
+    #ddd 60%,
+    #ddd 80%,
+    #bbb 80%
+  );
+  border-radius: 6px;
+  opacity: 0.8;
+}
+
+.voice-time {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+}
+
+/* 오디오 숨김 */
+.voice-bubble audio {
+  display: none;
+}
+
+/* 시스템 다크모드 자동 연동 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eaeaea;
+  }
+
+  /* 상단바 */
+  .top-bar {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .chat-title,
+  .back-btn {
+    color: #eaeaea;
+  }
+
+  /* 날짜 */
+  .date {
+    color: #888;
+  }
+
+  /* 이름 */
+  .name {
+    color: #bdbdbd;
+  }
+
+  /* 말풍선 */
+  .bubble {
+    background: #2a2a2a;
+    color: #f1f1f1;
+  }
+
+  /* 시간 */
+  .time {
+    color: #9a9a9a;
+  }
+
+  /* 사진 */
+  .photo {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  /* 음성 메시지 */
+  .voice-bubble {
+    background: #2a2a2a;
+  }
+
+  .voice-btn {
+    background: #555;
+    color: #fff;
+  }
+
+  .voice-wave {
+    background: linear-gradient(
+      to right,
+      #666 20%,
+      #777 20%,
+      #777 40%,
+      #666 40%,
+      #666 60%,
+      #777 60%,
+      #777 80%,
+      #666 80%
+    );
+  }
+
+  .voice-time {
+    color: #bdbdbd;
+  }
+
+}
+
+.post-nav {
+  display: flex;
+  justify-content: space-between; /* ← 왼쪽 / 오른쪽 */
+  align-items: center;
+  padding: 18px 14px 28px;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+  margin-top: 20px
+}
+.post-nav a {
+  color: #666;
+  text-decoration: none;
+}
+
+    @media (prefers-color-scheme: dark) {
+  .post-nav {
+    border-top: 1px solid #2a2a2a;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-nav a {
+    color: #bbb;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- 상단바 -->
+  <div class="top-bar">
+<a href="index.html#toggle" class="back-btn">‹</a>
+    <div class="chat-title">강영현</div>
+  </div>
+
+  <!-- 날짜 -->
+  <div class="date">2021년 6월 10일 목요일</div>
+
+  <!-- 채팅 -->
+  <div class="chat">
+
+    <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">Sunddenly See - KT Tunstall 이었어요!!!! 다들 속 시워언한 밤 되시길 바라용!!</div>
+          <div class="time">오전 12:02</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">어제 이브에 이어 오늘 200일이 됐어영 ㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:25</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">오늘 하늘도 뭐라도 주고 싶어서 비를 내려주네요 ㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:41</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">오늘은 오랜만에 집밥을 먹었어요</div>
+          <div class="time">오후 07:46</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">쥪밥이요 ㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:47</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">시간이 맞아서 갔는데 쌀국수 나오더라고요</div>
+          <div class="time">오후 07:48</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">오랜만에 먹었는데 맛있더라고요 ㅎㅎ</div>
+          <div class="time">오후 07:49</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아 쥪밥은 회사 식당이예요 jyp bob이라고 써져있어요 ㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:50</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">제가 진짜 집밥 한 번 먹고 오려면 시간이 꽤나 걸려서..ㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:53</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">정말 생각보다 모르는 분들이 많구나.. 많이 먹어서 시간이 걸리는 것도 물론 있겠지만 제 부모님은 캐나다에 계세요 ㅎㅎ</div>
+          <div class="time">오후 07:54</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">모를 수도 있죠!! 하핳</div>
+          <div class="time">오후 07:56</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">근데 아마 코로나 아니었어도 전 본가 잘 안 가지 않았을까요..?</div>
+          <div class="time">오후 07:58</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">집에 제 방이 있긴 있는데 데뷔하고 딱 두 번인가 세 번밖에 안들어가봤을걸요 ㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:01</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아 근데 그동안 부모님을 그 정도 뵌 건 아니구 투어 다닐 때는 꽤 자주 뵀어요</div>
+          <div class="time">오후 08:03</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">인테리어에 참여했냐구요..? ㅋㅋㅋㅋㅋㅋㅋㅋㅋ 아뇨 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:04</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">근데 진짜로 초등학교 졸업 이후로는 중간에 잠깐 왔다갔다 하실 때도 있었지만 거의 일년에 한 두번 뵙고 그랬어서 막 자주 못 뵙는 게 저는 엄청 슬픈 일로는 안느껴져요!! 서로 건강하고 행복하게 지내고 있으면 되는 거죠!!</div>
+          <div class="time">오후 08:08</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">그리고 제 소식은 매일같이 라디오로 들을 수 있어서 좋대요 ㅎㅎ 연예인 하길 잘했대요</div>
+          <div class="time">오후 08:11</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">만약에 회사 다니거나 다른 일 했으면 이만큼 얼굴 보고 소식 듣기도 어려웠을 거라고 하시더라고요 ㅎㅎ</div>
+          <div class="time">오후 08:13</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">이렇게 자주 얼굴 비출 수 있고 라디오도 할 수 있게 해줘서 고마워요.. 마이데이 덕이죠.</div>
+          <div class="time">오후 08:16</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">오늘 200일 생방 때도 즐겁게 만나요! 이따 봐요!!</div>
+          <div class="time">오후 08:18</div>
+        </div>
+      </div>
+    </div>
+  
+</div> <!-- chat 끝 -->
+
+<div class="post-nav">
+  <a href="post-210609.html" class="prev">‹</a>
+  <a href="post-210611.html" class="next">›</a>
+
+</div>
+  
+<script>
+  function toggleVoice(btn) {
+    const audio = btn.closest('.voice-bubble').querySelector('audio');
+
+    if (audio.paused) {
+      audio.play();
+      btn.innerHTML = '❚❚';
+    } else {
+      audio.pause();
+      btn.innerHTML = '▶';
+    }
+
+    audio.onended = () => {
+      btn.innerHTML = '▶';
+    };
+  }
+</script>
+
+</body>
+</html>
