@@ -189,6 +189,32 @@
 
       .voice-time { color: #bdbdbd; }
     }
+
+    .post-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 14px 28px;
+  margin-top: 40px;              /* 버튼을 더 아래로 */
+  border-top: 1px solid #eee;
+  font-size: 14px;
+}
+
+.post-nav a {
+  color: #666;
+  text-decoration: none;
+}
+
+/* 다크모드 */
+@media (prefers-color-scheme: dark) {
+  .post-nav {
+    border-top: 1px solid #2a2a2a;
+  }
+
+  .post-nav a {
+    color: #bbb;
+  }
+}
   </style>
 </head>
 
