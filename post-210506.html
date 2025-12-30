@@ -236,6 +236,24 @@
 
 }
 
+    .post-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 14px 30px;
+  font-size: 14px;
+}
+
+.post-nav a {
+  color: #666;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-nav a {
+    color: #bbb;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -368,8 +386,13 @@
       <div class="time">오후 11:57</div>
     </div>
   </div>
-</div>
-    
+  
+</div> <!-- chat 끝 -->
+
+  <!-- 이전 / 다음 게시물 -->
+  <div class="post-nav">
+    <a href="post-210505.html" class="prev">‹ 이전</a>
+    <a href="post-210507.html" class="next">다음 ›</a>
   </div>
   
 <script>
