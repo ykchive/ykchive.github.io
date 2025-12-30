@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>2021.05.06</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #f7f7f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    }
+
+    /* 상단바 */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-btn {
+      position: absolute;
+      left: 14px;
+      font-size: 28px;
+      font-weight: 300;
+      color: #333;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .chat-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* 날짜 */
+    .date {
+      text-align: center;
+      margin-top: 80px;
+      margin-bottom: 22px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* 채팅 영역 */
+    .chat {
+      padding: 0 14px 40px;
+    }
+
+    .message {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .profile {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .content {
+      max-width: 85%;
+    }
+
+    .name {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .bubble-row {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .bubble {
+      background: #ededed;
+      padding: 12px 15px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .time {
+      font-size: 11px;
+      color: #aaa;
+      margin-left: 6px;
+      white-space: nowrap;
+    }
+
+    .photo {
+      width: 85%;
+      border-radius: 16px;
+      display: block;
+    }
+
+    /* 음성 메시지 */
+    .voice-bubble {
+      background: #ededed;
+      border-radius: 16px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 160px;
+    }
+
+    .voice-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #333;
+      color: #fff;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .voice-wave {
+      flex: 1;
+      height: 18px;
+      background: linear-gradient(
+        to right,
+        #bbb 20%, #ddd 20%,
+        #ddd 40%, #bbb 40%,
+        #bbb 60%, #ddd 60%,
+        #ddd 80%, #bbb 80%
+      );
+      border-radius: 6px;
+    }
+
+    .voice-time {
+      font-size: 12px;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    .voice-bubble audio {
+      display: none;
+    }
+
+    /* 🌙 시스템 다크모드 */
+    @media (prefers-color-scheme: dark) {
+      body { background: #121212; color: #eaeaea; }
+
+      .top-bar {
+        background: #1e1e1e;
+        border-bottom: 1px solid #2a2a2a;
+      }
+
+      .chat-title, .back-btn { color: #eaeaea; }
+      .date { color: #888; }
+      .name { color: #bdbdbd; }
+
+      .bubble,
+      .voice-bubble {
+        background: #2a2a2a;
+        color: #f1f1f1;
+      }
+
+      .time { color: #9a9a9a; }
+
+      .voice-btn { background: #555; }
+
+      .voice-wave {
+        background: linear-gradient(
+          to right,
+          #666 20%, #777 20%,
+          #777 40%, #666 40%,
+          #666 60%, #777 60%,
+          #777 80%, #666 80%
+        );
+      }
+
+      .voice-time { color: #bdbdbd; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 상단바 -->
+  <div class="top-bar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+    <div class="chat-title">강영현</div>
+  </div>
+
+  <!-- 날짜 -->
+  <div class="date">2021년 5월 19일 수요일</div>
+
+  <!-- 채팅 -->
+  <div class="chat">
+
+    <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">와 오늘은 11시간가량 잤어요 ㅋㅋㅋㅋ</div>
+          <div class="time">오후 06:47</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아까 밖에서 한 5-6살쯤 되는 아이가 아이언맨 풀세팅으로 포즈잡은 채로 딱 서서 머리만 슥슥 돌리고 있는데 멋있으면서 귀엽더라고요 ㅋㅋㅋㅋ</div>
+          <div class="time">오후 06:50</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아니 애가 신나서 뛰어다니는 게 아니라 그냥 가마안히 서있고 고개만 돌려서 진지하구나 싶었죠 ㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 06:52</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">사진 찍을까했는데 너무 모르는 남이라.. ㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 06:57</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">일단 시간도 없어서 지나가면서 본거고 찍어도 되냐고 물어보면 그 자연스러움이 사라졌겠죠 ㅋㅋㅋ 그리고 모자이크를 하기엔.. 이미 가면을 쓰고 있었는걸요.. ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:01</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아 근데 최애 마블 캐릭터는 누구에요?</div>
+          <div class="time">오후 07:06</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아 마블을 좋아하는지 먼저 물어봐야하는거구만ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:07</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아니 소고기 마블 최고 뭐냐고욬ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:08</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">네 저도 소고기 마블 최애입니다.</div>
+          <div class="time">오후 07:10</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">옛날에 브랜드관리 수업 때였나? 한 브랜드 (제한 없이 등록된 상품이나 상표 뿐만 아니라 자유롭게 선택 가능)을 되살리는 그런 과제였는데 어떤 팀이 발표로 DC를 골랐어요. 거기서 신기했던게 옛날에는 슈퍼히어로하면 어떤 캐릭터가 떠오르냐에서 한 50프로가 슈퍼맨이었지만 요즘(이미 몇 년은 지났지만)은 아이언맨이 우월했거든요. 아이언맨이 돌아가신 지금 시간이 좀 더 지나면 또 다른 캐릭터로 바뀌겠죠??</div>
+          <div class="time">오후 07:20</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아 데니멀즈가 차세대 슈퍼히어로군요 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:22</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">그 친구들 그런 능력이 있는 줄 몰랐네요 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:27</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">하긴 우주에서 떨어지고 무사한 친구들이니 엄청나긴 하네요</div>
+          <div class="time">오후 07:32</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">나도 슈퍼 능력 뭐라도 갖고싶다.. ㅋㅋㅋㅋㅋ 전 이제 들어가볼게유!!</div>
+          <div class="time">오후 07:35</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">내일도 슈퍼파워 넘치는 하루 되길 바라용!!</div>
+          <div class="time">오후 11:58</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+<script>
+  function toggleVoice(btn) {
+    const audio = btn.closest('.voice-bubble').querySelector('audio');
+
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '❚❚';
+    } else {
+      audio.pause();
+      btn.textContent = '▶';
+    }
+
+    audio.onended = () => btn.textContent = '▶';
+  }
+</script>
+
+</body>
+</html>
