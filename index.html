@@ -17,19 +17,18 @@
     }
 
     /* 메뉴 버튼 */
-    .menu-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 22px;
-      height: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      cursor: pointer;
-      z-index: 1001;
-    }
-
+  .menu-btn {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  width: 22px;
+  height: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1001;
+}
     .menu-btn span {
       height: 2px;
       background: #333;
@@ -130,6 +129,7 @@
   padding: 0 20px;
   box-sizing: border-box;
   z-index: 999;
+  overscroll-behavior: contain;
 
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -140,20 +140,12 @@
     }
 
     .month {
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 }
 
 .menu-title {
   font-weight: 600;
   font-size: 15px;
-}
-
-    .menu-btn {
-  top: 18px;
-}
-
-    .side-header {
-     border-bottom: 1px solid #eee;
 }
 
     .month .date-list {
@@ -172,7 +164,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 10px 0;
+      padding: 14px 0;
       font-size: 15px;
     }
 
@@ -189,30 +181,27 @@
       list-style: none;
       padding: 16px 0;
       margin: 0;
-      padding-left: 14px
+      padding-left: 14px;
     }
 
     .date-list li {
-      padding: 14px 0;
+      padding: 16px 0;
       border-bottom: 1px solid #eee;
       font-size: 14px;
       cursor: pointer;
     }
 
-    .side-header {
+    /* 상단바 정렬 */
+.side-header {
   position: sticky;
   top: 0;
   height: 56px;
   display: flex;
   align-items: center;
-  background: #fff;
-  z-index: 20;
-  padding-bottom: 6px;
-}
-
-    /* 상단바 정렬 */
-.side-header {
   justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 20;
 }
 
 /* 검색 아이콘 */
@@ -474,7 +463,16 @@ function toggleMonth(el) {
 
 function toggleSearch() {
   const box = document.getElementById('searchBox');
-  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+  const input = box.querySelector('input');
+
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    input.value = '';
+    filterDates('');
+  } else {
+    box.style.display = 'block';
+    input.focus();
+  }
 }
 
 function filterDates(keyword) {
@@ -496,13 +494,20 @@ function filterDates(keyword) {
       }
     });
 
-    if (keyword && hasMatch) {
-      list.classList.add('open');
-      title.classList.add('open');
-    }
-
-    if (!keyword) {
+    if (keyword) {
+      if (hasMatch) {
+        month.style.display = 'block';
+        list.classList.add('open');
+        title.classList.add('open');
+      } else {
+        month.style.display = 'none';
+      }
+    } else {
+      // 검색어 없을 때 초기화
+      month.style.display = 'block';
       items.forEach(li => li.style.display = 'block');
+      list.classList.remove('open');
+      title.classList.remove('open');
     }
   });
 }
