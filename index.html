@@ -237,6 +237,48 @@
   opacity: 0;
   pointer-events: none;
 }
+
+    /* 시스템 다크모드 자동 연동 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eeeeee;
+  }
+
+  .profile-box {
+    background: rgba(40, 40, 40, 0.95);
+    border-color: #2a2a2a;
+  }
+
+  .side-menu {
+    background: #1e1e1e;
+  }
+
+  .side-header {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .menu-title,
+  .month-title,
+  .date-list li {
+    color: #eeeeee;
+  }
+
+  .date-list li {
+    border-bottom-color: #2a2a2a;
+  }
+
+  .menu-btn span {
+    background: #eeeeee;
+  }
+
+  .search-box input {
+    background: #2a2a2a;
+    color: #eeeeee;
+    border-color: #3a3a3a;
+  }
+}
     
   </style>
 </head>
@@ -451,6 +493,7 @@ function toggleMenu() {
   document.getElementById('sideMenu').classList.toggle('open');
   document.getElementById('dim').classList.toggle('show');
   document.querySelector('.menu-btn').classList.toggle('hide');
+  document.getElementById('searchBox').style.display = 'none';
 }
 
 function toggleMonth(el) {
