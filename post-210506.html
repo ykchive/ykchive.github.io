@@ -236,16 +236,23 @@
 
 }
 
-    .post-nav {
+.post-nav {
   display: flex;
-  justify-content: space-between;
-  padding: 20px 14px 30px;
+  justify-content: space-between; /* ← 왼쪽 / 오른쪽 */
+  align-items: center;
+  padding: 18px 14px 28px;
+  border-top: 1px solid #eee;
   font-size: 14px;
 }
-
 .post-nav a {
   color: #666;
   text-decoration: none;
+}
+
+    @media (prefers-color-scheme: dark) {
+  .post-nav {
+    border-top: 1px solid #2a2a2a;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -391,7 +398,7 @@
 
   <!-- 이전 / 다음 게시물 -->
   <div class="post-nav">
-    <a href="post-210507.html" class="next">다음 ›</a>
+    <a href="post-210507.html" class="next">›</a>
   </div>
   
 <script>
