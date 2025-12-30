@@ -243,6 +243,12 @@
         margin: 70px 12px 0;
       }
     }
+
+.menu-btn.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+    
   </style>
 </head>
 <body>
@@ -452,10 +458,11 @@
 </div> <!-- ✅ side-menu 여기서 한 번만 닫기 -->
 
 <script>
-  function toggleMenu() {
-    document.getElementById('sideMenu').classList.toggle('open');
-    document.getElementById('dim').classList.toggle('show');
-  }
+function toggleMenu() {
+  document.getElementById('sideMenu').classList.toggle('open');
+  document.getElementById('dim').classList.toggle('show');
+  document.querySelector('.menu-btn').classList.toggle('hide');
+}
 
 function toggleMonth(el) {
   const list = el.nextElementSibling;
@@ -465,10 +472,10 @@ function toggleMonth(el) {
   el.classList.toggle('open', !isOpen);
 }
 
-  function toggleSearch() {
-    const box = document.getElementById('searchBox');
-    box.style.display = box.style.display === 'block' ? 'none' : 'block';
-  }
+function toggleSearch() {
+  const box = document.getElementById('searchBox');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+}
 
 function filterDates(keyword) {
   const months = document.querySelectorAll('.month');
@@ -499,16 +506,6 @@ function filterDates(keyword) {
     }
   });
 }
-      });
-
-      if (keyword && hasMatch) {
-      }
-
-    if (!keyword) {
-  items.forEach(li => li.style.display = 'block');
-}
-    });
-  }
 </script>
 
 </body>
