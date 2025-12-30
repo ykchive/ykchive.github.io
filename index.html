@@ -140,7 +140,7 @@
     }
 
     .month {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .menu-title {
@@ -153,12 +153,18 @@
 }
 
     .side-header {
-  border-bottom: 1px solid #eee;
+     border-bottom: 1px solid #eee;
 }
 
     .month .date-list {
-      display: none;
-    }
+     max-height: 0;
+     overflow: hidden;
+     transition: max-height 0.25s ease;
+}
+
+    .month .date-list.open {
+     max-height: 2000px; /* 충분히 큰 값 */
+}
 
     .month-title {
       cursor: pointer;
@@ -181,7 +187,7 @@
 
     .date-list {
       list-style: none;
-      padding: 0;
+      padding: 16px 0;
       margin: 0;
       padding-left: 14px
     }
@@ -268,26 +274,24 @@
 
 <!-- 사이드 메뉴 -->
 <div class="side-menu" id="sideMenu">
-<div class="side-header">
-  <div class="menu-title">DATE</div>
 
-  <span class="material-icons search-icon" onclick="toggleSearch()">
-    search
-  </span>
-</div>
+  <div class="side-header">
+    <div class="menu-title">DATE</div>
+    <span class="material-icons search-icon" onclick="toggleSearch()">search</span>
+  </div>
 
-<!-- 검색창 -->
-<div class="search-box" id="searchBox">
-  <input type="text" placeholder="날짜 검색 (예: 2021.07.15)" onkeyup="filterDates(this.value)">
-</div>
+  <!-- 검색창 -->
+  <div class="search-box" id="searchBox">
+    <input type="text"
+           placeholder="날짜 검색 (예: 2021.07.15)"
+           onkeyup="filterDates(this.value)">
   </div>
 
   <!-- 2021.05 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.05
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">
+      <span class="arrow">▶</span> 2021.05
+    </div>
     <ul class="date-list">
       <li onclick="location.href='post-210506.html'">2021.05.06</li>
       <li onclick="location.href='post-210507.html'">2021.05.07</li>
@@ -311,10 +315,9 @@
 
   <!-- 2021.06 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.06
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">
+      <span class="arrow">▶</span> 2021.06
+    </div>
     <ul class="date-list">
       <li onclick="location.href='post-210601.html'">2021.06.01</li>
       <li onclick="location.href='post-210602.html'">2021.06.02</li>
@@ -341,10 +344,9 @@
 
   <!-- 2021.07 -->
   <div class="month">
-<div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.07
-</div>
+    <div class="month-title" onclick="toggleMonth(this)">
+      <span class="arrow">▶</span> 2021.07
+    </div>
     <ul class="date-list">
       <li onclick="location.href='post-210701.html'">2021.07.01</li>
       <li onclick="location.href='post-210705.html'">2021.07.05</li>
@@ -368,11 +370,10 @@
     </ul>
   </div>
 
-  <!-- 2021.08 -->
+<!-- 2021.08 -->
   <div class="month">
 <div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.08
+  <span class="arrow">▶</span> 2021.08
 </div>
     <ul class="date-list">
       <li onclick="location.href='post-210802.html'">2021.08.02</li>
@@ -403,8 +404,7 @@
   <!-- 2021.09 -->
   <div class="month">
 <div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.09
+  <span class="arrow">▶</span> 2021.09
 </div>
     <ul class="date-list">
       <li onclick="location.href='post-210901.html'">2021.09.01</li>
@@ -434,8 +434,7 @@
   <!-- 2021.10 -->
   <div class="month">
 <div class="month-title" onclick="toggleMonth(this)">
-  <span class="arrow">▶</span>
-  2021.10
+  <span class="arrow">▶</span> 2021.10
 </div>
     <ul class="date-list">
       <li onclick="location.href='post-211004.html'">2021.10.04</li>
@@ -450,40 +449,67 @@
     </ul>
   </div>
 
-</div>
-
-  <script>
-    function toggleMenu() {
-      document.getElementById('sideMenu').classList.toggle('open');
-      document.getElementById('dim').classList.toggle('show');
-    }
-
-    function toggleMonth(el) {
-      const list = el.nextElementSibling;
-      const isOpen = list.style.display === 'block';
-
-      list.style.display = isOpen ? 'none' : 'block';
-      el.classList.toggle('open', !isOpen);
-    }
+</div> <!-- ✅ side-menu 여기서 한 번만 닫기 -->
 
 <script>
+  function toggleMenu() {
+    document.getElementById('sideMenu').classList.toggle('open');
+    document.getElementById('dim').classList.toggle('show');
+  }
+
+function toggleMonth(el) {
+  const list = el.nextElementSibling;
+  const isOpen = list.classList.contains('open');
+
+  list.classList.toggle('open', !isOpen);
+  el.classList.toggle('open', !isOpen);
+}
+
   function toggleSearch() {
     const box = document.getElementById('searchBox');
     box.style.display = box.style.display === 'block' ? 'none' : 'block';
   }
 
-  function filterDates(keyword) {
-    const items = document.querySelectorAll('.date-list li');
+function filterDates(keyword) {
+  const months = document.querySelectorAll('.month');
+
+  months.forEach(month => {
+    const title = month.querySelector('.month-title');
+    const list = month.querySelector('.date-list');
+    const items = list.querySelectorAll('li');
+
+    let hasMatch = false;
 
     items.forEach(li => {
-      li.style.display = li.textContent.includes(keyword)
-        ? 'block'
-        : 'none';
+      if (li.textContent.includes(keyword)) {
+        li.style.display = 'block';
+        hasMatch = true;
+      } else {
+        li.style.display = 'none';
+      }
+    });
+
+    if (keyword && hasMatch) {
+      list.classList.add('open');
+      title.classList.add('open');
+    }
+
+    if (!keyword) {
+      items.forEach(li => li.style.display = 'block');
+    }
+  });
+}
+      });
+
+      if (keyword && hasMatch) {
+      }
+
+    if (!keyword) {
+  items.forEach(li => li.style.display = 'block');
+}
     });
   }
 </script>
-    
-  </script>
 
 </body>
 </html>
