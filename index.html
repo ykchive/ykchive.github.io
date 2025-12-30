@@ -204,6 +204,34 @@
   padding-bottom: 6px;
 }
 
+    /* 상단바 정렬 */
+.side-header {
+  justify-content: space-between;
+}
+
+/* 검색 아이콘 */
+.search-icon {
+  font-size: 22px;
+  cursor: pointer;
+  color: #444;
+}
+
+/* 검색창 */
+.search-box {
+  display: none;
+  padding: 10px 0 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
     @media (max-width: 420px) {
       .profile-box {
         margin: 70px 12px 0;
@@ -240,8 +268,18 @@
 
 <!-- 사이드 메뉴 -->
 <div class="side-menu" id="sideMenu">
-  <div class="side-header">
-    <div class="menu-title">DATE</div>
+<div class="side-header">
+  <div class="menu-title">DATE</div>
+
+  <span class="material-icons search-icon" onclick="toggleSearch()">
+    search
+  </span>
+</div>
+
+<!-- 검색창 -->
+<div class="search-box" id="searchBox">
+  <input type="text" placeholder="날짜 검색 (예: 2021.07.15)" onkeyup="filterDates(this.value)">
+</div>
   </div>
 
   <!-- 2021.05 -->
@@ -427,6 +465,24 @@
       list.style.display = isOpen ? 'none' : 'block';
       el.classList.toggle('open', !isOpen);
     }
+
+<script>
+  function toggleSearch() {
+    const box = document.getElementById('searchBox');
+    box.style.display = box.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function filterDates(keyword) {
+    const items = document.querySelectorAll('.date-list li');
+
+    items.forEach(li => {
+      li.style.display = li.textContent.includes(keyword)
+        ? 'block'
+        : 'none';
+    });
+  }
+</script>
+    
   </script>
 
 </body>
