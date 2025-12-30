@@ -236,6 +236,16 @@
 
 }
 
+    .post-nav {
+  border-top: 1px solid #eee;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-nav {
+    border-top: 1px solid #2a2a2a;
+  }
+}
+    
   </style>
 </head>
 <body>
@@ -369,10 +379,14 @@
           <div class="bubble">하핳 오늘도 재밌었네요 ㅋㅋㅋㅋㅋㅋ.. 굿밤되세용!!</div>
           <div class="time">오후 11:59</div>
         </div>
-      </div>
-    </div>
-    
-  </div>
+      </div> 
+</div> <!-- chat 끝 -->
+
+<!-- 이전 / 다음 게시물 -->
+<div class="post-nav">
+  <a href="post-210506.html" class="prev">‹ 이전</a>
+  <a href="post-2105010.html" class="next">다음 ›</a>
+</div>
 
 <script>
   function toggleVoice(btn) {
