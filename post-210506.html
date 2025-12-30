@@ -371,6 +371,24 @@
 </div>
     
   </div>
+  
+<script>
+  function toggleVoice(btn) {
+    const audio = btn.closest('.voice-bubble').querySelector('audio');
+
+    if (audio.paused) {
+      audio.play();
+      btn.innerHTML = '❚❚';
+    } else {
+      audio.pause();
+      btn.innerHTML = '▶';
+    }
+
+    audio.onended = () => {
+      btn.innerHTML = '▶';
+    };
+  }
+</script>
 
 </body>
 </html>
