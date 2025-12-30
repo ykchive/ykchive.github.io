@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>2021.05.06</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #f7f7f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    }
+
+    /* 상단바 */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-btn {
+      position: absolute;
+      left: 14px;
+      font-size: 28px;
+      font-weight: 300;
+      color: #333;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .chat-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* 날짜 */
+    .date {
+      text-align: center;
+      margin-top: 80px;
+      margin-bottom: 22px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* 채팅 영역 */
+    .chat {
+      padding: 0 14px 40px;
+    }
+
+    .message {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .profile {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .content {
+      max-width: 85%;
+    }
+
+    .name {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .bubble-row {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .bubble {
+      background: #ededed;
+      padding: 12px 15px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .time {
+      font-size: 11px;
+      color: #aaa;
+      margin-left: 6px;
+      white-space: nowrap;
+    }
+
+    .photo {
+      width: 85%;
+      border-radius: 16px;
+      display: block;
+    }
+
+    /* 음성 메시지 */
+    .voice-bubble {
+      background: #ededed;
+      border-radius: 16px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 160px;
+    }
+
+    .voice-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #333;
+      color: #fff;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .voice-wave {
+      flex: 1;
+      height: 18px;
+      background: linear-gradient(
+        to right,
+        #bbb 20%, #ddd 20%,
+        #ddd 40%, #bbb 40%,
+        #bbb 60%, #ddd 60%,
+        #ddd 80%, #bbb 80%
+      );
+      border-radius: 6px;
+    }
+
+    .voice-time {
+      font-size: 12px;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    .voice-bubble audio {
+      display: none;
+    }
+
+    /* 🌙 시스템 다크모드 */
+    @media (prefers-color-scheme: dark) {
+      body { background: #121212; color: #eaeaea; }
+
+      .top-bar {
+        background: #1e1e1e;
+        border-bottom: 1px solid #2a2a2a;
+      }
+
+      .chat-title, .back-btn { color: #eaeaea; }
+      .date { color: #888; }
+      .name { color: #bdbdbd; }
+
+      .bubble,
+      .voice-bubble {
+        background: #2a2a2a;
+        color: #f1f1f1;
+      }
+
+      .time { color: #9a9a9a; }
+
+      .voice-btn { background: #555; }
+
+      .voice-wave {
+        background: linear-gradient(
+          to right,
+          #666 20%, #777 20%,
+          #777 40%, #666 40%,
+          #666 60%, #777 60%,
+          #777 80%, #666 80%
+        );
+      }
+
+      .voice-time { color: #bdbdbd; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 상단바 -->
+  <div class="top-bar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+    <div class="chat-title">강영현</div>
+  </div>
+
+  <!-- 날짜 -->
+  <div class="date">2021년 5월 20일 목요일</div>
+
+  <!-- 채팅 -->
+  <div class="chat">
+
+    <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">하이~ hi~</div>
+          <div class="time">오후 07:59</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">오늘은 살짝만 피곤쓰~ pigeons~</div>
+          <div class="time">오후 08:01</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">ㅋㅋㅋㅋㅋㅋ 와 근데 새삼 비 많이 오네요</div>
+          <div class="time">오후 08:09</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">혹시 운전 하시나요??</div>
+          <div class="time">오후 08:11</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">하게 되면 안전운전해요 꼭!!</div>
+          <div class="time">오후 08:14</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">매니저님한테 안전운전 플리즈라고 전했어요 ㅋㅋㅋㅋ 오케이~하고 했답니다 ㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:16</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">매니저님한테 고맙다고 전했어요 ㅋㅋㅋㅋ 노땡쓰~라고 하시네요 ㅋㅋㅋㅋㅋㅋㅋㅋ "고마워할 필요는 없어~"의 뜻이겠죠..? ㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:20</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">아 ㅋㅋㅋㅋㅋ 그러는 사이에 벌써 도착을 거의 다 했군요 이따 생방 때 뵐게요!!</div>
+          <div class="time">오후 08:32</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 💬 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">오늘도 정말 고생 많았어요!!!</div>
+          <div class="time">오후 11:59</div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+<script>
+  function toggleVoice(btn) {
+    const audio = btn.closest('.voice-bubble').querySelector('audio');
+
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '❚❚';
+    } else {
+      audio.pause();
+      btn.textContent = '▶';
+    }
+
+    audio.onended = () => btn.textContent = '▶';
+  }
+</script>
+
+</body>
+</html>
