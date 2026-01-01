@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photos</title>
+<link rel="stylesheet" href="photo.css">
+</head>
+<body>
+
+<!-- 상단바 -->
+<div class="photo-top">
+  <a href="index.html" class="back">‹</a>
+  <span>사진</span>
+</div>
+
+<!-- 앨범 -->
+<div class="album">
+  <img src="https://i.postimg.cc/Z5qB10L0/IMG-7513.jpg.jpg"
+       data-date="2021.07.21"
+       data-link="post-210721.html">
+
+  <img src="https://i.postimg.cc/9XtD0y8T/IMG-7514.jpg"
+       data-date="2021.07.20"
+       data-link="post-210720.html">
+</div>
+
+<!-- 사진 뷰어 -->
+<div class="viewer" id="viewer">
+  <div class="viewer-top">
+    <span id="viewerDate"></span>
+    <a id="viewerLink">➔</a>
+  </div>
+  <img id="viewerImg">
+</div>
+
+<script src="photo.js"></script>
+</body>
+</html>
