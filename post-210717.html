@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>2021.07.17</title>
+  <title>2021.07.16</title>
 
   <style>
     body {
@@ -109,43 +109,6 @@
       display: block;
     }
 
-/* 음성 메시지 */
-.voice-bubble {
-  background: #ededed;
-  border-radius: 16px;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 160px;
-}
-
-.voice-time {
-  font-size: 12px;
-  color: #666;
-  white-space: nowrap;
-  min-width: 36px;
-  text-align: right;
-}
-
-    .voice-bubble.simple {
-  padding: 8px 10px;
-  align-items: center;
-  gap: 8px;
-}
-
-.voice-bubble.simple audio {
-  display: block;
-  width: 160px;
-  height: 26px;
-}
-
-.voice-bubble.simple .voice-time {
-  font-size: 12px;
-  color: #666;
-}
-
-
 /* 시스템 다크모드 자동 연동 */
 @media (prefers-color-scheme: dark) {
   body {
@@ -190,39 +153,6 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.4);
   }
 
-  /* 음성 메시지 */
-  .voice-bubble {
-    background: #2a2a2a;
-  }
-
-  .voice-btn {
-    background: #555;
-    color: #fff;
-  }
-
-  .voice-wave {
-    background: linear-gradient(
-      to right,
-      #666 20%,
-      #777 20%,
-      #777 40%,
-      #666 40%,
-      #666 60%,
-      #777 60%,
-      #777 80%,
-      #666 80%
-    );
-  }
-
-  .voice-time {
-    color: #bdbdbd;
-  }
-
-}
-    @media (prefers-color-scheme: dark) {
-  .voice-bubble.simple .voice-time {
-    color: #bdbdbd;
-  }
 }
 
 .post-nav {
@@ -250,54 +180,7 @@
     color: #bbb;
   }
 }
-
-    /* 음성 말풍선 */
-.voice-bubble {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  background: #ededed;
-  border-radius: 16px;
-  min-width: 200px;
-}
-
-/* 동그란 버튼 */
-.voice-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #fff;
-  border: none;
-  cursor: pointer;
-  position: relative;
-}
-
-/* 파형 아이콘 */
-/* 기본 = 재생(▶) */
-.voice-btn::before {
-  content: '';
-  position: absolute;
-  left: 13px;
-  top: 9px;
-  width: 0;
-  height: 0;
-  border-left: 10px solid #333;
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent;
-}
-
-/* 재생 중 = 일시정지(❚❚) */
-.voice-btn.playing::before {
-  border: none;
-  width: 4px;
-  height: 14px;
-  background: #333;
-  left: 11px;
-  top: 9px;
-  box-shadow: 8px 0 0 #333;
-}
- 
+    
   </style>
 </head>
 <body>
@@ -309,36 +192,19 @@
   </div>
 
   <!-- 날짜 -->
-  <div class="date">2021년 7월 17일 토요일</div>
+  <div class="date">2021년 7월 16일 금요일</div>
 
   <!-- 채팅 -->
   <div class="chat">
 
-        <!-- 사진 메시지 -->
-  <div class="message">
-  <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-  <div class="content">
-    <div class="name">강영현</div>
-
-      <div class="bubble-row">
-      <img
-        class="photo"
-        src="https://i.postimg.cc/SNcCvX4Z/IMG-7604.jpg"
-        alt="photo"
-        >
-        <div class="time">오후 9:18</div>
-      </div>
-    </div>  
-  </div>
-
-        <!-- 텍스트 -->
+    <!-- 텍스트 -->
     <div class="message">
       <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
-          <div class="bubble">잘 자고 내일 또 음악중심에서 만나요!! 굿나잇!</div>
-          <div class="time">오전 12:03</div>
+          <div class="bubble">오늘도 잔잔함 밤 되세용 굿나잇!!</div>
+          <div class="time">오전 12:04</div>
         </div>
       </div>
     </div>
@@ -349,8 +215,8 @@
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
-          <div class="bubble">오늘 오프닝 참 마음이 따뜻해지는 말들이었어요 ㅎㅎ</div>
-          <div class="time">오후 10:01</div>
+          <div class="bubble">오늘은 출근길이랄게 없었네요 ㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:11</div>
         </div>
       </div>
     </div>
@@ -361,8 +227,8 @@
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
-          <div class="bubble">컴백~~~~~~~</div>
-          <div class="time">오후 10:01</div>
+          <div class="bubble">그냥 근처에서 대기하면서 좀 쉬었어요 ㅋㅋㅋㅋ</div>
+          <div class="time">08:12</div>
         </div>
       </div>
     </div>
@@ -373,39 +239,11 @@
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
-          <div class="bubble">아원츄루컴백~~~~~~</div>
-          <div class="time">시간</div>
+          <div class="bubble">오늘은 keep walkin을 했지요 ㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:13</div>
         </div>
       </div>
     </div>
-
-<!-- 음성 메시지 -->
-<div class="message">
-  <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-  <div class="content">
-    <div class="name">강영현</div>
-
-    <div class="bubble-row">
-      <div class="voice-bubble">
-<button class="voice-btn" aria-label="음성 메시지 재생">
-  <span class="play">▶</span>
-  <span class="pause">❚❚</span>
-</button>
-
-<input type="range" class="voice-bar" value="0" max="100">
-
-        <span class="voice-time">0:00</span>
-
-<audio
-  src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"
-  preload="metadata">
-</audio>
-      </div>
-
-      <div class="time">오후 9:14</div>
-    </div>
-  </div>
-</div>
 
         <!-- 텍스트 -->
     <div class="message">
@@ -413,8 +251,44 @@
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
-          <div class="bubble">ㅋㅋㅋㅋㅋㅋ 오늘도 듣다가 좋은 밤 되세용!! 전 이제 들어가볼게요 미리굿나잇!!</div>
-          <div class="time">오후 10:08</div>
+          <div class="bubble">그리고 오에스티도 나온다고 하더라고요 하핳</div>
+          <div class="time">오후 08:15</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">저도 음원은 오늘 받았어요 ㅋㅋㅋㅋㅋ 좀 전에 작업해놓은 곡이라</div>
+          <div class="time">오후 08:16</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">너무 멋있게 불러주셨더라고요 ㅎㅎ</div>
+          <div class="time">오후 09:17</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">저는 이제 라디오하러 벌써 왔어용 이따가 생방 때 만나요!!</div>
+          <div class="time">오후 08:21</div>
         </div>
       </div>
     </div>
@@ -422,69 +296,10 @@
 </div> <!-- chat 끝 -->
 
 <div class="post-nav">
-  <a href="post-210716.html" class="prev">‹</a>
-  <a href="post-210719.html" class="next">›</a>
+  <a href="post-210715.html" class="prev">‹</a>
+  <a href="post-210717.html" class="next">›</a>
 </div>
 
-<script>
-document.querySelectorAll('.voice-bubble').forEach(bubble => {
-  const audio = bubble.querySelector('audio');
-  const btn   = bubble.querySelector('.voice-btn');
-  const bar   = bubble.querySelector('.voice-bar');
-  const time  = bubble.querySelector('.voice-time');
-
-  /* 시간 포맷 (초 → mm:ss) */
-  const formatTime = sec => {
-    const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60);
-    return `${m}:${s.toString().padStart(2, '0')}`;
-  };
-
-  /* 메타데이터 로드 (총 길이 표시) */
-  audio.addEventListener('loadedmetadata', () => {
-    bar.max = 100;
-    bar.value = 0;
-    time.textContent = formatTime(audio.duration);
-  });
-
-  /* 재생 / 일시정지 버튼 */
-  btn.addEventListener('click', () => {
-    // 다른 음성 전부 정지
-    document.querySelectorAll('audio').forEach(a => {
-      if (a !== audio) a.pause();
-    });
-    document.querySelectorAll('.voice-btn').forEach(b => {
-      if (b !== btn) b.classList.remove('playing');
-    });
-
-    if (audio.paused) {
-      audio.play();
-      btn.classList.add('playing');
-    } else {
-      audio.pause();
-      btn.classList.remove('playing');
-    }
-  });
-
-  /* 재생 중 → 진행바 + 현재 시간 */
-  audio.addEventListener('timeupdate', () => {
-    bar.value = (audio.currentTime / audio.duration) * 100;
-    time.textContent = formatTime(audio.currentTime);
-  });
-
-  /* 진행바 드래그 → 그 위치로 이동 */
-  bar.addEventListener('input', () => {
-    audio.currentTime = (bar.value / 100) * audio.duration;
-  });
-
-  /* 재생 끝 */
-  audio.addEventListener('ended', () => {
-    btn.classList.remove('playing');
-    bar.value = 0;
-    time.textContent = formatTime(audio.duration);
-  });
-});
-</script>>
 
 </body>
 </html>
