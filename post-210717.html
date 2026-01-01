@@ -250,6 +250,89 @@
     color: #bbb;
   }
 }
+
+    /* 음성 말풍선 */
+.voice-bubble {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: #ededed;
+  border-radius: 16px;
+  min-width: 200px;
+}
+
+/* 동그란 버튼 */
+.voice-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+/* 파형 아이콘 */
+.voice-btn::before,
+.voice-btn::after,
+.voice-btn span {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  width: 3px;
+  background: #333;
+  border-radius: 2px;
+}
+
+.voice-btn::before { left: 10px; height: 8px; }
+.voice-btn::after  { left: 18px; height: 10px; }
+.voice-btn span {
+  left: 14px;
+  height: 14px;
+}
+
+/* 재생 중 애니메이션 */
+.voice-btn.playing::before {
+  animation: wave 1s infinite;
+}
+.voice-btn.playing span {
+  animation: wave 1s infinite .15s;
+}
+.voice-btn.playing::after {
+  animation: wave 1s infinite .3s;
+}
+
+/* 진행 바 */
+.voice-bar {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 2px;
+}
+
+.voice-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* 시간 */
+.voice-time {
+  font-size: 12px;
+  color: #666;
+  min-width: 36px;
+}
+
+/* 파형 애니메이션 */
+@keyframes wave {
+  0% { height: 6px; }
+  50% { height: 16px; }
+  100% { height: 6px; }
+}
     
   </style>
 </head>
@@ -332,22 +415,23 @@
       </div>
     </div>
 
-<!-- 음성 메시지 (심플) -->
+<!-- 음성 메시지 -->
 <div class="message">
   <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
   <div class="content">
     <div class="name">강영현</div>
 
     <div class="bubble-row">
-<div class="voice-bubble simple">
-  <audio
-    src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"
-    controls
-    preload="metadata"
-    controlslist="nodownload">
-  </audio>
-  <div class="voice-time">0:00</div>
-</div>
+      <div class="voice-bubble">
+        <button class="voice-btn"></button>
+
+        <input type="range" class="voice-bar" value="0">
+
+        <span class="voice-time">0:00</span>
+
+        <audio src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"></audio>
+      </div>
+
       <div class="time">오후 9:14</div>
     </div>
   </div>
@@ -396,6 +480,50 @@
       });
     });
   });
+
+  document.querySelectorAll('.voice-bubble').forEach(box => {
+  const audio = box.querySelector('audio');
+  const btn = box.querySelector('.voice-btn');
+  const bar = box.querySelector('.voice-bar');
+  const time = box.querySelector('.voice-time');
+
+  const format = s => {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  };
+
+  audio.addEventListener('loadedmetadata', () => {
+    time.textContent = format(audio.duration);
+  });
+
+  btn.onclick = () => {
+    document.querySelectorAll('audio').forEach(a => {
+      if (a !== audio) a.pause();
+    });
+
+    if (audio.paused) {
+      audio.play();
+      btn.classList.add('playing');
+    } else {
+      audio.pause();
+      btn.classList.remove('playing');
+    }
+  };
+
+  audio.addEventListener('timeupdate', () => {
+    bar.value = (audio.currentTime / audio.duration) * 100;
+  });
+
+  bar.oninput = () => {
+    audio.currentTime = (bar.value / 100) * audio.duration;
+  };
+
+  audio.onended = () => {
+    btn.classList.remove('playing');
+    bar.value = 0;
+  };
+});
   
 </script>
 
