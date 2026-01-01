@@ -52,14 +52,14 @@ body {
 /* 날짜 */
 /* ===================== */
 .date {
-  margin-top: 14px, 0;
+  margin: 14px 0;
   padding-top: 8px;
 
   text-align: center;
   font-size: 12px;
   color: #999;
 
-  border-top: 1px solid #e0e0e0;
+  border-top: 0.5px solid #e0e0e0; /* 🔥 더 얇게 */
 }
 
 /* ===================== */
