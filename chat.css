@@ -187,6 +187,16 @@ body {
   right: 10px;
 }
 
+.photo-counter {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: #fff;
+  opacity: 0.85;
+}
+
     /* ===== 음성 메시지 ===== */
 /* 음성 말풍선 */
 .voice-bubble {
