@@ -423,9 +423,11 @@
 
     <div class="bubble-row">
       <div class="voice-bubble">
-        <button class="voice-btn"></button>
+<button class="voice-btn">
+  <span></span>
+</button>
 
-        <input type="range" class="voice-bar" value="0">
+<input type="range" class="voice-bar" value="0" max="100">
 
         <span class="voice-time">0:00</span>
 
@@ -457,49 +459,32 @@
 </div>
 
 <script>
-  function formatTime(sec) {
+document.querySelectorAll('.voice-bubble').forEach(bubble => {
+  const audio = bubble.querySelector('audio');
+  const btn   = bubble.querySelector('.voice-btn');
+  const bar   = bubble.querySelector('.voice-bar');
+  const time  = bubble.querySelector('.voice-time');
+
+  /* 시간 포맷 */
+  const formatTime = sec => {
     const m = Math.floor(sec / 60);
     const s = Math.floor(sec % 60);
     return `${m}:${s.toString().padStart(2, '0')}`;
-  }
-
-  document.querySelectorAll('.voice-bubble.simple audio').forEach(audio => {
-    const timeEl = audio.parentElement.querySelector('.voice-time');
-
-    audio.addEventListener('loadedmetadata', () => {
-      timeEl.textContent = formatTime(audio.duration);
-    });
-  });
-
-  const audios = document.querySelectorAll('audio');
-
-  audios.forEach(audio => {
-    audio.addEventListener('play', () => {
-      audios.forEach(a => {
-        if (a !== audio) a.pause();
-      });
-    });
-  });
-
-  document.querySelectorAll('.voice-bubble').forEach(box => {
-  const audio = box.querySelector('audio');
-  const btn = box.querySelector('.voice-btn');
-  const bar = box.querySelector('.voice-bar');
-  const time = box.querySelector('.voice-time');
-
-  const format = s => {
-    const m = Math.floor(s / 60);
-    const sec = Math.floor(s % 60);
-    return `${m}:${sec.toString().padStart(2, '0')}`;
   };
 
+  /* 음성 길이 표시 */
   audio.addEventListener('loadedmetadata', () => {
-    time.textContent = format(audio.duration);
+    time.textContent = formatTime(audio.duration);
   });
 
-  btn.onclick = () => {
+  /* 재생 / 일시정지 */
+  btn.addEventListener('click', () => {
+    // 다른 음성 전부 정지
     document.querySelectorAll('audio').forEach(a => {
       if (a !== audio) a.pause();
+    });
+    document.querySelectorAll('.voice-btn').forEach(b => {
+      if (b !== btn) b.classList.remove('playing');
     });
 
     if (audio.paused) {
@@ -509,22 +494,24 @@
       audio.pause();
       btn.classList.remove('playing');
     }
-  };
+  });
 
+  /* 진행률 업데이트 */
   audio.addEventListener('timeupdate', () => {
     bar.value = (audio.currentTime / audio.duration) * 100;
   });
 
-  bar.oninput = () => {
+  /* 진행바 드래그 */
+  bar.addEventListener('input', () => {
     audio.currentTime = (bar.value / 100) * audio.duration;
-  };
+  });
 
-  audio.onended = () => {
+  /* 재생 종료 */
+  audio.addEventListener('ended', () => {
     btn.classList.remove('playing');
     bar.value = 0;
-  };
+  });
 });
-  
 </script>
 
 </body>
