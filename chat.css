@@ -3,10 +3,15 @@
 /* ===================== */
 body {
   margin: 0;
+  padding-top: 52px; /* ⬅️ 상단바 높이만큼 */
   background: #f7f7f7;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  overflow-x: hidden; /* ⬅️ 좌우 스크롤 방지 */
 }
 
+/* ===================== */
+/* 상단바 */
+/* ===================== */
 .top-bar {
   position: fixed;
   top: 0;
@@ -33,17 +38,17 @@ body {
   z-index: 1;
 }
 
-/* 중앙 제목 (완전 고정) */
+/* 중앙 제목 */
 .chat-title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   font-size: 16px;
   font-weight: 600;
-  pointer-events: none; /* ← 아이콘 클릭 방해 X */
+  pointer-events: none;
 }
 
-/* 오른쪽 아이콘 */
+/* 오른쪽 */
 .top-right {
   display: flex;
   align-items: center;
@@ -52,49 +57,45 @@ body {
 }
 
 /* ===================== */
-/* 날짜 구분 (안 짤리고, 간격 좁게) */
+/* 날짜 구분 */
 /* ===================== */
-/* 날짜 */
 .date {
   position: relative;
-  margin: 6px 0;
-  padding: 6px 14px 0;
+  margin: 4px 0;              /* ⬅️ 간격 줄임 */
+  padding: 4px 14px 0;
   text-align: center;
   font-size: 12px;
   color: #999;
 }
 
-/* 첫 날짜 상단바 보정 */
-.date:first-of-type {
-  margin-top: 58px;
-}
-
-/* 날짜 구분선 */
+/* 구분선 (얇게) */
 .date::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
+  height: 0.5px;              /* ⬅️ 더 얇게 */
   background: rgba(0, 0, 0, 0.15);
+  opacity: 0.6;
 }
 
 /* ===================== */
 /* 채팅 영역 */
 /* ===================== */
 .chat {
-  padding: 52px 14px 40px; /* ⬅️ 위쪽 padding만 늘림 */
+  padding: 0 14px 40px;       /* ⬅️ 상단 padding 제거 */
 }
 
 .message {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 8px;         /* ⬅️ 메시지 간격 축소 */
 }
 
-.date + .message {
-  margin-top: 4px;   /* ⬅️ 날짜 다음 첫 메시지 */
+/* 날짜 다음 첫 메시지 */
+.date + .chat .message:first-child {
+  margin-top: 2px;
 }
 
 .profile {
@@ -128,12 +129,12 @@ body {
   line-height: 1.5;
 }
 
-    /* 🔍 검색어 강조 */
+/* 검색 강조 */
 .bubble strong {
   background: rgba(255, 235, 59, 0.4);
-  font-weight: normal;
   padding: 0 2px;
   border-radius: 3px;
+  font-weight: normal;
 }
 
 .time {
@@ -148,7 +149,7 @@ body {
 /* ===================== */
 .photo {
   width: 85%;
-  border-radius: 16px;      /* 말풍선은 둥글게 */
+  border-radius: 16px;
   display: block;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -174,7 +175,6 @@ body {
 .photo-viewer img {
   max-width: 92%;
   max-height: 92%;
-  border-radius: 0;        /* 전체보기는 네모 */
   object-fit: contain;
 }
 
@@ -187,17 +187,10 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px;
-  user-select: none;
 }
 
-.photo-nav.prev {
-  left: 10px;
-}
-
-.photo-nav.next {
-  right: 10px;
-}
+.photo-nav.prev { left: 10px; }
+.photo-nav.next { right: 10px; }
 
 .photo-counter {
   position: absolute;
@@ -209,8 +202,9 @@ body {
   opacity: 0.85;
 }
 
-    /* ===== 음성 메시지 ===== */
-/* 음성 말풍선 */
+/* ===================== */
+/* 음성 메시지 */
+/* ===================== */
 .voice-bubble {
   background: #ededed;
   border-radius: 16px;
@@ -221,41 +215,27 @@ body {
   min-width: 200px;
 }
 
-/* 재생 버튼 */
 .voice-btn {
   width: 26px;
   height: 26px;
   border-radius: 50%;
   background: #fff;
   border: none;
-  cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
 }
 
-/* SVG 아이콘 */
 .voice-btn svg {
   width: 14px;
   height: 14px;
   fill: #000;
-  display: block;
 }
 
-/* 재생 / 일시정지 전환 */
-.voice-btn .pause {
-  display: none;
-}
-.voice-btn.playing .play {
-  display: none;
-}
-.voice-btn.playing .pause {
-  display: inline;
-}
+.voice-btn .pause { display: none; }
+.voice-btn.playing .play { display: none; }
+.voice-btn.playing .pause { display: inline; }
 
-/* 시간 */
 .voice-current,
 .voice-total {
   font-size: 11px;
@@ -264,14 +244,12 @@ body {
   color: #666;
 }
 
-/* 재생바 */
 .voice-bar {
   flex: 1;
   height: 4px;
   appearance: none;
   background: #ccc;
   border-radius: 2px;
-  touch-action: none;
 }
 
 .voice-bar::-webkit-slider-thumb {
@@ -282,7 +260,9 @@ body {
   border-radius: 50%;
 }
 
-/* 아이콘 버튼 */
+/* ===================== */
+/* 아이콘 */
+/* ===================== */
 .icon-btn {
   background: none;
   border: none;
@@ -298,135 +278,11 @@ body {
   fill: none;
 }
 
-/* 검색 전용 상단바 */
-.search-top {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 52px;
-  background: #fff;
-  display: none;
-  align-items: center;
-  padding: 0 12px;
-  gap: 8px;
-  z-index: 1100;
-  border-bottom: 1px solid #eee;
-}
-
-.search-top input {
-  flex: 1;
-  height: 34px;
-  padding: 0 10px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.search-top button {
-  background: none;
-  border: none;
-  font-size: 14px;
-  color: #007aff;
-  cursor: pointer;
-}
-
-.search-top.show {
-  display: flex;
-}
-
-.search-top button {
-  font-size: 22px;
-  color: #333;
-}
-
-.search-top .icon-btn svg {
-  width: 18px;
-  height: 18px;
-  stroke: #333;
-  stroke-width: 2;
-  fill: none;
-}
-
-.search-count {
-  font-size: 13px;
-  color: #666;
-  min-width: 44px;
-  text-align: center;
-}
-
-.search-input-wrap {
-  position: relative;
-  flex: 1;
-}
-
-.search-input-wrap input {
-  width: 100%;
-  height: 34px;
-  padding: 0 32px 0 10px; /* 오른쪽 여백 */
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.clear-btn {
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: none;
-}
-
-.clear-btn svg {
-  width: 16px;
-  height: 16px;
-  stroke: #888;
-  stroke-width: 2;
-  fill: none;
-}
-
-/* 다크모드 */
-@media (prefers-color-scheme: dark) {
-  .icon-btn svg {
-    stroke: #eaeaea;
-  }
-
-  .search-top {
-    background: #1e1e1e;
-    border-bottom: 1px solid #2a2a2a;
-  }
-
-  .search-top input {
-    background: #2a2a2a;
-    border-color: #444;
-    color: #fff;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .search-top .icon-btn svg {
-    stroke: #eaeaea;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .search-count {
-    color: #aaa;
-  }
-}
-
 /* ===================== */
 /* 다크모드 */
 /* ===================== */
 @media (prefers-color-scheme: dark) {
-  body {
-    background: #121212;
-    color: #eaeaea;
-  }
+  body { background: #121212; }
 
   .top-bar {
     background: #1e1e1e;
@@ -434,72 +290,27 @@ body {
   }
 
   .chat-title,
-  .back-btn {
-    color: #eaeaea;
-  }
+  .back-btn { color: #eaeaea; }
 
   .date {
     color: #888;
   }
 
-  .name {
-    color: #bdbdbd;
+  .date::before {
+    background: rgba(255,255,255,0.18);
   }
+
+  .name { color: #bdbdbd; }
 
   .bubble {
     background: #2a2a2a;
     color: #f1f1f1;
   }
 
-  .time {
-    color: #9a9a9a;
-  }
+  .time { color: #9a9a9a; }
 
-  .photo {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  }
-
-  .post-nav {
-    border-top: 1px solid #2a2a2a;
-  }
-
-  .post-nav a {
-    color: #bbb;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .voice-bubble {
-    background: #2a2a2a;
-  }
-  .voice-btn {
-    background: #444;
-    color: #fff;
-  }
-  .voice-bar {
-    background: #555;
-  }
-  .voice-bar::-webkit-slider-thumb {
-    background: #ddd;
-  }
-  .voice-current,
-  .voice-total {
-    color: #bdbdbd;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .date {
-    border-top: 1px solid #333;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .date {
-    color: #888;
-  }
-
-  .date::before {
-    background: rgba(255, 255, 255, 0.18);
-  }
+  .voice-bubble { background: #2a2a2a; }
+  .voice-btn { background: #444; }
+  .voice-bar { background: #555; }
+  .voice-bar::-webkit-slider-thumb { background: #ddd; }
 }
