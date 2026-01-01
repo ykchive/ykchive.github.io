@@ -73,6 +73,7 @@ body {
 .bubble-row {
   display: flex;
   align-items: flex-end;
+  gap: 2px;
 }
 
 .bubble {
@@ -88,8 +89,10 @@ body {
 .time {
   font-size: 11px;
   color: #aaa;
-  margin-left: 6px;
+  margin-left: 2px;
   white-space: nowrap; /* ← 이거 꼭 */
+  line-height: 1;
+  transform: translateY(-2px);
 }
 
 /* 사진 */
