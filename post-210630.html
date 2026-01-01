@@ -185,96 +185,19 @@
   .date {
     color: #888;
   }
-
-  /* 이름 */
-  .name {
-    color: #bdbdbd;
-  }
-
-  /* 말풍선 */
-  .bubble {
-    background: #2a2a2a;
-    color: #f1f1f1;
-  }
-
-  /* 시간 */
-  .time {
-    color: #9a9a9a;
-  }
-
-  /* 사진 */
-  .photo {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  }
-
-  /* 음성 메시지 */
-  .voice-bubble {
-    background: #2a2a2a;
-  }
-
-  .voice-btn {
-    background: #555;
-    color: #fff;
-  }
-
-  .voice-wave {
-    background: linear-gradient(
-      to right,
-      #666 20%,
-      #777 20%,
-      #777 40%,
-      #666 40%,
-      #666 60%,
-      #777 60%,
-      #777 80%,
-      #666 80%
-    );
-  }
-
-  .voice-time {
-    color: #bdbdbd;
-  }
-
-}
-
-.post-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 14px 28px;
-  margin-top: 40px;              /* 버튼을 더 아래로 */
-  border-top: 1px solid #eee;
-  font-size: 14px;
-}
-
-.post-nav a {
-  color: #666;
-  text-decoration: none;
-}
-
-/* 다크모드 */
-@media (prefers-color-scheme: dark) {
-  .post-nav {
-    border-top: 1px solid #2a2a2a;
-  }
-
-  .post-nav a {
-    color: #bbb;
-  }
-}
-    
-  </style>
+  <!-- 공용 CSS -->
+  <link rel="stylesheet" href="post.css">
 </head>
 <body>
 
   <!-- 상단바 -->
   <div class="top-bar">
-<a href="index.html#toggle" class="back-btn">‹</a>
+    <a href="index.html#toggle" class="back-btn">‹</a>
     <div class="chat-title">강영현</div>
   </div>
 
   <!-- 날짜 -->
-  <div class="date">2021년 6월 30일 수요일</div>
+  <div class="date" data-date="2021-06-30"></div>
 
   <!-- 채팅 -->
   <div class="chat">
@@ -466,23 +389,7 @@
   <a href="post-210701.html" class="next">›</a>
 </div>
 
-<script>
-  function toggleVoice(btn) {
-    const audio = btn.closest('.voice-bubble').querySelector('audio');
-
-    if (audio.paused) {
-      audio.play();
-      btn.innerHTML = '❚❚';
-    } else {
-      audio.pause();
-      btn.innerHTML = '▶';
-    }
-
-    audio.onended = () => {
-      btn.innerHTML = '▶';
-    };
-  }
-</script>
-
+  <!-- 공용 JS -->
+  <script src="post.js"></script>
 </body>
 </html>
