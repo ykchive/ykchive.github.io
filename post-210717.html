@@ -182,16 +182,18 @@
 }
 
     /* ===== 음성 메시지 ===== */
+/* 음성 말풍선 */
 .voice-bubble {
-  background: #fff;
+  background: #ededed;
   border-radius: 16px;
-  padding: 12px 15px;     /* 좌우 패딩 살짝 줄임 */
+  padding: 12px 15px;
   display: flex;
   align-items: center;
-  gap: 2px;              /* 간격 확 줄이기 */
+  gap: 4px;
   min-width: 200px;
 }
 
+/* 재생 버튼 */
 .voice-btn {
   width: 26px;
   height: 26px;
@@ -199,48 +201,42 @@
   background: #d8d8d8;
   border: none;
   cursor: pointer;
-  color: #000;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;   /* ▶ ❚❚ 크기 같이 줄이기 */
   padding: 0;
 }
 
-.voice-btn {
-  color: #000;   /* 아이콘 색 검정 */
-}
-    
-.voice-btn span {
-  font-size: 13px;
-  line-height: 1;
-}
-
-.voice-btn .play {
-  transform: translateX(-1px);   /* ▶ */
+/* SVG 아이콘 */
+.voice-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #000;
+  display: block;
 }
 
+/* 재생 / 일시정지 전환 */
 .voice-btn .pause {
-  transform: translateY(0.5px);  /* ❚❚ */
+  display: none;
 }
-
 .voice-btn.playing .play {
   display: none;
 }
-    
 .voice-btn.playing .pause {
   display: inline;
 }
 
+/* 시간 */
 .voice-current,
 .voice-total {
   font-size: 11px;
-  line-height: 1.5;   /* ← 이 줄만 추가 */
-  color: #666;
   min-width: 34px;
   text-align: center;
+  color: #666;
 }
 
+/* 재생바 */
 .voice-bar {
   flex: 1;
   height: 4px;
@@ -355,10 +351,10 @@
     </div>
 
 
-    
-    <!-- 음성 메시지 -->
-<div class="message">
+      < !-- 음성 --! >
+    <div class="message">
   <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+
   <div class="content">
     <div class="name">강영현</div>
 
@@ -366,29 +362,31 @@
       <div class="voice-bubble">
 
         <button class="voice-btn" aria-label="음성 메시지 재생">
-          <span class="play">▶</span>
-          <span class="pause">❚❚</span>
+          <span class="play">
+            <svg viewBox="0 0 24 24">
+              <polygon points="8,5 19,12 8,19"/>
+            </svg>
+          </span>
+
+          <span class="pause">
+            <svg viewBox="0 0 24 24">
+              <rect x="6" y="5" width="4" height="14"/>
+              <rect x="14" y="5" width="4" height="14"/>
+            </svg>
+          </span>
         </button>
 
         <span class="voice-current">0:00</span>
-
-        <input type="range" class="voice-bar" value="0" max="100">
-
+        <input type="range" class="voice-bar" value="0">
         <span class="voice-total">0:00</span>
 
-        <audio
-          src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"
-          preload="metadata">
-        </audio>
-
+        <audio src="voice.m4a" preload="metadata"></audio>
       </div>
 
       <div class="time">오후 9:14</div>
     </div>
   </div>
 </div>
-
-    
 
         <!-- 텍스트 -->
     <div class="message">
@@ -409,7 +407,8 @@
   <a href="post-210717.html" class="next">›</a>
 </div>
 
-<script>
+
+  <script>
 document.querySelectorAll('.voice-bubble').forEach(bubble => {
   const audio = bubble.querySelector('audio');
   const btn   = bubble.querySelector('.voice-btn');
@@ -423,16 +422,14 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     return `${m}:${sec.toString().padStart(2, '0')}`;
   };
 
-  /* 메타데이터 로드 → 재생바 세팅 */
   audio.addEventListener('loadedmetadata', () => {
     bar.min = 0;
-    bar.max = audio.duration;      // ⭐ 핵심
+    bar.max = audio.duration;
     bar.value = 0;
     cur.textContent = '0:00';
     total.textContent = format(audio.duration);
   });
 
-  /* 재생 / 일시정지 */
   btn.addEventListener('click', () => {
     document.querySelectorAll('audio').forEach(a => {
       if (a !== audio) a.pause();
@@ -450,19 +447,16 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     }
   });
 
-  /* 재생 중 → 바 & 현재시간 업데이트 */
   audio.addEventListener('timeupdate', () => {
     bar.value = audio.currentTime;
     cur.textContent = format(audio.currentTime);
   });
 
-  /* ⭐⭐⭐ 재생바 드래그 → 해당 위치부터 재생 */
   bar.addEventListener('input', () => {
     audio.currentTime = bar.value;
     cur.textContent = format(bar.value);
   });
 
-  /* 재생 끝 */
   audio.addEventListener('ended', () => {
     btn.classList.remove('playing');
     bar.value = 0;
