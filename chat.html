@@ -28,26 +28,33 @@ body {
   background: #fff;
   border-bottom: 1px solid #eee;
   z-index: 1000;
+
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 12px;
 }
 
 .back-btn {
-  position: absolute;
-  left: 14px;
   font-size: 28px;
   font-weight: 300;
   color: #333;
   text-decoration: none;
-  user-select: none;
   cursor: pointer;
 }
 
 .chat-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 16px;
   font-weight: 600;
-  color: #111;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 /* ===================== */
