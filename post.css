@@ -1,5 +1,5 @@
 /* ===================== */
-/* 기본 설정 */
+/* 기본 */
 /* ===================== */
 body {
   margin: 0;
@@ -18,27 +18,23 @@ body {
   height: 52px;
   background: #fff;
   border-bottom: 1px solid #eee;
-  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .back-btn {
   position: absolute;
   left: 14px;
   font-size: 28px;
-  font-weight: 300;
   color: #333;
   text-decoration: none;
-  user-select: none;
-  cursor: pointer;
 }
 
 .chat-title {
   font-size: 16px;
   font-weight: 600;
-  color: #111;
 }
 
 /* ===================== */
@@ -46,14 +42,13 @@ body {
 /* ===================== */
 .date {
   text-align: center;
-  margin-top: 80px;
-  margin-bottom: 22px;
+  margin: 80px 0 22px;
   font-size: 12px;
   color: #999;
 }
 
 /* ===================== */
-/* 채팅 영역 */
+/* 채팅 */
 /* ===================== */
 .chat {
   padding: 0 14px 40px;
@@ -61,7 +56,6 @@ body {
 
 .message {
   display: flex;
-  align-items: flex-start;
   margin-bottom: 18px;
 }
 
@@ -70,7 +64,6 @@ body {
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
-  flex-shrink: 0;
 }
 
 .content {
@@ -93,44 +86,48 @@ body {
   padding: 12px 15px;
   border-radius: 16px;
   font-size: 14px;
-  line-height: 1.5;
 }
 
 .time {
   font-size: 11px;
   color: #aaa;
   margin-left: 6px;
-  white-space: nowrap;
 }
 
 /* ===================== */
-/* 사진 메시지 */
+/* 사진 (채팅 안) */
 /* ===================== */
-.photo {
-  max-width: 85%;
-  width: auto;
+.chat .photo {
+  width: 85%;
   border-radius: 16px;
-  display: block;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  display: block;
 }
 
-.photo-viewer img {
-  max-width: 92%;
-  max-height: 92%;
-  border-radius: 0;
-  object-fit: contain;
-  touch-action: none;
+/* ===================== */
+/* 🔥 사진 전체보기 (문제 원인 해결부) */
+/* ===================== */
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
 }
 
 .photo-viewer.show {
   display: flex;
 }
 
+/* ⬇️⬇️⬇️ 제일 중요 */
 .photo-viewer img {
-  max-width: 92%;
-  max-height: 92%;
-  border-radius: 0;        /* 전체보기는 네모 */
+  max-width: 92vw;
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  border-radius: 0 !important;   /* ❗ 동그랗게 되는 문제 차단 */
   object-fit: contain;
 }
 
@@ -138,168 +135,17 @@ body {
 /* 이전 / 다음 */
 /* ===================== */
 .post-nav {
+  border-top: 1px solid #eee;
+  padding: 18px 14px 28px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 18px 14px 28px;
-  border-top: 1px solid #eee;
-  font-size: 14px;
-  margin-top: 20px;
-}
-
-.post-nav a {
-  color: #666;
-  text-decoration: none;
-}
-
-    /* ===== 음성 메시지 ===== */
-/* 음성 말풍선 */
-.voice-bubble {
-  background: #ededed;
-  border-radius: 16px;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  min-width: 200px;
-}
-
-/* 재생 버튼 */
-.voice-btn {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: #fff;
-  border: none;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-/* SVG 아이콘 */
-.voice-btn svg {
-  width: 14px;
-  height: 14px;
-  fill: #000;
-  display: block;
-}
-
-/* 재생 / 일시정지 전환 */
-.voice-btn .pause {
-  display: none;
-}
-.voice-btn.playing .play {
-  display: none;
-}
-.voice-btn.playing .pause {
-  display: inline;
-}
-
-/* 시간 */
-.voice-current,
-.voice-total {
-  font-size: 11px;
-  min-width: 34px;
-  text-align: center;
-  color: #666;
-}
-
-/* 재생바 */
-.voice-bar {
-  flex: 1;
-  height: 4px;
-  appearance: none;
-  background: #ccc;
-  border-radius: 2px;
-  touch-action: none;
-}
-
-.voice-bar::-webkit-slider-thumb {
-  appearance: none;
-  width: 10px;
-  height: 10px;
-  background: #333;
-  border-radius: 50%;
-}
-
-/* ===== 사진 전체보기 강제 초기화 ===== */
-.photo-viewer img {
-  border-radius: 0 !important;
-  width: auto;
-  height: auto;
-  max-width: 100vw;
-  max-height: 100vh;
-  object-fit: contain;
 }
 
 /* ===================== */
 /* 다크모드 */
 /* ===================== */
 @media (prefers-color-scheme: dark) {
-  body {
-    background: #121212;
-    color: #eaeaea;
-  }
-
-  .top-bar {
-    background: #1e1e1e;
-    border-bottom: 1px solid #2a2a2a;
-  }
-
-  .chat-title,
-  .back-btn {
-    color: #eaeaea;
-  }
-
-  .date {
-    color: #888;
-  }
-
-  .name {
-    color: #bdbdbd;
-  }
-
-  .bubble {
-    background: #2a2a2a;
-    color: #f1f1f1;
-  }
-
-  .time {
-    color: #9a9a9a;
-  }
-
-  .photo {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  }
-
-  .post-nav {
-    border-top: 1px solid #2a2a2a;
-  }
-
-  .post-nav a {
-    color: #bbb;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .voice-bubble {
-    background: #2a2a2a;
-  }
-  .voice-btn {
-    background: #444;
-    color: #fff;
-  }
-  .voice-bar {
-    background: #555;
-  }
-  .voice-bar::-webkit-slider-thumb {
-    background: #ddd;
-  }
-  .voice-current,
-  .voice-total {
-    color: #bdbdbd;
-  }
+  body { background: #121212; }
+  .top-bar { background: #1e1e1e; border-color: #2a2a2a; }
+  .bubble { background: #2a2a2a; color: #eee; }
 }
