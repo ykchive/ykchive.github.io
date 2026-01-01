@@ -25,11 +25,15 @@ body {
   font-size: 28px;
   color: #333;
   text-decoration: none;
+  curosr: pointer;
+  user-select: none;
+  text-decoration: none;
 }
 
 .chat-title {
   font-size: 16px;
   font-weight: 600;
+  color: #111
 }
 
 /* 날짜 */
@@ -49,6 +53,7 @@ body {
 .message {
   display: flex;
   margin-bottom: 18px;
+  align-item: flex-start;
 }
 
 .profile {
@@ -56,6 +61,7 @@ body {
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
+  flex-shrink: 0;
 }
 
 .name {
@@ -74,6 +80,9 @@ body {
   padding: 12px 15px;
   border-radius: 16px;
   font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+  max-width: 82%
 }
 
 .time {
@@ -87,6 +96,7 @@ body {
 .photo {
   width: 85%;
   border-radius: 16px;
+  display: block;
 }
 
 /* 음성 */
@@ -96,7 +106,7 @@ body {
   padding: 10px 14px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   min-width: 200px;
 }
 
@@ -133,12 +143,21 @@ body {
   display: inline;
 }
 
+.voice-current,
+.voice-total{
+  font-size: 11px;
+  min-width: 34px
+  text-align: center;
+  color: #666;
+ }
+
 .voice-bar {
   flex: 1;
   height: 4px;
   appearance: none;
   background: #ccc;
   border-radius: 2px;
+  touch-action: none
 }
 
 .voice-bar::-webkit-slider-thumb {
@@ -149,21 +168,34 @@ body {
   border-radius: 50%;
 }
 
-.voice-current,
-.voice-total {
-  font-size: 11px;
-  min-width: 34px;
-  text-align: center;
-  color: #666;
-}
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  curosr: pointer;
+
+  .icon-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: #333;
+    stroke-width: 2;
+    fill: none
+  }
 
 /* 하단 네비 */
 .post-nav {
   display: flex;
   justify-content: space-between;
+  align-items: ceter;
   padding: 18px 14px 28px;
-  border-top: none;
+  border-top: 1px solid #eee;
+  margin-top: 20px;
 }
+
+  .post-nav a {
+    color: #666;
+    text-decoration: none;
+  }
 
 /* ===== 레이아웃 안정화 ===== */
 
