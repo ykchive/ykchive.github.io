@@ -166,6 +166,27 @@ body {
   object-fit: contain;
 }
 
+.photo-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 36px;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  user-select: none;
+}
+
+.photo-nav.prev {
+  left: 10px;
+}
+
+.photo-nav.next {
+  right: 10px;
+}
+
     /* ===== 음성 메시지 ===== */
 /* 음성 말풍선 */
 .voice-bubble {
