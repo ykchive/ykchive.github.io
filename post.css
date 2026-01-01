@@ -131,3 +131,21 @@ body {
   padding: 18px 14px 28px;
   border-top: 1px solid #eee;
 }
+
+/* ===== 레이아웃 안정화 ===== */
+
+.message {
+  align-items: flex-start;
+}
+
+.content {
+  max-width: calc(100% - 50px);
+}
+
+.bubble-row {
+  gap: 6px;
+}
+
+.photo {
+  display: block;
+}
