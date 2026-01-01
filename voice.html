@@ -4,99 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>음성 메시지</title>
-
-  <!-- 채팅 화면과 동일한 CSS -->
   <link rel="stylesheet" href="chat.css">
 </head>
-
 <body>
 
-<!-- 상단바 (채팅과 동일) -->
+<!-- 상단바 -->
 <div class="top-bar">
   <a href="index.html" class="back-btn">‹</a>
   <div class="chat-title">음성 메시지</div>
 </div>
 
-<!-- 날짜 -->
-<div class="date">2021.07.21</div>
+<!-- 음성 모아보기 -->
+<div id="voiceContainer"></div>
 
-<!-- 채팅 -->
-<div class="chat">
+<script>
+/* =========================
+   음성 메시지 자동 수집
+========================= */
 
-  <!-- 음성 메시지 -->
-  <div class="message">
-    <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+// ⚠️ chat.html에 있는 음성 데이터 (자동화용)
+const voiceData = [
+  {
+    date: "2021-07-21",
+    time: "오후 7:43",
+    src: "voice/210721-1.mp3"
+  },
+  {
+    date: "2021-07-21",
+    time: "오후 8:01",
+    src: "voice/210721-2.mp3"
+  },
+  {
+    date: "2021-07-22",
+    time: "오후 6:12",
+    src: "voice/210722-1.mp3"
+  }
+];
 
-    <div class="content">
-      <div class="name">강영현</div>
+const container = document.getElementById("voiceContainer");
+let lastDate = "";
 
-      <div class="bubble-row">
-        <div class="voice-bubble">
-          <button class="voice-btn">▶︎</button>
-          <span class="voice-current">0:00</span>
-          <input type="range" class="voice-bar" value="0">
-          <span class="voice-total">1:12</span>
+voiceData.forEach(v => {
 
-          <audio src="voice/210721-1.mp3"></audio>
+  // 날짜 출력
+  if (v.date !== lastDate) {
+    const d = new Date(v.date);
+    const dateEl = document.createElement("div");
+    dateEl.className = "date";
+    dateEl.textContent =
+      `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ` +
+      ["일","월","화","수","목","금","토"][d.getDay()] + "요일";
+    container.appendChild(dateEl);
+    lastDate = v.date;
+  }
+
+  // 메시지
+  const msg = document.createElement("div");
+  msg.className = "chat";
+  msg.innerHTML = `
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="voice-bubble">
+            <button class="voice-btn">▶︎</button>
+            <span class="voice-current">0:00</span>
+            <input type="range" class="voice-bar" value="0">
+            <span class="voice-total">--:--</span>
+            <audio src="${v.src}"></audio>
+          </div>
+          <div class="time">${v.time}</div>
         </div>
-
-        <div class="time">오후 7:43</div>
       </div>
     </div>
-  </div>
+  `;
+  container.appendChild(msg);
+});
+</script>
 
-  <!-- 두 번째 음성 -->
-  <div class="message">
-    <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-
-    <div class="content">
-      <div class="name">강영현</div>
-
-      <div class="bubble-row">
-        <div class="voice-bubble">
-          <button class="voice-btn">▶︎</button>
-          <span class="voice-current">0:00</span>
-          <input type="range" class="voice-bar" value="0">
-          <span class="voice-total">0:48</span>
-
-          <audio src="voice/210721-2.mp3"></audio>
-        </div>
-
-        <div class="time">오후 8:01</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- 다음 날짜 -->
-<div class="date">2021.07.22</div>
-
-<div class="chat">
-
-  <div class="message">
-    <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-
-    <div class="content">
-      <div class="name">강영현</div>
-
-      <div class="bubble-row">
-        <div class="voice-bubble">
-          <button class="voice-btn">▶︎</button>
-          <span class="voice-current">0:00</span>
-          <input type="range" class="voice-bar" value="0">
-          <span class="voice-total">2:03</span>
-
-          <audio src="voice/210722-1.mp3"></audio>
-        </div>
-
-        <div class="time">오후 6:12</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<script src="chat.js"></script>
 </body>
 </html>
