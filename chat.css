@@ -79,6 +79,15 @@ body {
   display: none;
 }
 
+.search-input-wrap input {
+  font-size: 16px; /* ⭐ 이 줄이 핵심 */
+}
+
+input,
+textarea {
+  -webkit-text-size-adjust: 100%;
+}
+
 /* ===================== */
 /* 날짜 구분 */
 /* ===================== */
@@ -339,4 +348,24 @@ body {
   .voice-btn { background: #444; }
   .voice-bar { background: #555; }
   .voice-bar::-webkit-slider-thumb { background: #ddd; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .search-top {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .search-input-wrap input {
+    background: #2a2a2a;
+    color: #f1f1f1;
+  }
+
+  .search-input-wrap input::placeholder {
+    color: #888;
+  }
+
+  .search-top .icon-btn svg {
+    stroke: #eaeaea;
+  }
 }
