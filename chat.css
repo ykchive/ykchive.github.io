@@ -65,8 +65,8 @@ body {
   content: "";
   position: absolute;
   top: 0;
-  left: 8%;
-  right: 8%;
+  left: -14px;
+  right: -14px;
   height: 1px;
   background: rgba(0, 0, 0, 0.15);
 }
@@ -81,7 +81,11 @@ body {
 .message {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
+}
+
+.date + .message {
+  margin-top: 4px;   /* ⬅️ 날짜 다음 첫 메시지 */
 }
 
 .profile {
