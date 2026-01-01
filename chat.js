@@ -10,13 +10,15 @@ function formatTime(seconds) {
 /* ==================================================
    2. 사진 전체보기
 ================================================== */
-
   const photos = Array.from(document.querySelectorAll('.photo'));
   const viewer = document.getElementById('photoViewer');
   const viewerImg = document.getElementById('viewerImg');
-  let currentIndex = 0;
+  const counter = document.getElementById('photoCounter');
 
-  // 사진 클릭
+  let currentIndex = 0;
+  let startX = 0;
+
+  // 사진 클릭 → 뷰어 열기
   photos.forEach((photo, index) => {
     photo.addEventListener('click', () => {
       currentIndex = index;
@@ -26,6 +28,7 @@ function formatTime(seconds) {
 
   function openViewer() {
     viewerImg.src = photos[currentIndex].src;
+    counter.textContent = `${currentIndex + 1} / ${photos.length}`;
     viewer.classList.add('show');
   }
 
@@ -33,7 +36,7 @@ function formatTime(seconds) {
     viewer.classList.remove('show');
   }
 
-  // 이전 / 다음
+  // 이전 / 다음 버튼
   document.querySelector('.photo-nav.prev').onclick = () => {
     if (currentIndex > 0) {
       currentIndex--;
@@ -47,6 +50,26 @@ function formatTime(seconds) {
       openViewer();
     }
   };
+
+  // 👉 스와이프 시작
+  viewer.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  // 👉 스와이프 끝
+  viewer.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentIndex < photos.length - 1) {
+        currentIndex++; // 왼쪽으로 밀기 → 다음
+      } else if (diff < 0 && currentIndex > 0) {
+        currentIndex--; // 오른쪽으로 밀기 → 이전
+      }
+      openViewer();
+    }
+  });
 
   // 바깥 클릭 시 닫기
   viewer.addEventListener('click', (e) => {
