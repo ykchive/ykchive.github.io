@@ -3,202 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>2021.05.11</title>
+  <title>2021.05.06</title>
 
   <style>
-    body {
-      margin: 0;
-      background: #f7f7f7;
-      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-    }
+ 
+/* ===================== */
+/* 기본 설정 */
+/* ===================== */
+body {
+  margin: 0;
+  background: #f7f7f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+}
 
-    /* 상단바 */
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 52px;
-      background: #fff;
-      border-bottom: 1px solid #eee;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* ===================== */
+/* 상단바 */
+/* ===================== */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .back-btn {
+.back-btn {
   position: absolute;
   left: 14px;
   font-size: 28px;
   font-weight: 300;
   color: #333;
-  cursor: pointer;
+  text-decoration: none;
   user-select: none;
-  text-decoration: none; /* ← 이거 추가 */
+  cursor: pointer;
 }
 
-    .chat-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #111;
-    }
+.chat-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
 
-    /* 날짜 */
-    .date {
-      text-align: center;
-      margin-top: 80px;
-      margin-bottom: 22px;
-      font-size: 12px;
-      color: #999;
-    }
+/* ===================== */
+/* 날짜 */
+/* ===================== */
+.date {
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 22px;
+  font-size: 12px;
+  color: #999;
+}
 
-    /* 채팅 영역 */
-    .chat {
-      padding: 0 14px 40px;
-    }
+/* ===================== */
+/* 채팅 영역 */
+/* ===================== */
+.chat {
+  padding: 0 14px 40px;
+}
 
-    .message {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 18px;
-    }
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
 
-    .profile {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
-      flex-shrink: 0;
-    }
+.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
 
-    .content {
-      max-width: 85%;
-    }
+.content {
+  max-width: 85%;
+}
 
-    .name {
-      font-size: 13px;
-      color: #555;
-      margin-bottom: 4px;
-    }
+.name {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 4px;
+}
 
-    .bubble-row {
-      display: flex;
-      align-items: flex-end;
-    }
+.bubble-row {
+  display: flex;
+  align-items: flex-end;
+}
 
-    .bubble {
-      background: #ededed;
-      padding: 12px 15px;
-      border-radius: 16px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+.bubble {
+  background: #ededed;
+  padding: 12px 15px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
 
-    .time {
-      font-size: 11px;
-      color: #aaa;
-      margin-left: 6px;
-      white-space: nowrap;
-    }
+.time {
+  font-size: 11px;
+  color: #aaa;
+  margin-left: 6px;
+  white-space: nowrap;
+}
 
-    .photo {
-      width: 85%;
-      border-radius: 16px;
-      display: block;
-    }
+/* ===================== */
+/* 사진 메시지 */
+/* ===================== */
+.photo {
+  width: 85%;
+  border-radius: 16px;      /* 말풍선은 둥글게 */
+  display: block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    /* 음성 메시지 */
-    .voice-bubble {
-      background: #ededed;
-      border-radius: 16px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 160px;
-    }
+/* ===================== */
+/* 사진 전체보기 */
+/* ===================== */
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
 
-    .voice-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #333;
-      color: #fff;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
+.photo-viewer.show {
+  display: flex;
+}
 
-    .voice-wave {
-      flex: 1;
-      height: 18px;
-      background: linear-gradient(
-        to right,
-        #bbb 20%, #ddd 20%,
-        #ddd 40%, #bbb 40%,
-        #bbb 60%, #ddd 60%,
-        #ddd 80%, #bbb 80%
-      );
-      border-radius: 6px;
-    }
+.photo-viewer img {
+  max-width: 92%;
+  max-height: 92%;
+  border-radius: 0;        /* 전체보기는 네모 */
+  object-fit: contain;
+}
 
-    .voice-time {
-      font-size: 12px;
-      color: #666;
-      white-space: nowrap;
-    }
-
-    .voice-bubble audio {
-      display: none;
-    }
-
-    /* 🌙 시스템 다크모드 */
-    @media (prefers-color-scheme: dark) {
-      body { background: #121212; color: #eaeaea; }
-
-      .top-bar {
-        background: #1e1e1e;
-        border-bottom: 1px solid #2a2a2a;
-      }
-
-      .chat-title, .back-btn { color: #eaeaea; }
-      .date { color: #888; }
-      .name { color: #bdbdbd; }
-
-      .bubble,
-      .voice-bubble {
-        background: #2a2a2a;
-        color: #f1f1f1;
-      }
-
-      .time { color: #9a9a9a; }
-
-      .voice-btn { background: #555; }
-
-      .voice-wave {
-        background: linear-gradient(
-          to right,
-          #666 20%, #777 20%,
-          #777 40%, #666 40%,
-          #666 60%, #777 60%,
-          #777 80%, #666 80%
-        );
-      }
-
-      .voice-time { color: #bdbdbd; }
-    }
-
-    .post-nav {
+/* ===================== */
+/* 이전 / 다음 */
+/* ===================== */
+.post-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 18px 14px 28px;
-  margin-top: 40px;              /* 버튼을 더 아래로 */
   border-top: 1px solid #eee;
   font-size: 14px;
+  margin-top: 20px;
 }
 
 .post-nav a {
@@ -206,8 +165,119 @@
   text-decoration: none;
 }
 
+    /* ===== 음성 메시지 ===== */
+/* 음성 말풍선 */
+.voice-bubble {
+  background: #ededed;
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 200px;
+}
+
+/* 재생 버튼 */
+.voice-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* SVG 아이콘 */
+.voice-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #000;
+  display: block;
+}
+
+/* 재생 / 일시정지 전환 */
+.voice-btn .pause {
+  display: none;
+}
+.voice-btn.playing .play {
+  display: none;
+}
+.voice-btn.playing .pause {
+  display: inline;
+}
+
+/* 시간 */
+.voice-current,
+.voice-total {
+  font-size: 11px;
+  min-width: 34px;
+  text-align: center;
+  color: #666;
+}
+
+/* 재생바 */
+.voice-bar {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 2px;
+  touch-action: none;
+}
+
+.voice-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* ===================== */
 /* 다크모드 */
+/* ===================== */
 @media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eaeaea;
+  }
+
+  .top-bar {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .chat-title,
+  .back-btn {
+    color: #eaeaea;
+  }
+
+  .date {
+    color: #888;
+  }
+
+  .name {
+    color: #bdbdbd;
+  }
+
+  .bubble {
+    background: #2a2a2a;
+    color: #f1f1f1;
+  }
+
+  .time {
+    color: #9a9a9a;
+  }
+
+  .photo {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
   .post-nav {
     border-top: 1px solid #2a2a2a;
   }
@@ -216,9 +286,29 @@
     color: #bbb;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .voice-bubble {
+    background: #2a2a2a;
+  }
+  .voice-btn {
+    background: #444;
+    color: #fff;
+  }
+  .voice-bar {
+    background: #555;
+  }
+  .voice-bar::-webkit-slider-thumb {
+    background: #ddd;
+  }
+  .voice-current,
+  .voice-total {
+    color: #bdbdbd;
+  }
+}
+
   </style>
 </head>
-
 <body>
 
   <!-- 상단바 -->
@@ -336,20 +426,176 @@
 </div>
 
 <script>
-  function toggleVoice(btn) {
-    const audio = btn.closest('.voice-bubble').querySelector('audio');
+
+/* ===================== */
+/* 사진 전체보기 */
+/* ===================== */
+const viewer = document.getElementById('photoViewer');
+const viewerImg = document.getElementById('photoViewerImg');
+const photos = Array.from(document.querySelectorAll('.photo'));
+
+let currentIndex = 0;
+let startX = 0;
+
+/* 열기 */
+photos.forEach((img, i) => {
+  img.addEventListener('click', () => {
+    currentIndex = i;
+    openViewer(img.src);
+  });
+});
+
+function openViewer(src) {
+  viewerImg.src = src;
+  viewer.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+/* 닫기 */
+function closeViewer() {
+  viewer.classList.remove('show');
+  document.body.style.overflow = '';
+
+  setTimeout(() => {
+    viewerImg.src = '';
+  }, 200);
+}
+
+/* 배경 클릭 → 닫기 */
+viewer.addEventListener('click', e => {
+  if (e.target === viewer) {
+    closeViewer();
+  }
+});
+
+/* ===================== */
+/* 좌우 스와이프 */
+/* ===================== */
+viewerImg.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+
+viewerImg.addEventListener('touchend', e => {
+  const endX = e.changedTouches[0].clientX;
+  const diff = startX - endX;
+
+  if (Math.abs(diff) < 50) return;
+
+  if (diff > 0) nextPhoto();
+  else prevPhoto();
+});
+
+function nextPhoto() {
+  if (currentIndex < photos.length - 1) {
+    currentIndex++;
+    viewerImg.src = photos[currentIndex].src;
+  }
+}
+
+function prevPhoto() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    viewerImg.src = photos[currentIndex].src;
+  }
+}
+
+
+document.querySelectorAll('.voice-bubble').forEach(bubble => {
+  /* ===== 요소 연결 ===== */
+  const audio = bubble.querySelector('audio');
+  const btn   = bubble.querySelector('.voice-btn');
+  const bar   = bubble.querySelector('.voice-bar');
+  const cur   = bubble.querySelector('.voice-current');
+  const total = bubble.querySelector('.voice-total');
+
+  let wasPlaying = false; // 드래그 전 재생 상태 기억
+
+  /* ===== 시간 포맷 ===== */
+  const format = s => {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  };
+
+  /* ===== 메타데이터 로드 ===== */
+  audio.addEventListener('loadedmetadata', () => {
+    bar.min = 0;
+    bar.max = audio.duration;
+    bar.value = 0;
+    cur.textContent = '0:00';
+    total.textContent = format(audio.duration);
+  });
+
+  /* ===== 재생 / 일시정지 ===== */
+  btn.addEventListener('click', () => {
+    // 다른 음성 멈추기
+    document.querySelectorAll('audio').forEach(a => {
+      if (a !== audio) a.pause();
+    });
+    document.querySelectorAll('.voice-btn').forEach(b => {
+      if (b !== btn) b.classList.remove('playing');
+    });
 
     if (audio.paused) {
       audio.play();
-      btn.textContent = '❚❚';
+      btn.classList.add('playing');
     } else {
       audio.pause();
-      btn.textContent = '▶';
+      btn.classList.remove('playing');
     }
+  });
 
-    audio.onended = () => btn.textContent = '▶';
-  }
+  /* ===== 재생 중 시간 업데이트 ===== */
+  audio.addEventListener('timeupdate', () => {
+    bar.value = audio.currentTime;
+    cur.textContent = format(audio.currentTime);
+  });
+
+  /* ===== 재생바 드래그 UX ===== */
+  bar.addEventListener('mousedown', () => {
+    wasPlaying = !audio.paused;
+    audio.pause();
+  });
+
+  bar.addEventListener('touchstart', () => {
+    wasPlaying = !audio.paused;
+    audio.pause();
+  });
+
+  bar.addEventListener('input', () => {
+    audio.currentTime = bar.value;
+    cur.textContent = format(bar.value);
+  });
+
+  bar.addEventListener('mouseup', () => {
+    if (wasPlaying) audio.play();
+  });
+
+  bar.addEventListener('touchend', () => {
+    if (wasPlaying) audio.play();
+  });
+
+  /* ===== 재생 종료 ===== */
+  audio.addEventListener('ended', () => {
+    btn.classList.remove('playing');
+    bar.value = 0;
+    cur.textContent = '0:00';
+  });
+});
+
+/* ===== 날짜 자동 생성 ===== */
+document.querySelectorAll('.date').forEach(el => {
+  const raw = el.dataset.date;
+  if (!raw) return;
+
+  const d = new Date(raw);
+  const week = ['일','월','화','수','목','금','토'];
+
+  el.textContent =
+    `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${week[d.getDay()]}요일`;
+});
+  
 </script>
-
+    
 </body>
 </html>
