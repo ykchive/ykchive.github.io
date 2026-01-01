@@ -10,48 +10,48 @@ function formatTime(seconds) {
 /* ==================================================
    2. 사진 전체보기
 ================================================== */
-const viewer = document.getElementById('photoViewer');
-const viewerImg = document.getElementById('photoViewerImg');
-const photos = [...document.querySelectorAll('.photo')];
 
-let photoIndex = 0;
-let startX = 0;
+  const photos = Array.from(document.querySelectorAll('.photo'));
+  const viewer = document.getElementById('photoViewer');
+  const viewerImg = document.getElementById('viewerImg');
+  let currentIndex = 0;
 
-/* 사진 클릭 → 전체보기 */
-photos.forEach((img, i) => {
-  img.addEventListener('click', () => {
-    photoIndex = i;
-    viewerImg.src = img.src;
-    viewer.classList.add('show');
-    document.body.style.overflow = 'hidden';
+  // 사진 클릭
+  photos.forEach((photo, index) => {
+    photo.addEventListener('click', () => {
+      currentIndex = index;
+      openViewer();
+    });
   });
-});
 
-/* 배경 클릭 → 닫기 */
-viewer.addEventListener('click', e => {
-  if (e.target === viewer) closeViewer();
-});
+  function openViewer() {
+    viewerImg.src = photos[currentIndex].src;
+    viewer.classList.add('show');
+  }
 
-function closeViewer() {
-  viewer.classList.remove('show');
-  viewerImg.src = '';
-  document.body.style.overflow = '';
-}
+  function closeViewer() {
+    viewer.classList.remove('show');
+  }
 
-/* 좌우 스와이프 */
-viewerImg.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-});
+  // 이전 / 다음
+  document.querySelector('.photo-nav.prev').onclick = () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      openViewer();
+    }
+  };
 
-viewerImg.addEventListener('touchend', e => {
-  const diff = startX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) < 50) return;
+  document.querySelector('.photo-nav.next').onclick = () => {
+    if (currentIndex < photos.length - 1) {
+      currentIndex++;
+      openViewer();
+    }
+  };
 
-  if (diff > 0 && photoIndex < photos.length - 1) photoIndex++;
-  if (diff < 0 && photoIndex > 0) photoIndex--;
-
-  viewerImg.src = photos[photoIndex].src;
-});
+  // 바깥 클릭 시 닫기
+  viewer.addEventListener('click', (e) => {
+    if (e.target === viewer) closeViewer();
+  });
 
 /* ==================================================
    3. 음성 메시지
