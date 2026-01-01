@@ -198,7 +198,7 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: #d8d8d8;
+  background: #efefef;
   border: none;
   cursor: pointer;
 
@@ -406,21 +406,25 @@
   <a href="post-210717.html" class="next">›</a>
 </div>
 
-
-  <script>
+<script>
 document.querySelectorAll('.voice-bubble').forEach(bubble => {
+  /* ===== 요소 연결 ===== */
   const audio = bubble.querySelector('audio');
   const btn   = bubble.querySelector('.voice-btn');
   const bar   = bubble.querySelector('.voice-bar');
   const cur   = bubble.querySelector('.voice-current');
   const total = bubble.querySelector('.voice-total');
 
+  let wasPlaying = false; // 드래그 전 재생 상태 기억
+
+  /* ===== 시간 포맷 ===== */
   const format = s => {
     const m = Math.floor(s / 60);
     const sec = Math.floor(s % 60);
     return `${m}:${sec.toString().padStart(2, '0')}`;
   };
 
+  /* ===== 메타데이터 로드 ===== */
   audio.addEventListener('loadedmetadata', () => {
     bar.min = 0;
     bar.max = audio.duration;
@@ -429,7 +433,9 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     total.textContent = format(audio.duration);
   });
 
+  /* ===== 재생 / 일시정지 ===== */
   btn.addEventListener('click', () => {
+    // 다른 음성 멈추기
     document.querySelectorAll('audio').forEach(a => {
       if (a !== audio) a.pause();
     });
@@ -446,9 +452,21 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     }
   });
 
+  /* ===== 재생 중 시간 업데이트 ===== */
   audio.addEventListener('timeupdate', () => {
     bar.value = audio.currentTime;
     cur.textContent = format(audio.currentTime);
+  });
+
+  /* ===== 재생바 드래그 UX ===== */
+  bar.addEventListener('mousedown', () => {
+    wasPlaying = !audio.paused;
+    audio.pause();
+  });
+
+  bar.addEventListener('touchstart', () => {
+    wasPlaying = !audio.paused;
+    audio.pause();
   });
 
   bar.addEventListener('input', () => {
@@ -456,6 +474,15 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     cur.textContent = format(bar.value);
   });
 
+  bar.addEventListener('mouseup', () => {
+    if (wasPlaying) audio.play();
+  });
+
+  bar.addEventListener('touchend', () => {
+    if (wasPlaying) audio.play();
+  });
+
+  /* ===== 재생 종료 ===== */
   audio.addEventListener('ended', () => {
     btn.classList.remove('playing');
     bar.value = 0;
