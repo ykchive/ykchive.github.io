@@ -107,24 +107,20 @@ body {
 /* 사진 메시지 */
 /* ===================== */
 .photo {
-  width: 85%;
-  border-radius: 16px;      /* 말풍선은 둥글게 */
+  max-width: 85%;
+  width: auto;
+  border-radius: 16px;
   display: block;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ===================== */
-/* 사진 전체보기 */
-/* ===================== */
-.photo-viewer {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
+.photo-viewer img {
+  max-width: 92%;
+  max-height: 92%;
+  border-radius: 0;
+  object-fit: contain;
+  touch-action: none;
 }
 
 .photo-viewer.show {
