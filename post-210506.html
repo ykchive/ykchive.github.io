@@ -286,6 +286,11 @@
   display: flex;
 }
 
+    .photo {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
   </style>
 </head>
 <body>
@@ -426,37 +431,27 @@
   <span></span>
   <a href="post-210507.html" class="next">›</a>
 </div>
+
+    <!-- 사진 전체보기 -->
+<div class="photo-viewer" id="photoViewer">
+  <img id="photoViewerImg" alt="">
+</div>
   
 <script>
-  function toggleVoice(btn) {
-    const audio = btn.closest('.voice-bubble').querySelector('audio');
-
-    if (audio.paused) {
-      audio.play();
-      btn.innerHTML = '❚❚';
-    } else {
-      audio.pause();
-      btn.innerHTML = '▶';
-    }
-
-    audio.onended = () => {
-      btn.innerHTML = '▶';
-    };
-  }
-
 /* ===== 사진 클릭 → 전체보기 ===== */
 const viewer = document.getElementById('photoViewer');
 const viewerImg = document.getElementById('photoViewerImg');
 
+/* 사진 클릭 */
 document.querySelectorAll('.photo').forEach(img => {
   img.addEventListener('click', () => {
     viewerImg.src = img.src;
     viewer.classList.add('show');
-    document.body.style.overflow = 'hidden'; // 스크롤 잠금
+    document.body.style.overflow = 'hidden';
   });
 });
 
-/* 아무 곳이나 누르면 닫기 */
+/* 아무 데나 누르면 닫기 */
 viewer.addEventListener('click', () => {
   viewer.classList.remove('show');
   viewerImg.src = '';
@@ -464,11 +459,6 @@ viewer.addEventListener('click', () => {
 });
   
 </script>
-
-<!-- 사진 뷰어 -->
-<div class="photo-viewer" id="photoViewer">
-  <img id="photoViewerImg" alt="">
-</div>
     
 </body>
 </html>
