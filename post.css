@@ -155,9 +155,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 18px 14px 28px;
+  margin-top: 40px;              /* 버튼을 더 아래로 */
   border-top: 1px solid #eee;
   font-size: 14px;
-  margin-top: 20px;
 }
 
 .post-nav a {
