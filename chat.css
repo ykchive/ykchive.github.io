@@ -3,10 +3,9 @@
 /* ===================== */
 body {
   margin: 0;
-  padding-top: 52px; /* ⬅️ 상단바 높이만큼 */
   background: #f7f7f7;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-  overflow-x: hidden; /* ⬅️ 좌우 스크롤 방지 */
+  overflow-x: hidden;
 }
 
 /* ===================== */
@@ -17,25 +16,31 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 52px;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  z-index: 1000;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+
+  padding: env(safe-area-inset-top) 12px 0;
+  height: calc(52px + env(safe-area-inset-top));
+
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
 }
 
 /* 왼쪽 */
 .back-btn {
   font-size: 28px;
-  font-weight: 300;
   color: #333;
   text-decoration: none;
-  cursor: pointer;
-  z-index: 1;
+}
+
+/* 오른쪽 */
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 /* 중앙 제목 */
@@ -45,15 +50,7 @@ body {
   transform: translateX(-50%);
   font-size: 16px;
   font-weight: 600;
-  pointer-events: none;
-}
-
-/* 오른쪽 */
-.top-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  z-index: 1;
+  pointer-events: none; /* 아이콘 클릭 방해 ❌ */
 }
 
 .search-top {
@@ -61,20 +58,25 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 52px;
-  background: #fff;
 
-  display: none;          /* ⭐⭐⭐ 이 줄 필수 */
+  display: none;
   align-items: center;
-  padding: 0 12px;
   gap: 8px;
 
-  z-index: 1100;
+  padding: env(safe-area-inset-top) 12px 0;
+  height: calc(52px + env(safe-area-inset-top));
+
+  background: #fff;
   border-bottom: 1px solid #eee;
+  z-index: 1100;
 }
 
 .search-top.show {
   display: flex;
+}
+
+.top-bar.hide {
+  display: none;
 }
 
 /* ===================== */
@@ -105,7 +107,10 @@ body {
 /* 채팅 영역 */
 /* ===================== */
 .chat {
-  padding: 0 14px 40px;       /* ⬅️ 상단 padding 제거 */
+  padding-top: calc(60px + env(safe-area-inset-top));
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-bottom: 40px;
 }
 
 .message {
