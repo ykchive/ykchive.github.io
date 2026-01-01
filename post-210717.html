@@ -183,7 +183,7 @@
 
     /* ===== 음성 메시지 ===== */
 .voice-bubble {
-  background: #ededed;
+  background: #fff;
   border-radius: 16px;
   padding: 12px 15px;     /* 좌우 패딩 살짝 줄임 */
   display: flex;
@@ -216,13 +216,18 @@
   line-height: 1;
 }
 
+.voice-btn .play {
+  transform: translateX(-1px);   /* ▶ */
+}
+
 .voice-btn .pause {
-  display: none;
+  transform: translateY(0.5px);  /* ❚❚ */
 }
 
 .voice-btn.playing .play {
   display: none;
 }
+    
 .voice-btn.playing .pause {
   display: inline;
 }
