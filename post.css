@@ -162,7 +162,7 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 18px 14px 28px;
-  border-top: 1px solid #eee;
+  border-top: none;
 }
 
 /* ===== 레이아웃 안정화 ===== */
