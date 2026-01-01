@@ -225,6 +225,16 @@ body {
   border-radius: 50%;
 }
 
+/* ===== 사진 전체보기 강제 초기화 ===== */
+.photo-viewer img {
+  border-radius: 0 !important;
+  width: auto;
+  height: auto;
+  max-width: 100vw;
+  max-height: 100vh;
+  object-fit: contain;
+}
+
 /* ===================== */
 /* 다크모드 */
 /* ===================== */
