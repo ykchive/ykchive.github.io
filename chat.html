@@ -1,5 +1,3 @@
-최종
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -61,16 +59,6 @@ body {
   margin-bottom: 22px;
   font-size: 12px;
   color: #999;
-}
-
-    /* 날짜 구분선 */
-.date::before {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 1px;
-  background: #e5e5e5;
-  margin-bottom: 12px;
 }
 
 /* ===================== */
@@ -250,6 +238,104 @@ body {
   border-radius: 50%;
 }
 
+/* 상단바 오른쪽 버튼 */
+.top-right {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* 아이콘 버튼 */
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: #333;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* 검색 전용 상단바 */
+.search-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: #fff;
+  display: none;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  z-index: 1100;
+  border-bottom: 1px solid #eee;
+}
+
+.search-top input {
+  flex: 1;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.search-top button {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #007aff;
+  cursor: pointer;
+}
+
+.search-top.show {
+  display: flex;
+}
+
+.search-top button {
+  font-size: 22px;
+  color: #333;
+}
+
+.search-top .icon-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: #333;
+  stroke-width: 2;
+}
+
+/* 다크모드 */
+@media (prefers-color-scheme: dark) {
+  .icon-btn svg {
+    stroke: #eaeaea;
+  }
+
+  .search-top {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .search-top input {
+    background: #2a2a2a;
+    border-color: #444;
+    color: #fff;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .search-top .icon-btn svg {
+    stroke: #eaeaea;
+  }
+}
+
 /* ===================== */
 /* 다크모드 */
 /* ===================== */
@@ -319,21 +405,47 @@ body {
   }
 }
 
-    @media (prefers-color-scheme: dark) {
-  .date::before {
-    background: #2a2a2a;
-  }
-}
-
   </style>
 </head>
 <body>
 
-  <!-- 상단바 -->
-  <div class="top-bar">
-<a href="index.html#toggle" class="back-btn">‹</a>
-    <div class="chat-title">강영현</div>
+<!-- 상단바 -->
+<div class="top-bar">
+  <a href="index.html#toggle" class="back-btn">‹</a>
+
+  <div class="chat-title">강영현</div>
+
+  <!-- 오른쪽 아이콘 -->
+  <div class="top-right">
+    <!-- 검색 -->
+    <button class="icon-btn search-btn" aria-label="검색">
+      <svg viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
+      </svg>
+    </button>
+
+    <!-- 세줄 메뉴 -->
+    <button class="icon-btn menu-btn" aria-label="메뉴">
+      <svg viewBox="0 0 24 24">
+        <line x1="4" y1="6" x2="20" y2="6"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
   </div>
+</div>
+
+<!-- 검색 상단바 -->
+<div class="search-top">
+  <input type="text" id="searchInput" placeholder="대화 검색">
+<button id="searchClose" class="icon-btn" aria-label="검색 닫기">
+  <svg viewBox="0 0 24 24">
+    <line x1="6" y1="6" x2="18" y2="18"/>
+    <line x1="18" y1="6" x2="6" y2="18"/>
+  </svg>
+</button>
+</div>
 
   <!-- 날짜 -->
 <div class="date" data-date="2021-05-06"></div>
@@ -402,12 +514,6 @@ body {
 
 </div> <!-- chat 끝 -->
 
-<!-- 이전 / 다음 게시물 -->
-
-<div class="post-nav">
-  <a href="post-.html" class="prev">‹</a>
-  <a href="post-.html" class="next">›</a>
-</div>
 
     <!-- 사진 전체보기 -->
 <div class="photo-viewer" id="photoViewer">
@@ -583,8 +689,70 @@ document.querySelectorAll('.date').forEach(el => {
   el.textContent =
     `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${week[d.getDay()]}요일`;
 });
-  
+
+/* ===================== */
+/* 상단 검색 */
+/* ===================== */
+const topBar = document.querySelector('.top-bar');
+const searchTop = document.querySelector('.search-top');
+const searchBtn = document.querySelector('.search-btn');
+const searchInput = document.getElementById('searchInput');
+const searchClose = document.getElementById('searchClose');
+const bubbles = document.querySelectorAll('.bubble');
+
+/* 검색 열기 */
+searchBtn.addEventListener('click', () => {
+  topBar.style.display = 'none';
+  searchTop.classList.add('show');
+  searchInput.focus();
+});
+
+/* 검색 닫기 */
+searchClose.addEventListener('click', () => {
+  searchTop.classList.remove('show');
+  searchInput.value = '';
+  clearHighlight();
+  topBar.style.display = 'flex';
+});
+
+/* 검색 기능 */
+searchInput.addEventListener('input', () => {
+  const keyword = searchInput.value.trim();
+  clearHighlight();
+
+  if (!keyword) return;
+
+  let firstMatch = null;
+
+  bubbles.forEach(bubble => {
+    const text = bubble.textContent;
+
+    if (text.includes(keyword)) {
+      bubble.innerHTML = text.replace(
+        new RegExp(keyword, 'gi'),
+        `<strong>$&</strong>`
+      );
+
+      if (!firstMatch) firstMatch = bubble;
+    }
+  });
+
+  if (firstMatch) {
+    firstMatch.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  }
+});
+
+/* 강조 제거 */
+function clearHighlight() {
+  bubbles.forEach(bubble => {
+    bubble.innerHTML = bubble.textContent;
+  });
+}
+
 </script>
-    
+
 </body>
 </html>
