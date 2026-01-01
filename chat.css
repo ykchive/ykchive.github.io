@@ -166,24 +166,6 @@ body {
   object-fit: contain;
 }
 
-/* ===================== */
-/* 이전 / 다음 */
-/* ===================== */
-.post-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 14px 28px;
-  border-top: 1px solid #eee;
-  font-size: 14px;
-  margin-top: 20px;
-}
-
-.post-nav a {
-  color: #666;
-  text-decoration: none;
-}
-
     /* ===== 음성 메시지 ===== */
 /* 음성 말풍선 */
 .voice-bubble {
