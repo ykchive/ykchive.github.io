@@ -3,232 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>2021.05.22</title>
 
-  <style>
-    body {
-      margin: 0;
-      background: #f7f7f7;
-      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-    }
-
-    /* 상단바 */
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 52px;
-      background: #fff;
-      border-bottom: 1px solid #eee;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-  .back-btn {
-  position: absolute;
-  left: 14px;
-  font-size: 28px;
-  font-weight: 300;
-  color: #333;
-  cursor: pointer;
-  user-select: none;
-  text-decoration: none; /* ← 이거 추가 */
-}
-
-    .chat-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #111;
-    }
-
-    /* 날짜 */
-    .date {
-      text-align: center;
-      margin-top: 80px;
-      margin-bottom: 22px;
-      font-size: 12px;
-      color: #999;
-    }
-
-    /* 채팅 영역 */
-    .chat {
-      padding: 0 14px 40px;
-    }
-
-    .message {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 18px;
-    }
-
-    .profile {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
-      flex-shrink: 0;
-    }
-
-    .content {
-      max-width: 85%;
-    }
-
-    .name {
-      font-size: 13px;
-      color: #555;
-      margin-bottom: 4px;
-    }
-
-    .bubble-row {
-      display: flex;
-      align-items: flex-end;
-    }
-
-    .bubble {
-      background: #ededed;
-      padding: 12px 15px;
-      border-radius: 16px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .time {
-      font-size: 11px;
-      color: #aaa;
-      margin-left: 6px;
-      white-space: nowrap;
-    }
-
-    .photo {
-      width: 85%;
-      border-radius: 16px;
-      display: block;
-    }
-
-    /* 음성 메시지 */
-    .voice-bubble {
-      background: #ededed;
-      border-radius: 16px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 160px;
-    }
-
-    .voice-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #333;
-      color: #fff;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .voice-wave {
-      flex: 1;
-      height: 18px;
-      background: linear-gradient(
-        to right,
-        #bbb 20%, #ddd 20%,
-        #ddd 40%, #bbb 40%,
-        #bbb 60%, #ddd 60%,
-        #ddd 80%, #bbb 80%
-      );
-      border-radius: 6px;
-    }
-
-    .voice-time {
-      font-size: 12px;
-      color: #666;
-      white-space: nowrap;
-    }
-
-    .voice-bubble audio {
-      display: none;
-    }
-
-    /* 🌙 시스템 다크모드 */
-    @media (prefers-color-scheme: dark) {
-      body { background: #121212; color: #eaeaea; }
-
-      .top-bar {
-        background: #1e1e1e;
-        border-bottom: 1px solid #2a2a2a;
-      }
-
-      .chat-title, .back-btn { color: #eaeaea; }
-      .date { color: #888; }
-      .name { color: #bdbdbd; }
-
-      .bubble,
-      .voice-bubble {
-        background: #2a2a2a;
-        color: #f1f1f1;
-      }
-
-      .time { color: #9a9a9a; }
-
-      .voice-btn { background: #555; }
-
-      .voice-wave {
-        background: linear-gradient(
-          to right,
-          #666 20%, #777 20%,
-          #777 40%, #666 40%,
-          #666 60%, #777 60%,
-          #777 80%, #666 80%
-        );
-      }
-
-      .voice-time { color: #bdbdbd; }
-    }
-
-    .post-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 14px 28px;
-  margin-top: 40px;              /* 버튼을 더 아래로 */
-  border-top: 1px solid #eee;
-  font-size: 14px;
-}
-
-.post-nav a {
-  color: #666;
-  text-decoration: none;
-}
-
-/* 다크모드 */
-@media (prefers-color-scheme: dark) {
-  .post-nav {
-    border-top: 1px solid #2a2a2a;
-  }
-
-  .post-nav a {
-    color: #bbb;
-  }
-}
-  </style>
+  <!-- 공용 CSS -->
+  <link rel="stylesheet" href="post.css">
 </head>
-
 <body>
 
   <!-- 상단바 -->
   <div class="top-bar">
-  <a href="index.html" class="back-btn">‹</a>
+    <a href="index.html#toggle" class="back-btn">‹</a>
     <div class="chat-title">강영현</div>
   </div>
 
   <!-- 날짜 -->
-  <div class="date">2021년 5월 22일 토요일</div>
+  <div class="date" data-date="2021-05-22"></div>
 
   <!-- 채팅 -->
   <div class="chat">
@@ -251,21 +41,7 @@
 
   </div>
 
-<script>
-  function toggleVoice(btn) {
-    const audio = btn.closest('.voice-bubble').querySelector('audio');
-
-    if (audio.paused) {
-      audio.play();
-      btn.textContent = '❚❚';
-    } else {
-      audio.pause();
-      btn.textContent = '▶';
-    }
-
-    audio.onended = () => btn.textContent = '▶';
-  }
-</script>
-
+  <!-- 공용 JS -->
+  <script src="post.js"></script>
 </body>
 </html>
