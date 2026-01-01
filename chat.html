@@ -694,16 +694,16 @@ body {
 
 <script>
 /* ==================================================
-   공통 유틸
+   1. 공통 유틸
 ================================================== */
-const formatTime = s => {
-  const m = Math.floor(s / 60);
-  const sec = Math.floor(s % 60);
-  return `${m}:${sec.toString().padStart(2, '0')}`;
-};
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
 
 /* ==================================================
-   사진 전체보기
+   2. 사진 전체보기
 ================================================== */
 const viewer = document.getElementById('photoViewer');
 const viewerImg = document.getElementById('photoViewerImg');
@@ -712,6 +712,7 @@ const photos = [...document.querySelectorAll('.photo')];
 let photoIndex = 0;
 let startX = 0;
 
+/* 사진 클릭 → 전체보기 */
 photos.forEach((img, i) => {
   img.addEventListener('click', () => {
     photoIndex = i;
@@ -721,17 +722,18 @@ photos.forEach((img, i) => {
   });
 });
 
+/* 배경 클릭 → 닫기 */
 viewer.addEventListener('click', e => {
   if (e.target === viewer) closeViewer();
 });
 
 function closeViewer() {
   viewer.classList.remove('show');
-  document.body.style.overflow = '';
   viewerImg.src = '';
+  document.body.style.overflow = '';
 }
 
-/* 스와이프 */
+/* 좌우 스와이프 */
 viewerImg.addEventListener('touchstart', e => {
   startX = e.touches[0].clientX;
 });
@@ -747,7 +749,7 @@ viewerImg.addEventListener('touchend', e => {
 });
 
 /* ==================================================
-   음성 메시지
+   3. 음성 메시지
 ================================================== */
 document.querySelectorAll('.voice-bubble').forEach(bubble => {
   const audio = bubble.querySelector('audio');
@@ -758,6 +760,7 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
 
   let wasPlaying = false;
 
+  /* 메타데이터 로드 */
   audio.addEventListener('loadedmetadata', () => {
     bar.min = 0;
     bar.max = audio.duration;
@@ -766,6 +769,7 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     total.textContent = formatTime(audio.duration);
   });
 
+  /* 재생 / 일시정지 */
   btn.addEventListener('click', () => {
     document.querySelectorAll('audio').forEach(a => {
       if (a !== audio) a.pause();
@@ -783,30 +787,34 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     }
   });
 
+  /* 재생 진행 */
   audio.addEventListener('timeupdate', () => {
     bar.value = audio.currentTime;
     cur.textContent = formatTime(audio.currentTime);
   });
 
-  /* 드래그 UX */
-  ['mousedown','touchstart'].forEach(e =>
-    bar.addEventListener(e, () => {
+  /* 드래그 시작 */
+  ['mousedown', 'touchstart'].forEach(evt =>
+    bar.addEventListener(evt, () => {
       wasPlaying = !audio.paused;
       audio.pause();
     })
   );
 
+  /* 드래그 중 */
   bar.addEventListener('input', () => {
     audio.currentTime = bar.value;
     cur.textContent = formatTime(bar.value);
   });
 
-  ['mouseup','touchend'].forEach(e =>
-    bar.addEventListener(e, () => {
+  /* 드래그 종료 */
+  ['mouseup', 'touchend'].forEach(evt =>
+    bar.addEventListener(evt, () => {
       if (wasPlaying) audio.play();
     })
   );
 
+  /* 재생 종료 */
   audio.addEventListener('ended', () => {
     btn.classList.remove('playing');
     bar.value = 0;
@@ -815,7 +823,7 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
 });
 
 /* ==================================================
-   날짜 자동 표시
+   4. 날짜 자동 출력
 ================================================== */
 document.querySelectorAll('.date').forEach(el => {
   const raw = el.dataset.date;
@@ -825,11 +833,11 @@ document.querySelectorAll('.date').forEach(el => {
   const week = ['일','월','화','수','목','금','토'];
 
   el.textContent =
-    `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${week[d.getDay()]}요일`;
+    `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${week[d.getDay()]}요일`;
 });
 
 /* ==================================================
-   채팅 검색
+   5. 채팅 검색
 ================================================== */
 const topBar      = document.querySelector('.top-bar');
 const searchTop   = document.querySelector('.search-top');
@@ -885,28 +893,21 @@ searchInput.addEventListener('input', () => {
     }
   });
 
-  if (results.length) {
-    moveToResult(0);
-  } else {
-    countEl.textContent = '0 / 0';
-  }
+  results.length
+    ? moveToResult(0)
+    : (countEl.textContent = '0 / 0');
 });
 
-/* 이전 */
-searchPrev.addEventListener('click', () => {
+/* 이전 / 다음 */
+searchPrev.addEventListener('click', () => move(-1));
+searchNext.addEventListener('click', () => move(1));
+
+function move(step) {
   if (!results.length) return;
-  current = (current - 1 + results.length) % results.length;
+  current = (current + step + results.length) % results.length;
   moveToResult(current);
-});
+}
 
-/* 다음 */
-searchNext.addEventListener('click', () => {
-  if (!results.length) return;
-  current = (current + 1) % results.length;
-  moveToResult(current);
-});
-
-/* 결과 이동 */
 function moveToResult(index) {
   results[index].scrollIntoView({
     behavior: 'smooth',
@@ -921,7 +922,6 @@ function clearHighlight() {
     bubble.innerHTML = bubble.textContent;
   });
 }
-
 </script>
 
 </body>
