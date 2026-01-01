@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>2021.07.05</title>
+  <title>2021.07.17</title>
 
   <style>
     body {
@@ -345,7 +345,7 @@
   </div>
 
   <!-- 날짜 -->
-  <div class="date">2021년 7월 23일 수요일</div>
+  <div class="date">2021년 7월 17일 토요일</div>
 
   <!-- 채팅 -->
   <div class="chat">
@@ -423,7 +423,7 @@
 
     <div class="bubble-row">
       <div class="voice-bubble">
-<button class="voice-btn">
+<button class="voice-btn" aria-label="음성 메시지 재생">
   <span></span>
 </button>
 
@@ -431,7 +431,10 @@
 
         <span class="voice-time">0:00</span>
 
-        <audio src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"></audio>
+<audio
+  src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"
+  preload="metadata">
+</audio>
       </div>
 
       <div class="time">오후 9:14</div>
@@ -472,10 +475,12 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     return `${m}:${s.toString().padStart(2, '0')}`;
   };
 
-  /* 음성 길이 표시 */
-  audio.addEventListener('loadedmetadata', () => {
-    time.textContent = formatTime(audio.duration);
-  });
+/* 음성 길이 표시 + 초기화 */
+audio.addEventListener('loadedmetadata', () => {
+  bar.max = 100;      // 진행바 최대값
+  bar.value = 0;     // 시작은 0
+  time.textContent = formatTime(audio.duration); // 실제 길이
+});
 
   /* 재생 / 일시정지 */
   btn.addEventListener('click', () => {
