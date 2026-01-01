@@ -7,40 +7,37 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
 }
 
-/* ===================== */
-/* 상단바 */
-/* ===================== */
-.top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 52px;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  z-index: 1000;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-}
+  /* 상단바 */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
 .back-btn {
+  position: absolute;
+  left: 14px;
   font-size: 28px;
   font-weight: 300;
   color: #333;
-  text-decoration: none;
   cursor: pointer;
+  user-select: none;
+  text-decoration: none; /* ← 이거 추가 */
 }
 
-.chat-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: 600;
-}
+    .chat-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
 
 .top-right {
   display: flex;
