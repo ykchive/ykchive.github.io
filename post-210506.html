@@ -616,11 +616,13 @@ document.querySelectorAll('.date').forEach(el => {
   const raw = el.dataset.date;
   if (!raw) return;
 
-  const d = new Date(raw);
+  const [y, m, d] = raw.split('-').map(Number);
+  const date = new Date(y, m - 1, d); // ← 핵심
+
   const week = ['일','월','화','수','목','금','토'];
 
   el.textContent =
-    `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${week[d.getDay()]}요일`;
+    `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
 });
   
 </script>
