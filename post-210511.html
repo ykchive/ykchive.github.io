@@ -426,23 +426,6 @@ body {
 </div>
 
 <script>
-
-/* ===================== */
-/* 사진 전체보기 */
-/* ===================== */
-const viewer = document.getElementById('photoViewer');
-const viewerImg = document.getElementById('photoViewerImg');
-const photos = Array.from(document.querySelectorAll('.photo'));
-
-let currentIndex = 0;
-let startX = 0;
-
-/* 열기 */
-photos.forEach((img, i) => {
-  img.addEventListener('click', () => {
-    currentIndex = i;
-    openViewer(img.src<script>
-
 /* ===================== */
 /* 사진 전체보기 */
 /* ===================== */
@@ -471,7 +454,6 @@ function openViewer(src) {
 function closeViewer() {
   viewer.classList.remove('show');
   document.body.style.overflow = '';
-
   setTimeout(() => {
     viewerImg.src = '';
   }, 200);
@@ -479,26 +461,18 @@ function closeViewer() {
 
 /* 배경 클릭 → 닫기 */
 viewer.addEventListener('click', e => {
-  if (e.target === viewer) {
-    closeViewer();
-  }
+  if (e.target === viewer) closeViewer();
 });
 
-/* ===================== */
 /* 좌우 스와이프 */
-/* ===================== */
 viewerImg.addEventListener('touchstart', e => {
   startX = e.touches[0].clientX;
 });
 
 viewerImg.addEventListener('touchend', e => {
-  const endX = e.changedTouches[0].clientX;
-  const diff = startX - endX;
-
+  const diff = startX - e.changedTouches[0].clientX;
   if (Math.abs(diff) < 50) return;
-
-  if (diff > 0) nextPhoto();
-  else prevPhoto();
+  diff > 0 ? nextPhoto() : prevPhoto();
 });
 
 function nextPhoto() {
@@ -515,25 +489,24 @@ function prevPhoto() {
   }
 }
 
-
+/* ===================== */
+/* 음성 메시지 */
+/* ===================== */
 document.querySelectorAll('.voice-bubble').forEach(bubble => {
-  /* ===== 요소 연결 ===== */
   const audio = bubble.querySelector('audio');
   const btn   = bubble.querySelector('.voice-btn');
   const bar   = bubble.querySelector('.voice-bar');
   const cur   = bubble.querySelector('.voice-current');
   const total = bubble.querySelector('.voice-total');
 
-  let wasPlaying = false; // 드래그 전 재생 상태 기억
+  let wasPlaying = false;
 
-  /* ===== 시간 포맷 ===== */
   const format = s => {
     const m = Math.floor(s / 60);
     const sec = Math.floor(s % 60);
     return `${m}:${sec.toString().padStart(2, '0')}`;
   };
 
-  /* ===== 메타데이터 로드 ===== */
   audio.addEventListener('loadedmetadata', () => {
     bar.min = 0;
     bar.max = audio.duration;
@@ -542,9 +515,7 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     total.textContent = format(audio.duration);
   });
 
-  /* ===== 재생 / 일시정지 ===== */
   btn.addEventListener('click', () => {
-    // 다른 음성 멈추기
     document.querySelectorAll('audio').forEach(a => {
       if (a !== audio) a.pause();
     });
@@ -561,13 +532,11 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     }
   });
 
-  /* ===== 재생 중 시간 업데이트 ===== */
   audio.addEventListener('timeupdate', () => {
     bar.value = audio.currentTime;
     cur.textContent = format(audio.currentTime);
   });
 
-  /* ===== 재생바 드래그 UX ===== */
   bar.addEventListener('mousedown', () => {
     wasPlaying = !audio.paused;
     audio.pause();
@@ -591,7 +560,6 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     if (wasPlaying) audio.play();
   });
 
-  /* ===== 재생 종료 ===== */
   audio.addEventListener('ended', () => {
     btn.classList.remove('playing');
     bar.value = 0;
@@ -599,20 +567,19 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
   });
 });
 
-/* ===== 날짜 자동 생성 ===== */
+/* ===================== */
+/* 날짜 + 요일 자동 생성 */
+/* ===================== */
 document.querySelectorAll('.date').forEach(el => {
   const raw = el.dataset.date;
   if (!raw) return;
 
   const [y, m, d] = raw.split('-').map(Number);
-  const date = new Date(y, m - 1, d); // ← 핵심
-
+  const date = new Date(y, m - 1, d); // ⚠️ month - 1 필수
   const week = ['일','월','화','수','목','금','토'];
 
-  el.textContent =
-    `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
+  el.textContent = `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
 });
-  
 </script>
     
 </body>
