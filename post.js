@@ -3,12 +3,12 @@
 /* ===================== */
 const viewer = document.getElementById('photoViewer');
 const viewerImg = document.getElementById('photoViewerImg');
-const photos = Array.from(document.querySelectorAll('.photo'));
+const photos = Array.from(document.querySelectorAll('.chat .photo'));
 
 let currentIndex = 0;
 let startX = 0;
 
-/* 열기 */
+/* 사진 클릭 → 열기 */
 photos.forEach((img, i) => {
   img.addEventListener('click', () => {
     currentIndex = i;
@@ -26,17 +26,19 @@ function openViewer(src) {
 function closeViewer() {
   viewer.classList.remove('show');
   document.body.style.overflow = '';
-
   setTimeout(() => {
     viewerImg.src = '';
-  }, 200);
+  }, 150);
 }
 
 /* 배경 클릭 → 닫기 */
 viewer.addEventListener('click', e => {
-  if (e.target === viewer) {
-    closeViewer();
-  }
+  if (e.target === viewer) closeViewer();
+});
+
+/* 이미지 클릭 시 닫히지 않게 */
+viewerImg.addEventListener('click', e => {
+  e.stopPropagation();
 });
 
 /* ===================== */
@@ -51,9 +53,7 @@ viewerImg.addEventListener('touchend', e => {
   const diff = startX - endX;
 
   if (Math.abs(diff) < 50) return;
-
-  if (diff > 0) nextPhoto();
-  else prevPhoto();
+  diff > 0 ? nextPhoto() : prevPhoto();
 });
 
 function nextPhoto() {
@@ -70,25 +70,28 @@ function prevPhoto() {
   }
 }
 
-
+/* ===================== */
+/* 음성 메시지 */
+/* ===================== */
 document.querySelectorAll('.voice-bubble').forEach(bubble => {
-  /* ===== 요소 연결 ===== */
   const audio = bubble.querySelector('audio');
+  if (!audio) return;
+
   const btn   = bubble.querySelector('.voice-btn');
   const bar   = bubble.querySelector('.voice-bar');
   const cur   = bubble.querySelector('.voice-current');
   const total = bubble.querySelector('.voice-total');
 
-  let wasPlaying = false; // 드래그 전 재생 상태 기억
+  let wasPlaying = false;
 
-  /* ===== 시간 포맷 ===== */
+  /* 시간 포맷 */
   const format = s => {
     const m = Math.floor(s / 60);
     const sec = Math.floor(s % 60);
     return `${m}:${sec.toString().padStart(2, '0')}`;
   };
 
-  /* ===== 메타데이터 로드 ===== */
+  /* 메타데이터 */
   audio.addEventListener('loadedmetadata', () => {
     bar.min = 0;
     bar.max = audio.duration;
@@ -97,9 +100,9 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     total.textContent = format(audio.duration);
   });
 
-  /* ===== 재생 / 일시정지 ===== */
+  /* 재생 / 일시정지 */
   btn.addEventListener('click', () => {
-    // 다른 음성 멈추기
+    // 다른 음성 전부 정지
     document.querySelectorAll('audio').forEach(a => {
       if (a !== audio) a.pause();
     });
@@ -116,52 +119,37 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     }
   });
 
-  /* ===== 재생 중 시간 업데이트 ===== */
+  /* 재생 중 */
   audio.addEventListener('timeupdate', () => {
     bar.value = audio.currentTime;
     cur.textContent = format(audio.currentTime);
   });
 
-  /* ===== 재생바 드래그 UX ===== */
-  bar.addEventListener('mousedown', () => {
+  /* 드래그 UX */
+  const pauseForDrag = () => {
     wasPlaying = !audio.paused;
     audio.pause();
-  });
+  };
 
-  bar.addEventListener('touchstart', () => {
-    wasPlaying = !audio.paused;
-    audio.pause();
-  });
+  bar.addEventListener('mousedown', pauseForDrag);
+  bar.addEventListener('touchstart', pauseForDrag);
 
   bar.addEventListener('input', () => {
     audio.currentTime = bar.value;
     cur.textContent = format(bar.value);
   });
 
-  bar.addEventListener('mouseup', () => {
+  const resumeAfterDrag = () => {
     if (wasPlaying) audio.play();
-  });
+  };
 
-  bar.addEventListener('touchend', () => {
-    if (wasPlaying) audio.play();
-  });
+  bar.addEventListener('mouseup', resumeAfterDrag);
+  bar.addEventListener('touchend', resumeAfterDrag);
 
-  /* ===== 재생 종료 ===== */
+  /* 종료 */
   audio.addEventListener('ended', () => {
     btn.classList.remove('playing');
     bar.value = 0;
     cur.textContent = '0:00';
   });
-});
-
-/* ===== 날짜 자동 생성 ===== */
-document.querySelectorAll('.date').forEach(el => {
-  const raw = el.dataset.date;
-  if (!raw) return;
-
-  const d = new Date(raw);
-  const week = ['일','월','화','수','목','금','토'];
-
-  el.textContent =
-    `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${week[d.getDay()]}요일`;
 });
