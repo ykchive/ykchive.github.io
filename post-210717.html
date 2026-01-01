@@ -120,48 +120,31 @@
   min-width: 160px;
 }
 
-.voice-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #333;
-  color: #fff;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.voice-wave {
-  flex: 1;
-  height: 18px;
-  background: linear-gradient(
-    to right,
-    #bbb 20%,
-    #ddd 20%,
-    #ddd 40%,
-    #bbb 40%,
-    #bbb 60%,
-    #ddd 60%,
-    #ddd 80%,
-    #bbb 80%
-  );
-  border-radius: 6px;
-  opacity: 0.8;
-}
-
 .voice-time {
   font-size: 12px;
   color: #666;
   white-space: nowrap;
+  min-width: 36px;
+  text-align: right;
 }
 
-/* 오디오 숨김 */
-.voice-bubble audio {
-  display: none;
+    .voice-bubble.simple {
+  padding: 8px 10px;
+  align-items: center;
+  gap: 8px;
 }
+
+.voice-bubble.simple audio {
+  display: block;
+  width: 160px;
+  height: 26px;
+}
+
+.voice-bubble.simple .voice-time {
+  font-size: 12px;
+  color: #666;
+}
+
 
 /* 시스템 다크모드 자동 연동 */
 @media (prefers-color-scheme: dark) {
@@ -235,6 +218,11 @@
     color: #bdbdbd;
   }
 
+}
+    @media (prefers-color-scheme: dark) {
+  .voice-bubble.simple .voice-time {
+    color: #bdbdbd;
+  }
 }
 
 .post-nav {
@@ -344,25 +332,25 @@
       </div>
     </div>
 
-      <!-- 음성 메시지 -->
+<!-- 음성 메시지 (심플) -->
 <div class="message">
   <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
   <div class="content">
     <div class="name">강영현</div>
 
-      <div class="bubble-row">
-        <div class="voice-bubble">
-          <div class="voice-btn" onclick="toggleVoice(this)">▶</div>
-          <div class="voice-wave"></div>
-          <div class="voice-time">0:18</div>
-
-          <!-- ✅ GitHub raw 링크 권장 -->
-          <audio src="https://github.com/ykchive/ykchive.github.io/blob/main/voice/210717.m4a"></audio>
-        </div>
-        <div class="time">오후 10:06</div>
+    <div class="bubble-row">
+      <div class="voice-bubble simple">
+        <audio
+          src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"
+          controls
+          preload="metadata">
+        </audio>
+        <div class="voice-time">0:00</div>
       </div>
+      <div class="time">오후 9:14</div>
     </div>
   </div>
+</div>
 
         <!-- 텍스트 -->
     <div class="message">
@@ -384,21 +372,30 @@
 </div>
 
 <script>
-  function toggleVoice(btn) {
-    const audio = btn.closest('.voice-bubble').querySelector('audio');
-
-    if (audio.paused) {
-      audio.play();
-      btn.innerHTML = '❚❚';
-    } else {
-      audio.pause();
-      btn.innerHTML = '▶';
-    }
-
-    audio.onended = () => {
-      btn.innerHTML = '▶';
-    };
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
   }
+
+  document.querySelectorAll('.voice-bubble.simple audio').forEach(audio => {
+    const timeEl = audio.parentElement.querySelector('.voice-time');
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeEl.textContent = formatTime(audio.duration);
+    });
+  });
+
+  const audios = document.querySelectorAll('audio');
+
+  audios.forEach(audio => {
+    audio.addEventListener('play', () => {
+      audios.forEach(a => {
+        if (a !== audio) a.pause();
+      });
+    });
+  });
+  
 </script>
 
 </body>
