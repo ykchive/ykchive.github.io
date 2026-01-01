@@ -49,26 +49,34 @@ body {
 }
 
 /* ===================== */
-/* 날짜 */
+/* 날짜 구분 (안 짤리고, 간격 좁게) */
 /* ===================== */
 .date {
-  margin: 10px 0;
-  font-size: 11px;
-  color: #999;
+  position: relative;
+  margin: 12px 0 10px;
+  padding-top: 10px;
+
   text-align: center;
+  font-size: 12px;
+  color: #999;
 }
 
-.date span {
-  background: #f7f7f7;
-  padding: 2px 8px;
-  border-radius: 10px;
+/* 날짜 위 얇은 구분선 */
+.date::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.15);
 }
 
 /* ===================== */
 /* 채팅 영역 */
 /* ===================== */
 .chat {
-  padding: 0 14px 40px;
+  padding: 80px 14px 40px; /* ⬅️ 위쪽 padding만 늘림 */
 }
 
 .message {
@@ -458,5 +466,15 @@ body {
 @media (prefers-color-scheme: dark) {
   .date {
     border-top: 1px solid #333;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .date {
+    color: #888;
+  }
+
+  .date::before {
+    background: rgba(255, 255, 255, 0.18);
   }
 }
