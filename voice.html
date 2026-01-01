@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>음성 메시지</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  background: #fff;
+}
+
+/* 상단바 */
+.top-bar {
+  position: sticky;
+  top: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  padding: 0 16px;
+  z-index: 10;
+}
+
+.back {
+  font-size: 22px;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.title {
+  font-weight: 600;
+}
+
+/* 리스트 */
+.list {
+  padding: 16px;
+}
+
+.date {
+  font-size: 14px;
+  color: #666;
+  margin: 18px 0 8px;
+}
+
+.voice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f4f4f4;
+  margin-bottom: 8px;
+}
+
+.voice button {
+  border: none;
+  background: none;
+  font-size: 18px;
+}
+
+.voice input {
+  flex: 1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+  <a href="index.html" class="back">‹</a>
+  <div class="title">음성 메시지</div>
+</div>
+
+<div class="list">
+
+  <div class="date">2021.07.21</div>
+
+  <div class="voice">
+    <button onclick="this.nextElementSibling.play()">▶︎</button>
+    <input type="range">
+    <audio src="voice/210721-1.mp3"></audio>
+  </div>
+
+  <div class="voice">
+    <button onclick="this.nextElementSibling.play()">▶︎</button>
+    <input type="range">
+    <audio src="voice/210721-2.mp3"></audio>
+  </div>
+
+  <div class="date">2021.07.22</div>
+
+  <div class="voice">
+    <button onclick="this.nextElementSibling.play()">▶︎</button>
+    <input type="range">
+    <audio src="voice/210722-1.mp3"></audio>
+  </div>
+
+</div>
+
+</body>
+</html>
