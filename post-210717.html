@@ -185,26 +185,32 @@
 .voice-bubble {
   background: #ededed;
   border-radius: 16px;
-  padding: 8px 12px;
+  padding: 8px 10px;     /* 좌우 패딩 살짝 줄임 */
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 220px;
+  gap: 4px;              /* 간격 확 줄이기 */
+  min-width: 200px;
 }
 
 .voice-btn {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: #fff;
   border: none;
   cursor: pointer;
-
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 13px;   /* ▶ ❚❚ 크기 같이 줄이기 */
+  padding: 0;
 }
 
+.voice-btn {
+  color: #000;   /* 아이콘 색 검정 */
+}
+    
 .voice-btn span {
   font-size: 13px;
   line-height: 1;
@@ -435,9 +441,10 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
   });
 
   audio.addEventListener('timeupdate', () => {
-    bar.value = (audio.currentTime / audio.duration) * 100;
-    cur.textContent = format(audio.currentTime);
-  });
+  if (!audio.duration) return;
+  bar.value = (audio.currentTime / audio.duration) * 100;
+  cur.textContent = format(audio.currentTime);
+});
 
   bar.addEventListener('input', () => {
     audio.currentTime = (bar.value / 100) * audio.duration;
@@ -450,6 +457,11 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     cur.textContent = '0:00';
   });
 });
+
+    bar.addEventListener('change', () => {
+  audio.currentTime = (bar.value / 100) * audio.duration;
+});
+    
 </script>
 
 
