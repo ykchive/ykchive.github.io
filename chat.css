@@ -23,30 +23,34 @@ body {
   padding: 0 12px;
 }
 
-/* 뒤로가기 */
+/* 왼쪽 */
 .back-btn {
   font-size: 28px;
   font-weight: 300;
   color: #333;
   text-decoration: none;
   cursor: pointer;
+  z-index: 1;
 }
 
-/* 제목 (완전 중앙 고정) */
+/* 중앙 제목 (완전 고정) */
 .chat-title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   font-size: 16px;
   font-weight: 600;
+  pointer-events: none; /* ← 아이콘 클릭 방해 X */
 }
 
-/* 오른쪽 아이콘 묶음 */
+/* 오른쪽 아이콘 */
 .top-right {
   display: flex;
   align-items: center;
   gap: 14px;
+  z-index: 1;
 }
+
 /* ===================== */
 /* 날짜 구분 (안 짤리고, 간격 좁게) */
 /* ===================== */
