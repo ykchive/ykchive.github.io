@@ -263,6 +263,29 @@
   }
 }
 
+    /* ===== 사진 전체보기 ===== */
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.photo-viewer img {
+  max-width: 92%;
+  max-height: 92%;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* 열렸을 때 */
+.photo-viewer.show {
+  display: flex;
+}
+
   </style>
 </head>
 <body>
@@ -420,7 +443,32 @@
       btn.innerHTML = '▶';
     };
   }
+
+/* ===== 사진 클릭 → 전체보기 ===== */
+const viewer = document.getElementById('photoViewer');
+const viewerImg = document.getElementById('photoViewerImg');
+
+document.querySelectorAll('.photo').forEach(img => {
+  img.addEventListener('click', () => {
+    viewerImg.src = img.src;
+    viewer.classList.add('show');
+    document.body.style.overflow = 'hidden'; // 스크롤 잠금
+  });
+});
+
+/* 아무 곳이나 누르면 닫기 */
+viewer.addEventListener('click', () => {
+  viewer.classList.remove('show');
+  viewerImg.src = '';
+  document.body.style.overflow = '';
+});
+  
 </script>
 
+<!-- 사진 뷰어 -->
+<div class="photo-viewer" id="photoViewer">
+  <img id="photoViewerImg" alt="">
+</div>
+    
 </body>
 </html>
