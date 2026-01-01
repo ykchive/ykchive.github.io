@@ -1,39 +1,195 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photos</title>
-<link rel="stylesheet" href="photo.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>사진 모아보기</title>
+
+<style>
+/* ===================== */
+/* 기본 */
+/* ===================== */
+body {
+  margin: 0;
+  background: #f7f7f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+}
+
+/* ===================== */
+/* 상단바 */
+/* ===================== */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.back-btn {
+  position: absolute;
+  left: 14px;
+  font-size: 28px;
+  text-decoration: none;
+  color: #333;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ===================== */
+/* 앨범 */
+/* ===================== */
+.album {
+  padding: 70px 10px 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.album img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ===================== */
+/* 사진 뷰어 */
+/* ===================== */
+.viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  flex-direction: column;
+  z-index: 2000;
+}
+
+.viewer.show {
+  display: flex;
+}
+
+/* 상단 정보 */
+.viewer-top {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.viewer-top .go-chat {
+  font-size: 22px;
+  text-decoration: none;
+  color: #fff;
+}
+
+/* 이미지 */
+.viewer-img {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer-img img {
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+}
+
+/* ===================== */
+/* 다크모드 */
+/* ===================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eee;
+  }
+
+  .top-bar {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .back-btn,
+  .title {
+    color: #eee;
+  }
+}
+</style>
 </head>
+
 <body>
 
 <!-- 상단바 -->
-<div class="photo-top">
-  <a href="index.html" class="back">‹</a>
-  <span>사진</span>
+<div class="top-bar">
+  <a href="index.html#toggle" class="back-btn">‹</a>
+  <div class="title">사진 모아보기</div>
 </div>
 
 <!-- 앨범 -->
 <div class="album">
-  <img src="https://i.postimg.cc/Z5qB10L0/IMG-7513.jpg.jpg"
-       data-date="2021.07.21"
-       data-link="post-210721.html">
+  <!-- 예시 사진들 -->
+  <img src="https://i.postimg.cc/Z5qB10L0/IMG-7513.jpg"
+       data-date="2021.05.06"
+       data-link="post-210506.html">
 
   <img src="https://i.postimg.cc/9XtD0y8T/IMG-7514.jpg"
-       data-date="2021.07.20"
-       data-link="post-210720.html">
+       data-date="2021.05.06"
+       data-link="post-210506.html">
 </div>
 
 <!-- 사진 뷰어 -->
 <div class="viewer" id="viewer">
   <div class="viewer-top">
     <span id="viewerDate"></span>
-    <a id="viewerLink">➔</a>
+    <a id="viewerLink" class="go-chat">➔</a>
   </div>
-  <img id="viewerImg">
+  <div class="viewer-img">
+    <img id="viewerImg">
+  </div>
 </div>
 
-<script src="photo.js"></script>
+<script>
+const viewer = document.getElementById('viewer');
+const viewerImg = document.getElementById('viewerImg');
+const viewerDate = document.getElementById('viewerDate');
+const viewerLink = document.getElementById('viewerLink');
+
+/* 사진 클릭 */
+document.querySelectorAll('.album img').forEach(img => {
+  img.addEventListener('click', () => {
+    viewerImg.src = img.src;
+    viewerDate.textContent = img.dataset.date;
+    viewerLink.href = img.dataset.link;
+
+    viewer.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+/* 바깥 클릭 시 닫기 */
+viewer.addEventListener('click', e => {
+  if (e.target === viewer) {
+    viewer.classList.remove('show');
+    viewerImg.src = '';
+    document.body.style.overflow = '';
+  }
+});
+</script>
+
 </body>
 </html>
