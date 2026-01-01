@@ -80,6 +80,7 @@ body {
   font-size: 11px;
   color: #aaa;
   margin-left: 6px;
+  white-space: nowrap; /* ← 이거 꼭 */
 }
 
 /* 사진 */
@@ -100,12 +101,24 @@ body {
 }
 
 .voice-btn {
-  border: none;
-  background: #fff;
-  border-radius: 50%;
   width: 26px;
   height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.voice-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #000;
+  display: block;
 }
 
 .voice-btn .pause {
@@ -122,6 +135,26 @@ body {
 
 .voice-bar {
   flex: 1;
+  height: 4px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 2px;
+}
+
+.voice-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+}
+
+.voice-current,
+.voice-total {
+  font-size: 11px;
+  min-width: 34px;
+  text-align: center;
+  color: #666;
 }
 
 /* 하단 네비 */
@@ -148,4 +181,85 @@ body {
 
 .photo {
   display: block;
+}
+
+
+/* ===== 다크모드 ===== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eaeaea;
+  }
+
+  /* 상단바 */
+  .top-bar {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .chat-title,
+  .back-btn {
+    color: #eaeaea;
+  }
+
+  /* 날짜 */
+  .date {
+    color: #888;
+  }
+
+  /* 이름 */
+  .name {
+    color: #bdbdbd;
+  }
+
+  /* 말풍선 */
+  .bubble {
+    background: #2a2a2a;
+    color: #f1f1f1;
+  }
+
+  /* 시간 */
+  .time {
+    color: #9a9a9a;
+  }
+
+  /* 사진 */
+  .photo {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  /* 음성 메시지 */
+  .voice-bubble {
+    background: #2a2a2a;
+  }
+
+  .voice-btn {
+    background: #444;
+  }
+
+  .voice-btn svg {
+    fill: #fff;
+  }
+
+  .voice-bar {
+    background: #555;
+  }
+
+  .voice-bar::-webkit-slider-thumb {
+    background: #ddd;
+  }
+
+  .voice-current,
+  .voice-total {
+    color: #bdbdbd;
+  }
+
+  /* 하단 네비 */
+  .post-nav {
+    border-top: 1px solid #2a2a2a;
+  }
+
+  .post-nav a {
+    color: #bbb;
+  }
 }
