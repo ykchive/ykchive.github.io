@@ -185,10 +185,10 @@
 .voice-bubble {
   background: #ededed;
   border-radius: 16px;
-  padding: 8px 10px;     /* 좌우 패딩 살짝 줄임 */
+  padding: 6px 8px;     /* 좌우 패딩 살짝 줄임 */
   display: flex;
   align-items: center;
-  gap: 4px;              /* 간격 확 줄이기 */
+  gap: 2px;              /* 간격 확 줄이기 */
   min-width: 200px;
 }
 
@@ -203,7 +203,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;   /* ▶ ❚❚ 크기 같이 줄이기 */
+  font-size: 10px;   /* ▶ ❚❚ 크기 같이 줄이기 */
   padding: 0;
 }
 
@@ -403,8 +403,7 @@
   <a href="post-210717.html" class="next">›</a>
 </div>
 
-
-  <script>
+<script>
 document.querySelectorAll('.voice-bubble').forEach(bubble => {
   const audio = bubble.querySelector('audio');
   const btn   = bubble.querySelector('.voice-btn');
@@ -418,11 +417,16 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     return `${m}:${sec.toString().padStart(2, '0')}`;
   };
 
+  /* 메타데이터 로드 → 재생바 세팅 */
   audio.addEventListener('loadedmetadata', () => {
+    bar.min = 0;
+    bar.max = audio.duration;      // ⭐ 핵심
+    bar.value = 0;
     cur.textContent = '0:00';
     total.textContent = format(audio.duration);
   });
 
+  /* 재생 / 일시정지 */
   btn.addEventListener('click', () => {
     document.querySelectorAll('audio').forEach(a => {
       if (a !== audio) a.pause();
@@ -440,30 +444,26 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
     }
   });
 
+  /* 재생 중 → 바 & 현재시간 업데이트 */
   audio.addEventListener('timeupdate', () => {
-  if (!audio.duration) return;
-  bar.value = (audio.currentTime / audio.duration) * 100;
-  cur.textContent = format(audio.currentTime);
-});
-
-  bar.addEventListener('input', () => {
-    audio.currentTime = (bar.value / 100) * audio.duration;
+    bar.value = audio.currentTime;
     cur.textContent = format(audio.currentTime);
   });
 
+  /* ⭐⭐⭐ 재생바 드래그 → 해당 위치부터 재생 */
+  bar.addEventListener('input', () => {
+    audio.currentTime = bar.value;
+    cur.textContent = format(bar.value);
+  });
+
+  /* 재생 끝 */
   audio.addEventListener('ended', () => {
     btn.classList.remove('playing');
     bar.value = 0;
     cur.textContent = '0:00';
   });
 });
-
-    bar.addEventListener('change', () => {
-  audio.currentTime = (bar.value / 100) * audio.duration;
-});
-    
 </script>
-
-
+  
 </body>
 </html>
