@@ -274,64 +274,28 @@
 }
 
 /* 파형 아이콘 */
-.voice-btn::before,
-.voice-btn::after,
-.voice-btn span {
+/* 기본 = 재생(▶) */
+.voice-btn::before {
   content: '';
   position: absolute;
-  bottom: 8px;
-  width: 3px;
-  background: #333;
-  border-radius: 2px;
+  left: 13px;
+  top: 9px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid #333;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
 }
 
-.voice-btn::before { left: 10px; height: 8px; }
-.voice-btn::after  { left: 18px; height: 10px; }
-.voice-btn span {
-  left: 14px;
-  height: 14px;
-}
-
-/* 재생 중 애니메이션 */
+/* 재생 중 = 일시정지(❚❚) */
 .voice-btn.playing::before {
-  animation: wave 1s infinite;
-}
-.voice-btn.playing span {
-  animation: wave 1s infinite .15s;
-}
-.voice-btn.playing::after {
-  animation: wave 1s infinite .3s;
-}
-
-/* 진행 바 */
-.voice-bar {
-  flex: 1;
-  height: 4px;
-  appearance: none;
-  background: #ccc;
-  border-radius: 2px;
-}
-
-.voice-bar::-webkit-slider-thumb {
-  appearance: none;
-  width: 10px;
-  height: 10px;
+  border: none;
+  width: 4px;
+  height: 14px;
   background: #333;
-  border-radius: 50%;
-}
-
-/* 시간 */
-.voice-time {
-  font-size: 12px;
-  color: #666;
-  min-width: 36px;
-}
-
-/* 파형 애니메이션 */
-@keyframes wave {
-  0% { height: 6px; }
-  50% { height: 16px; }
-  100% { height: 6px; }
+  left: 11px;
+  top: 9px;
+  box-shadow: 8px 0 0 #333;
 }
     
   </style>
@@ -468,21 +432,21 @@ document.querySelectorAll('.voice-bubble').forEach(bubble => {
   const bar   = bubble.querySelector('.voice-bar');
   const time  = bubble.querySelector('.voice-time');
 
-  /* 시간 포맷 */
+  /* 시간 포맷 (초 → mm:ss) */
   const formatTime = sec => {
     const m = Math.floor(sec / 60);
     const s = Math.floor(sec % 60);
     return `${m}:${s.toString().padStart(2, '0')}`;
   };
 
-/* 음성 길이 표시 + 초기화 */
-audio.addEventListener('loadedmetadata', () => {
-  bar.max = 100;      // 진행바 최대값
-  bar.value = 0;     // 시작은 0
-  time.textContent = formatTime(audio.duration); // 실제 길이
-});
+  /* 메타데이터 로드 (총 길이 표시) */
+  audio.addEventListener('loadedmetadata', () => {
+    bar.max = 100;
+    bar.value = 0;
+    time.textContent = formatTime(audio.duration);
+  });
 
-  /* 재생 / 일시정지 */
+  /* 재생 / 일시정지 버튼 */
   btn.addEventListener('click', () => {
     // 다른 음성 전부 정지
     document.querySelectorAll('audio').forEach(a => {
@@ -501,23 +465,25 @@ audio.addEventListener('loadedmetadata', () => {
     }
   });
 
-  /* 진행률 업데이트 */
+  /* 재생 중 → 진행바 + 현재 시간 */
   audio.addEventListener('timeupdate', () => {
     bar.value = (audio.currentTime / audio.duration) * 100;
+    time.textContent = formatTime(audio.currentTime);
   });
 
-  /* 진행바 드래그 */
+  /* 진행바 드래그 → 그 위치로 이동 */
   bar.addEventListener('input', () => {
     audio.currentTime = (bar.value / 100) * audio.duration;
   });
 
-  /* 재생 종료 */
+  /* 재생 끝 */
   audio.addEventListener('ended', () => {
     btn.classList.remove('playing');
     bar.value = 0;
+    time.textContent = formatTime(audio.duration);
   });
 });
-</script>
+</script>>
 
 </body>
 </html>
