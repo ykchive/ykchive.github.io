@@ -134,13 +134,24 @@ body {
     background: rgba(0,0,0,0.95);
   }
 
-  .viewer-top {
-    color: #fff;
-  }
-
   .viewer-top .go-chat {
     color: #fff;
   }
+}
+
+  .viewer-top {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  color: #fff;
+  font-size: 14px;
+}
+
+#viewerCounter {
+  font-size: 13px;
+  opacity: 0.85;
 }
   
 </style>
@@ -167,10 +178,11 @@ body {
 
 <!-- 사진 뷰어 -->
 <div class="viewer" id="viewer">
-  <div class="viewer-top">
-    <span id="viewerDate"></span>
-    <a id="viewerLink" class="go-chat">➔</a>
-  </div>
+<div class="viewer-top">
+  <span id="viewerDate"></span>
+  <span id="viewerCounter"></span>
+  <a id="viewerLink" class="go-chat">➔</a>
+</div>
   <div class="viewer-img">
     <img id="viewerImg">
   </div>
@@ -181,20 +193,60 @@ const viewer = document.getElementById('viewer');
 const viewerImg = document.getElementById('viewerImg');
 const viewerDate = document.getElementById('viewerDate');
 const viewerLink = document.getElementById('viewerLink');
+const viewerCounter = document.getElementById('viewerCounter');
+
+const images = Array.from(document.querySelectorAll('.album img'));
+let currentIndex = 0;
+
+/* 뷰어 열기 */
+function openViewer(index) {
+  const img = images[index];
+  currentIndex = index;
+
+  viewerImg.src = img.src;
+  viewerDate.textContent = img.dataset.date;
+  viewerLink.href = img.dataset.link;
+  viewerCounter.textContent = `${index + 1} / ${images.length}`;
+
+  viewer.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
 
 /* 사진 클릭 */
-document.querySelectorAll('.album img').forEach(img => {
-  img.addEventListener('click', () => {
-    viewerImg.src = img.src;
-    viewerDate.textContent = img.dataset.date;
-    viewerLink.href = img.dataset.link;
-
-    viewer.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  });
+images.forEach((img, index) => {
+  img.addEventListener('click', () => openViewer(index));
 });
 
-/* 바깥 클릭 시 닫기 */
+/* 좌우 이동 */
+function showPrev() {
+  if (currentIndex > 0) {
+    openViewer(currentIndex - 1);
+  }
+}
+
+function showNext() {
+  if (currentIndex < images.length - 1) {
+    openViewer(currentIndex + 1);
+  }
+}
+
+/* 스와이프 */
+let startX = 0;
+
+viewer.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+
+viewer.addEventListener('touchend', e => {
+  const endX = e.changedTouches[0].clientX;
+  const diff = startX - endX;
+
+  if (Math.abs(diff) > 50) {
+    diff > 0 ? showNext() : showPrev();
+  }
+});
+
+/* 배경 클릭 시 닫기 */
 viewer.addEventListener('click', e => {
   if (e.target === viewer) {
     viewer.classList.remove('show');
@@ -203,6 +255,5 @@ viewer.addEventListener('click', e => {
   }
 });
 </script>
-
 </body>
 </html>
