@@ -3,6 +3,7 @@
 /* ===================== */
 body {
   margin: 0;
+  padding-top: 52px; /* ⬅️ post와 동일 */
   background: #f7f7f7;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
   overflow-x: hidden;
@@ -140,34 +141,25 @@ body {
 .date {
   position: relative;
   text-align: center;
-  margin-top: 20px;      /* 날짜끼리 간격 */
-  margin-bottom: 0;      /* ⭐ 아래 여백 제거 */
-  padding-top: 10px;     /* 선 ↔ 날짜 간격 */
+  margin-top: 24px;
+  margin-bottom: 0;
+  padding-top: 8px;        /* ⭐ 날짜를 선에 더 붙이기 */
   font-size: 12px;
   color: #999;
-  z-index: 1;
 }
 
 .date::before {
   content: "";
   position: absolute;
-  top: 0;                /* 날짜 위에 선 */
+  top: 0;
   left: 0;
   right: 0;
   height: 0.5px;
-  background: rgba(0, 0, 0, 0.15);
-  opacity: 0.6;
+  background: rgba(0, 0, 0, 0.1);  /* ⭐ 살짝만 톤 다운 */
 }
 
 .chat-wrap {
-  padding-top: calc(52px + env(safe-area-inset-top) + 8px);
-  padding-left: 14px;
-  padding-right: 14px;
-  padding-bottom: 40px;
-}
-
-.chat-wrap .date:first-child {
-  margin-top: 12px;
+  padding: 0;
 }
 
 /* ===================== */
@@ -176,6 +168,7 @@ body {
 .chat {
   display: flex;
   flex-direction: column;
+  padding: 0 14px 40px;
 }
 
 .message {
