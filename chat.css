@@ -141,7 +141,7 @@ body {
 .date {
   position: relative;
   text-align: center;
-  margin-top: 24px;
+  margin-top: 20px;
   margin-bottom: 0;
   padding-top: 8px;        /* ⭐ 날짜를 선에 더 붙이기 */
   font-size: 12px;
@@ -152,10 +152,10 @@ body {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  left: -14px;          /* ⭐ chat padding 무시 */
+  right: -14px;
   height: 0.5px;
-  background: rgba(0, 0, 0, 0.1);  /* ⭐ 살짝만 톤 다운 */
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .chat-wrap {
@@ -179,19 +179,19 @@ body {
 
 /* 날짜 다음 첫 메시지 */
 .date + .message {
-  margin-top: 18px;     /* ⭐ message 간격과 동일 */
+  margin-top: 20px;   /* ⭐ 날짜 전용 여백 */
 }
 
 .profile {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 10px;
   flex-shrink: 0;
+  margin-right: 8px;
 }
 
 .content {
-  max-width: 85%;
+  max-width: calc(85% - 2px);
 }
 
 .name {
@@ -203,6 +203,11 @@ body {
 .bubble-row {
   display: flex;
   align-items: flex-end;
+}
+
+.time {
+  position: relative;
+  top: -2px;          /* ⭐ 살짝 띄움 */
 }
 
 .bubble {
@@ -219,13 +224,6 @@ body {
   padding: 0;
   border-radius: 0;
   font-weight: 600;
-}
-
-.time {
-  font-size: 11px;
-  color: #aaa;
-  margin-left: 6px;
-  white-space: nowrap;
 }
 
 /* ===================== */
