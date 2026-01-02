@@ -6,37 +6,38 @@
 <title>음성 메시지</title>
 
 <style>
-/* =====================
-   기본 설정
-===================== */
+/* ===================== */
+/* 기본 설정 */
+/* ===================== */
 body {
   margin: 0;
+  padding-top: 52px;
   background: #f7f7f7;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
 }
 
-/* =====================
-   상단바
-===================== */
+/* ===================== */
+/* 상단바 */
+/* ===================== */
 .top-bar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: calc(52px + env(safe-area-inset-top));
-  padding: env(safe-area-inset-top) 12px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 52px;
   background: #fff;
   border-bottom: 1px solid #eee;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .back-btn {
   position: absolute;
-  left: 12px;
+  left: 14px;
   font-size: 28px;
+  font-weight: 300;
   color: #333;
   text-decoration: none;
 }
@@ -44,55 +45,30 @@ body {
 .chat-title {
   font-size: 16px;
   font-weight: 600;
+  color: #111;
 }
 
-/* =====================
-   채팅 영역
-===================== */
-.chat-wrap {
-  padding-top: calc(52px + env(safe-area-inset-top));
-}
-
-/* =====================
-   날짜
-===================== */
+/* ===================== */
+/* 날짜 */
+/* ===================== */
 .date {
-  position: relative;
   text-align: center;
-  margin-top: 20px;
-  padding-top: 10px;
+  margin: 20px 0 15px;
   font-size: 12px;
   color: #999;
-
-  /* 상단바 가림 방지 */
-  scroll-margin-top: calc(52px + env(safe-area-inset-top) + 8px);
 }
 
-.chat-wrap .date:first-child {
-  margin-top: 12px;
+/* ===================== */
+/* 채팅 */
+/* ===================== */
+.chat {
+  padding: 0 14px 40px;
 }
 
-.date::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0.5px;
-  background: rgba(0,0,0,0.15);
-}
-
-/* =====================
-   메시지
-===================== */
 .message {
   display: flex;
   align-items: flex-start;
-  margin: 18px 14px;
-}
-
-.date + .message {
-  margin-top: 18px;
+  margin-bottom: 18px;
 }
 
 .profile {
@@ -100,7 +76,6 @@ body {
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
-  flex-shrink: 0;
 }
 
 .content {
@@ -118,41 +93,6 @@ body {
   align-items: flex-end;
 }
 
-/* =====================
-   음성 메시지
-===================== */
-.voice-bubble {
-  background: #ededed;
-  border-radius: 16px;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 200px;
-}
-
-.voice-btn {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: none;
-  background: #fff;
-  cursor: pointer;
-}
-
-.voice-current,
-.voice-total {
-  font-size: 11px;
-  color: #666;
-  min-width: 32px;
-  text-align: center;
-}
-
-.voice-bar {
-  flex: 1;
-  height: 4px;
-}
-
 .time {
   font-size: 11px;
   color: #aaa;
@@ -160,11 +100,73 @@ body {
   white-space: nowrap;
 }
 
-/* =====================
-   다크모드
-===================== */
+/* ===================== */
+/* 음성 메시지 */
+/* ===================== */
+.voice-bubble {
+  background: #ededed;
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 200px;
+}
+
+.voice-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.voice-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #000;
+}
+
+.voice-btn .pause { display: none; }
+.voice-btn.playing .play { display: none; }
+.voice-btn.playing .pause { display: inline; }
+
+.voice-current,
+.voice-total {
+  font-size: 11px;
+  min-width: 34px;
+  text-align: center;
+  color: #666;
+}
+
+.voice-bar {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 2px;
+}
+
+.voice-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* ===================== */
+/* 다크모드 */
+/* ===================== */
 @media (prefers-color-scheme: dark) {
-  body { background: #121212; }
+  body {
+    background: #121212;
+    color: #eaeaea;
+  }
 
   .top-bar {
     background: #1e1e1e;
@@ -172,22 +174,39 @@ body {
   }
 
   .chat-title,
-  .back-btn { color: #eaeaea; }
+  .back-btn {
+    color: #eaeaea;
+  }
 
-  .date { color: #888; }
-  .date::before { background: rgba(255,255,255,0.18); }
+  .date {
+    color: #888;
+  }
 
-  .name { color: #bdbdbd; }
+  .name {
+    color: #bdbdbd;
+  }
 
   .voice-bubble {
     background: #2a2a2a;
-    color: #f1f1f1;
   }
 
-  .voice-btn { background: #444; }
+  .voice-btn {
+    background: #444;
+  }
+
+  .voice-bar {
+    background: #555;
+  }
+
+  .voice-bar::-webkit-slider-thumb {
+    background: #ddd;
+  }
+
   .voice-current,
   .voice-total,
-  .time { color: #9a9a9a; }
+  .time {
+    color: #bdbdbd;
+  }
 }
 </style>
 </head>
@@ -200,10 +219,7 @@ body {
   <div class="chat-title">음성 메시지</div>
 </div>
 
-<!-- 채팅 -->
-<div class="chat-wrap">
-  <div id="voiceContainer"></div>
-</div>
+<div class="chat" id="voiceContainer"></div>
 
 <script>
 const voiceData = [
@@ -216,17 +232,14 @@ const container = document.getElementById("voiceContainer");
 let lastDate = "";
 
 voiceData.forEach(v => {
-
   if (v.date !== lastDate) {
-    const [y, m, d] = v.date.split("-");
-    const dateObj = new Date(y, m - 1, d);
-    const day = ["일","월","화","수","목","금","토"][dateObj.getDay()];
-
+    const d = new Date(v.date);
+    const day = ["일","월","화","수","목","금","토"][d.getDay()];
     const dateEl = document.createElement("div");
     dateEl.className = "date";
-    dateEl.textContent = `${y}년 ${m}월 ${d}일 ${day}요일`;
+    dateEl.textContent =
+      `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${day}요일`;
     container.appendChild(dateEl);
-
     lastDate = v.date;
   }
 
@@ -238,7 +251,17 @@ voiceData.forEach(v => {
       <div class="name">강영현</div>
       <div class="bubble-row">
         <div class="voice-bubble">
-          <button class="voice-btn">▶︎</button>
+          <button class="voice-btn">
+            <span class="play">
+              <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+            </span>
+            <span class="pause">
+              <svg viewBox="0 0 24 24">
+                <rect x="6" y="5" width="4" height="14"/>
+                <rect x="14" y="5" width="4" height="14"/>
+              </svg>
+            </span>
+          </button>
           <span class="voice-current">0:00</span>
           <input type="range" class="voice-bar" value="0">
           <span class="voice-total">--:--</span>
