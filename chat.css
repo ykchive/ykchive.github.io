@@ -97,8 +97,9 @@ textarea {
 .date {
   position: relative;
   text-align: center;
-  margin: 12px 0 8px;
-  padding-top: 10px;      /* ⬅️ 선과 날짜 간격 */
+  margin-top: 20px;
+  margin-bottom: 15px;
+  padding-top: 10px;
   font-size: 12px;
   color: #999;
 }
@@ -117,19 +118,15 @@ textarea {
 /* ===================== */
 /* 채팅 영역 */
 /* ===================== */
-.chat {
-  padding: calc(52px + env(safe-area-inset-top) + 10px) 14px 40px;
-  /* ⬆️ 상단바 때문에 잘리던 문제 해결 */
-}
 
 .message {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 4px;          /* ⬅️ 메시지 간격 축소 */
+  margin-bottom: 18px; /* ⭐ 예전이랑 동일 */
 }
 
 .chat-wrap {
-  padding-top: calc(52px + env(safe-area-inset-top) + 10px);
+  padding-top: calc(52px + env(safe-area-inset-top));
 }
 
 .chat {
@@ -138,7 +135,7 @@ textarea {
 
 /* 날짜 바로 다음 메시지 */
 .date + .message {
-  margin-top: 2px;
+  margin-top: 6px;
 }
 
 .profile {
