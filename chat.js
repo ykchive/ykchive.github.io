@@ -165,106 +165,107 @@ document.querySelectorAll('.date').forEach(el => {
 });
 
 /* ==================================================
-   5. 채팅 검색 (정리본)
+   5. 채팅 검색 (A안 최종)
 ================================================== */
 const topBar      = document.querySelector('.top-bar');
-const searchTop   = document.querySelector('.search-top');
 const searchBtn   = document.querySelector('.search-btn');
 const searchInput = document.getElementById('searchInput');
-const searchClose = document.getElementById('searchClose');
-const searchPrev  = document.getElementById('searchPrev');
-const searchNext  = document.getElementById('searchNext');
-const searchClear = document.getElementById('searchClear');
-const countEl     = document.getElementById('searchCount');
-const bubbles     = [...document.querySelectorAll('.bubble')];
+
+const nav      = document.getElementById('searchNav');
+const countEl  = document.getElementById('searchCount');
+const prevBtn  = document.getElementById('prevBtn');
+const nextBtn  = document.getElementById('nextBtn');
+
+const bubbles = [...document.querySelectorAll('.bubble')];
 
 let results = [];
-let current = 0;
+let current = -1;
 
 /* 검색 열기 */
 searchBtn.addEventListener('click', () => {
-  topBar.style.display = 'none';
-  searchTop.classList.add('show');
+  topBar.classList.add('search-active');
+  searchInput.value = '';
   searchInput.focus();
 });
 
-/* 검색 닫기 */
-searchClose.addEventListener('click', () => {
-  searchTop.classList.remove('show');
-  topBar.style.display = 'flex';
+/* 취소 */
+document.getElementById('searchCancel').addEventListener('click', () => {
+  topBar.classList.remove('search-active');
+  nav.classList.remove('show');
 
   searchInput.value = '';
-  searchClear.style.display = 'none';
-
   results = [];
-  current = 0;
-  countEl.textContent = '';
-  clearHighlight();
+  current = -1;
+  clearBold();
 });
 
-/* 🔍 검색 입력 (하나만 존재해야 함) */
+/* 입력 중: 아무 것도 안 함 (스크롤 ❌) */
 searchInput.addEventListener('input', () => {
+  nav.classList.remove('show');
+  clearBold();
+});
+
+/* Enter → 검색 확정 */
+searchInput.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+
   const keyword = searchInput.value.trim();
+  if (!keyword) return;
 
-  searchClear.style.display = keyword ? 'block' : 'none';
+  // 최근 메시지부터
+  results = bubbles
+    .slice()
+    .reverse()
+    .filter(b => b.textContent.includes(keyword));
 
-  clearHighlight();
-  results = [];
-  current = 0;
-
-  if (!keyword) {
-    countEl.textContent = '';
+  if (!results.length) {
+    countEl.textContent = '0 / 0';
     return;
   }
 
-  bubbles.forEach(bubble => {
-    const text = bubble.textContent;
-    if (text.includes(keyword)) {
-      bubble.innerHTML = text.replace(
-        new RegExp(keyword, 'gi'),
-        `<strong>$&</strong>`
-      );
-      results.push(bubble);
-    }
+  // 볼드 적용
+  results.forEach(bubble => {
+    bubble.innerHTML = bubble.textContent.replace(
+      new RegExp(`(${keyword})`, 'gi'),
+      '<strong>$1</strong>'
+    );
   });
 
-  results.length
-    ? moveToResult(0)
-    : (countEl.textContent = '0 / 0');
+  current = 0;
+  updateNav();
+  nav.classList.add('show');
+
+  searchInput.blur(); // 키보드 내림
+  scrollToCurrent();
 });
 
-/* 이전 / 다음 */
-searchPrev.addEventListener('click', () => move(-1));
-searchNext.addEventListener('click', () => move(1));
+/* 위 / 아래 */
+prevBtn.addEventListener('click', () => move(-1));
+nextBtn.addEventListener('click', () => move(1));
 
 function move(step) {
   if (!results.length) return;
-  current = (current + step + results.length) % results.length;
-  moveToResult(current);
+  current = Math.min(
+    Math.max(current + step, 0),
+    results.length - 1
+  );
+  updateNav();
+  scrollToCurrent();
 }
 
-function moveToResult(index) {
-  results[index].scrollIntoView({
+function scrollToCurrent() {
+  results[current].scrollIntoView({
     behavior: 'smooth',
     block: 'center'
   });
-  countEl.textContent = `${index + 1} / ${results.length}`;
 }
 
-/* 입력 지우기 */
-searchClear.addEventListener('click', () => {
-  searchInput.value = '';
-  searchInput.focus();
-  searchClear.style.display = 'none';
+function updateNav() {
+  countEl.textContent = `${current + 1} / ${results.length}`;
+}
 
-  results = [];
-  current = 0;
-  countEl.textContent = '';
-  clearHighlight();
-});
-
-/* 강조 제거 */
-function clearHighlight() {
+/* 볼드 제거 */
+function clearBold() {
   bubbles.forEach(bubble => {
     bubble.innerHTML = bubble.textContent;
   });
