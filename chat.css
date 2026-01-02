@@ -16,79 +16,108 @@ body {
   top: 0;
   left: 0;
   right: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: env(safe-area-inset-top) 12px 0;
-  height: calc(52px + env(safe-area-inset-top));
-
+  height: 52px;
   background: #fff;
   border-bottom: 1px solid #eee;
-  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
 }
 
-/* 왼쪽 */
-.back-btn {
-  font-size: 28px;
-  color: #333;
-  text-decoration: none;
+.chat-title {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
 }
 
-/* 오른쪽 */
 .top-right {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  gap: 6px;
 }
 
-/* 중앙 제목 */
-.chat-title {
+/* 검색바 */
+.search-bar {
   position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 36px;
+  background: #f1f1f4;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 8px;
+  top: calc(env(safe-area-inset-top) + 8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: .2s ease;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  stroke: #999;
+  fill: none;
+  stroke-width: 2;
+}
+
+.cancel-btn {
+  background: none;
+  border: none;
+  color: #007aff;
+  font-size: 15px;
+}
+
+/* 검색 활성 */
+.top-bar.search-active .search-bar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.top-bar.search-active .back-btn,
+.top-bar.search-active .chat-title,
+.top-bar.search-active .top-right {
+  display: none;
+}
+
+/* 네비게이션 */
+.search-nav {
+  position: fixed;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: 600;
-  pointer-events: none;
-}
-
-/* ===================== */
-/* 검색 상단바 */
-/* ===================== */
-.search-top {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  display: none;
-  align-items: center;
-  gap: 8px;
-
-  padding: env(safe-area-inset-top) 12px 0;
-  height: calc(52px + env(safe-area-inset-top));
-
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  z-index: 1100;
-}
-
-.search-top.show {
+  background: rgba(0,0,0,.6);
+  color: #fff;
+  border-radius: 20px;
+  padding: 6px 12px;
   display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: .2s;
 }
 
-.top-bar.hide {
-  display: none;
+.search-nav.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.search-input-wrap input {
+.search-nav button {
+  background: none;
+  border: none;
+  color: #fff;
   font-size: 16px;
-}
-
-input,
-textarea {
-  -webkit-text-size-adjust: 100%;
 }
 
 /* ===================== */
@@ -172,10 +201,10 @@ textarea {
 
 /* 검색 강조 */
 .bubble strong {
-  background: rgba(255, 235, 59, 0.4);
-  padding: 0 2px;
-  border-radius: 3px;
-  font-weight: normal;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-weight: 600;
 }
 
 .time {
@@ -309,6 +338,7 @@ textarea {
   border: none;
   padding: 0;
   cursor: pointer;
+  padding: 6px;
 }
 
 .icon-btn svg {
@@ -333,13 +363,8 @@ textarea {
   .chat-title,
   .back-btn { color: #eaeaea; }
 
-  .date {
-    color: #888;
-  }
-
-  .date::before {
-    background: rgba(255,255,255,0.18);
-  }
+  .date { color: #888; }
+  .date::before { background: rgba(255,255,255,0.18); }
 
   .name { color: #bdbdbd; }
 
@@ -354,24 +379,25 @@ textarea {
   .voice-btn { background: #444; }
   .voice-bar { background: #555; }
   .voice-bar::-webkit-slider-thumb { background: #ddd; }
-}
 
-@media (prefers-color-scheme: dark) {
-  .search-top {
-    background: #1e1e1e;
-    border-bottom: 1px solid #2a2a2a;
+  /* ===== 검색 UI ===== */
+  .search-bar {
+    background: #2a2a2a;
   }
 
-  .search-input-wrap input {
-    background: #2a2a2a;
+  .search-bar input {
     color: #f1f1f1;
   }
 
-  .search-input-wrap input::placeholder {
+  .search-bar input::placeholder {
     color: #888;
   }
 
-  .search-top .icon-btn svg {
-    stroke: #eaeaea;
+  .search-icon {
+    stroke: #aaa;
+  }
+
+  .cancel-btn {
+    color: #4da3ff;
   }
 }
