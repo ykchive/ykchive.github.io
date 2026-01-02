@@ -92,10 +92,9 @@ textarea {
 /* 날짜 구분 */
 /* ===================== */
 .date {
-  position: relative;
-  margin: 4px 0;              /* ⬅️ 간격 줄임 */
-  padding: 4px 14px 0;
   text-align: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
   font-size: 12px;
   color: #999;
 }
@@ -116,10 +115,7 @@ textarea {
 /* 채팅 영역 */
 /* ===================== */
 .chat {
-  padding-top: calc(60px + env(safe-area-inset-top));
-  padding-left: 14px;
-  padding-right: 14px;
-  padding-bottom: 40px;
+  padding: 0 14px 40px; /* ⬅️ 위쪽 padding만 늘림 */
 }
 
 .message {
