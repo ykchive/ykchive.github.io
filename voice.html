@@ -14,6 +14,14 @@
   <div class="chat-title">음성 메시지</div>
 </div>
 
+.chat .date:first-child {
+  margin-top: 12px;
+}
+
+.date {
+  scroll-margin-top: calc(52px + env(safe-area-inset-top) + 10px);
+}
+
 <!-- 채팅 영역 -->
 <div class="chat-wrap">
   <div id="voiceContainer" class="chat"></div>
