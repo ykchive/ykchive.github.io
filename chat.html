@@ -12,13 +12,16 @@ Chat html
 <body>
 
 <!-- ===================== -->
-<!-- 상단바 -->
+<!-- Chat 상단바 -->
 <!-- ===================== -->
 <div class="top-bar">
-  <a href="index.html#toggle" class="back-btn">‹</a>
+  <!-- 뒤로가기 -->
+  <a href="javascript:history.back()" class="back-btn">‹</a>
 
+  <!-- 중앙 타이틀 -->
   <div class="chat-title">강영현</div>
 
+  <!-- 오른쪽 버튼 -->
   <div class="top-right">
     <button class="icon-btn search-btn" aria-label="검색">
       <svg viewBox="0 0 24 24">
@@ -29,21 +32,22 @@ Chat html
 
     <button class="icon-btn menu-btn" aria-label="메뉴">
       <svg viewBox="0 0 24 24">
-        <line x1="4" y1="6" x2="20" y2="6"></line>
-        <line x1="4" y1="12" x2="20" y2="12"></line>
-        <line x1="4" y1="18" x2="20" y2="18"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
       </svg>
     </button>
   </div>
 
-  <!-- 검색바 -->
+  <!-- 검색바 (숨김 상태) -->
   <div class="search-bar">
-    <svg class="search-icon" viewBox="0 0 24 24">
+    <svg viewBox="0 0 24 24">
       <circle cx="11" cy="11" r="7"></circle>
       <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
     </svg>
 
-    <input type="text" placeholder="채팅 검색">
+    <input type="text" placeholder="검색">
+
     <button class="cancel-btn">취소</button>
   </div>
 </div>
