@@ -1,11 +1,197 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>음성 메시지</title>
-  <link rel="stylesheet" href="chat.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>음성 메시지</title>
+
+<style>
+/* =====================
+   기본 설정
+===================== */
+body {
+  margin: 0;
+  background: #f7f7f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+}
+
+/* =====================
+   상단바
+===================== */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(52px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+}
+
+.back-btn {
+  position: absolute;
+  left: 12px;
+  font-size: 28px;
+  color: #333;
+  text-decoration: none;
+}
+
+.chat-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* =====================
+   채팅 영역
+===================== */
+.chat-wrap {
+  padding-top: calc(52px + env(safe-area-inset-top));
+}
+
+/* =====================
+   날짜
+===================== */
+.date {
+  position: relative;
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 10px;
+  font-size: 12px;
+  color: #999;
+
+  /* 상단바 가림 방지 */
+  scroll-margin-top: calc(52px + env(safe-area-inset-top) + 8px);
+}
+
+.chat-wrap .date:first-child {
+  margin-top: 12px;
+}
+
+.date::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0.5px;
+  background: rgba(0,0,0,0.15);
+}
+
+/* =====================
+   메시지
+===================== */
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin: 18px 14px;
+}
+
+.date + .message {
+  margin-top: 18px;
+}
+
+.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.content {
+  max-width: 85%;
+}
+
+.name {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.bubble-row {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* =====================
+   음성 메시지
+===================== */
+.voice-bubble {
+  background: #ededed;
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 200px;
+}
+
+.voice-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+}
+
+.voice-current,
+.voice-total {
+  font-size: 11px;
+  color: #666;
+  min-width: 32px;
+  text-align: center;
+}
+
+.voice-bar {
+  flex: 1;
+  height: 4px;
+}
+
+.time {
+  font-size: 11px;
+  color: #aaa;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+/* =====================
+   다크모드
+===================== */
+@media (prefers-color-scheme: dark) {
+  body { background: #121212; }
+
+  .top-bar {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .chat-title,
+  .back-btn { color: #eaeaea; }
+
+  .date { color: #888; }
+  .date::before { background: rgba(255,255,255,0.18); }
+
+  .name { color: #bdbdbd; }
+
+  .voice-bubble {
+    background: #2a2a2a;
+    color: #f1f1f1;
+  }
+
+  .voice-btn { background: #444; }
+  .voice-current,
+  .voice-total,
+  .time { color: #9a9a9a; }
+}
+</style>
 </head>
+
 <body>
 
 <!-- 상단바 -->
@@ -14,23 +200,12 @@
   <div class="chat-title">음성 메시지</div>
 </div>
 
-.chat .date:first-child {
-  margin-top: 12px;
-}
-
-.date {
-  scroll-margin-top: calc(52px + env(safe-area-inset-top) + 10px);
-}
-
-<!-- 채팅 영역 -->
+<!-- 채팅 -->
 <div class="chat-wrap">
-  <div id="voiceContainer" class="chat"></div>
+  <div id="voiceContainer"></div>
 </div>
 
 <script>
-/* =========================
-   음성 메시지 데이터
-========================= */
 const voiceData = [
   { date: "2021-07-21", time: "오후 7:43", src: "voice/210721-1.mp3" },
   { date: "2021-07-21", time: "오후 8:01", src: "voice/210721-2.mp3" },
@@ -40,12 +215,8 @@ const voiceData = [
 const container = document.getElementById("voiceContainer");
 let lastDate = "";
 
-/* =========================
-   자동 생성
-========================= */
 voiceData.forEach(v => {
 
-  /* 날짜 구분 */
   if (v.date !== lastDate) {
     const [y, m, d] = v.date.split("-");
     const dateObj = new Date(y, m - 1, d);
@@ -59,7 +230,6 @@ voiceData.forEach(v => {
     lastDate = v.date;
   }
 
-  /* 메시지 */
   const msg = document.createElement("div");
   msg.className = "message";
   msg.innerHTML = `
@@ -68,10 +238,7 @@ voiceData.forEach(v => {
       <div class="name">강영현</div>
       <div class="bubble-row">
         <div class="voice-bubble">
-          <button class="voice-btn" aria-label="음성 재생">
-            <span class="play">▶︎</span>
-            <span class="pause">❚❚</span>
-          </button>
+          <button class="voice-btn">▶︎</button>
           <span class="voice-current">0:00</span>
           <input type="range" class="voice-bar" value="0">
           <span class="voice-total">--:--</span>
