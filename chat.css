@@ -157,6 +157,11 @@ body {
 /* ===================== */
 /* 메시지 */
 /* ===================== */
+.chat {
+  display: flex;
+  flex-direction: column;
+}
+
 .message {
   display: flex;
   align-items: flex-start;
