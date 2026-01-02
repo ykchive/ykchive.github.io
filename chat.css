@@ -116,9 +116,11 @@ textarea {
 }
 
 .chat-wrap {
-  padding-top: calc(52px + env(safe-area-inset-top));
+  padding:
+    calc(52px + env(safe-area-inset-top)) /* top */
+    14px                                  /* 좌우 */
+    40px;                                 /* bottom */
 }
-
 .chat-wrap .date:first-child {
   margin-top: 12px;
 }
