@@ -1,25 +1,24 @@
+Chat html
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>youngkbubble</title>
-
-  <!-- CSS 연결 -->
   <link rel="stylesheet" href="chat.css">
 </head>
-  
+
 <body>
 
+<!-- ===================== -->
 <!-- 상단바 -->
+<!-- ===================== -->
 <div class="top-bar">
-  <!-- 뒤로가기 -->
-  <a href="index.html#toggle" class="back-btn" aria-label="뒤로가기">‹</a>
+  <a href="index.html#toggle" class="back-btn">‹</a>
 
-  <!-- 가운데 타이틀 -->
   <div class="chat-title">강영현</div>
 
-  <!-- 오른쪽 아이콘 -->
   <div class="top-right">
     <button class="icon-btn search-btn" aria-label="검색">
       <svg viewBox="0 0 24 24">
@@ -44,56 +43,54 @@
       <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
     </svg>
 
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="채팅 검색"
-    />
-
-    <button id="searchCancel" class="cancel-btn">취소</button>
+    <input type="text" placeholder="채팅 검색">
+    <button class="cancel-btn">취소</button>
   </div>
 </div>
 
-    
-<!-- ===== 날짜 1 ===== -->
-<div class="date" data-date="2021-05-06">2021.05.06</div>
 
-    <!-- 텍스트 메시지 -->
-    <div class="message">
-      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-      <div class="content">
-        <div class="name">강영현</div>
-        <div class="bubble-row">
-          <div class="bubble">텍스트</div>
-          <div class="time">시간</div>
-        </div>
+
+<!-- ===================== -->
+<!-- 채팅 영역 (post랑 동일) -->
+<!-- ===================== -->
+
+<div class="date" data-date="2021-04-19"></div>
+<div class="chat">
+
+  <!-- 텍스트 -->
+  <div class="message">
+    <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+    <div class="content">
+      <div class="name">강영현</div>
+      <div class="bubble-row">
+        <div class="bubble">텍스트</div>
+        <div class="time">시간</div>
       </div>
     </div>
+  </div>
 
-    <!-- 사진 메시지 -->
-    <div class="message">
-      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
-      <div class="content">
-        <div class="name">강영현</div>
-        <div class="bubble-row">
-          <img
-            src="이미지주소"
-            class="photo"
-            data-date="2021.05.06"
-            data-link="post-210506.html">
-          <div class="time">시간</div>
-        </div>
+
+  <!-- 사진 -->
+  <div class="message">
+    <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+    <div class="content">
+      <div class="name">강영현</div>
+      <div class="bubble-row">
+        <img class="photo" src="image.jpg">
+        <div class="time">시간</div>
       </div>
     </div>
+  </div>
+
 
     <!-- 음성 메시지 -->
     <div class="message">
-      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
           <div class="voice-bubble">
-            <button class="voice-btn" aria-label="음성 메시지 재생">
+            <button class="voice-btn" aria-label="음성메세지">
               <span class="play">
                 <svg viewBox="0 0 24 24">
                   <polygon points="8,5 19,12 8,19"/>
@@ -111,7 +108,10 @@
             <input type="range" class="voice-bar" value="0">
             <span class="voice-total">0:00</span>
 
-            <audio src="음성메세지" preload="metadata"></audio>
+            <audio
+              src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"
+              preload="metadata">
+            </audio>
           </div>
 
           <div class="time">시간</div>
@@ -119,8 +119,12 @@
       </div>
     </div>
 
-    <!-- ===== 날짜 2 ===== -->
-    <div class="date" data-date="2021-05-07">2021.05.07</div>
+</div>    <!-- 날짜 1 메시지 끝 -->
+
+
+<!-- ===== 날짜 2 ===== -->
+<div class="date" data-date="2021-05-07"></div>
+<div class="chat">
 
     <!-- 텍스트 메시지 -->
     <div class="message">
@@ -241,25 +245,18 @@
     </div>
   </div>
 </div>
-</div>
 
-</div>
+</div>    <!-- 날짜 2 메시지 끝 -->
 
-<!-- chat 끝 -->
-
-
-
-  <!-- 사진 전체보기 -->
-<div class="photo-viewer" id="photoViewer">
+<!-- ===================== -->
+<!-- 사진 뷰어 -->
+<!-- ===================== -->
+<div class="photo-viewer">
   <button class="photo-nav prev">‹</button>
-
-  <div class="photo-counter" id="photoCounter"></div>
-  <img id="viewerImg" />
-
+  <img>
   <button class="photo-nav next">›</button>
 </div>
 
-  <!-- JS 연결 -->
-  <script src="chat.js"></script>
+<script src="chat.js"></script>
 </body>
 </html>
