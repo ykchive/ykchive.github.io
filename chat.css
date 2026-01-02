@@ -50,9 +50,12 @@ body {
   transform: translateX(-50%);
   font-size: 16px;
   font-weight: 600;
-  pointer-events: none; /* 아이콘 클릭 방해 ❌ */
+  pointer-events: none;
 }
 
+/* ===================== */
+/* 검색 상단바 */
+/* ===================== */
 .search-top {
   position: fixed;
   top: 0;
@@ -80,7 +83,7 @@ body {
 }
 
 .search-input-wrap input {
-  font-size: 16px; /* ⭐ 이 줄이 핵심 */
+  font-size: 16px;
 }
 
 input,
@@ -92,22 +95,23 @@ textarea {
 /* 날짜 구분 */
 /* ===================== */
 .date {
+  position: relative;          /* ⭐ 추가 */
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 15px;
+  margin: 12px 0 8px;          /* ⬅️ 간격 줄임 */
   font-size: 12px;
   color: #999;
 }
 
-/* 구분선 (얇게) */
+/* 구분선 */
 .date::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: 50%;                    /* ⬅️ 중앙 정렬 */
   left: 0;
   right: 0;
-  height: 0.5px;              /* ⬅️ 더 얇게 */
+  height: 0.5px;
   background: rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%);
   opacity: 0.6;
 }
 
@@ -115,17 +119,18 @@ textarea {
 /* 채팅 영역 */
 /* ===================== */
 .chat {
-  padding: 0 14px 40px; /* ⬅️ 위쪽 padding만 늘림 */
+  padding: calc(52px + env(safe-area-inset-top) + 10px) 14px 40px;
+  /* ⬆️ 상단바 때문에 잘리던 문제 해결 */
 }
 
 .message {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 8px;         /* ⬅️ 메시지 간격 축소 */
+  margin-bottom: 4px;          /* ⬅️ 메시지 간격 축소 */
 }
 
-/* 날짜 다음 첫 메시지 */
-.date + .chat .message:first-child {
+/* 날짜 바로 다음 메시지 */
+.date + .message {
   margin-top: 2px;
 }
 
