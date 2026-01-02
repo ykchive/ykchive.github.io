@@ -29,9 +29,12 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-weight: 600;
+  font-size: 16px;
+  pointer-events: none;
 }
 
 .top-right {
+  margin-left: auto;
   display: flex;
   gap: 6px;
 }
@@ -358,9 +361,9 @@ body {
 }
 
 .icon-btn svg {
-  width: 18px;
-  height: 18px;
-  stroke: #333;
+  width: 20px;
+  height: 20px;
+  stroke: #000;
   stroke-width: 2;
   fill: none;
 }
@@ -418,7 +421,3 @@ body {
   }
 }
 
-  .back-btn {
-    color: #eaeaea;
-  }
-}
