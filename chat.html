@@ -1,0 +1,498 @@
+Chat html
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>youngk bubble</title>
+
+<style>
+
+/* ===================== */
+/* 기본 설정 */
+/* ===================== */
+body {
+  margin: 0;
+  padding-top: 52px;
+  background: #f7f7f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+}
+
+/* ===================== */
+/* 상단바 */
+/* ===================== */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn {
+  position: absolute;
+  left: 14px;
+  font-size: 28px;
+  font-weight: 300;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+
+.chat-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+
+/* ===================== */
+/* 날짜 */
+/* ===================== */
+.date {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-size: 12px;
+  color: #999;
+}
+
+/* ===================== */
+/* 채팅 영역 */
+/* ===================== */
+.chat {
+  padding: 0 14px 40px;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.content {
+  max-width: 85%;
+}
+
+.name {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.bubble-row {
+  display: flex;
+  align-items: flex-end;
+}
+
+.bubble {
+  background: #ededed;
+  padding: 12px 15px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.time {
+  font-size: 11px;
+  color: #aaa;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+/* ===================== */
+/* 사진 메시지 */
+/* ===================== */
+.photo {
+  width: 85%;
+  border-radius: 16px;
+  display: block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===================== */
+/* 사진 전체보기 */
+/* ===================== */
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.photo-viewer.show {
+  display: flex;
+}
+
+.photo-viewer img {
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+}
+
+/* ===================== */
+/* 음성 메시지 */
+/* ===================== */
+.voice-bubble {
+  background: #ededed;
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 200px;
+}
+
+.voice-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.voice-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #000;
+  display: block;
+}
+
+.voice-btn .pause {
+  display: none;
+}
+
+.voice-btn.playing .play {
+  display: none;
+}
+
+.voice-btn.playing .pause {
+  display: inline;
+}
+
+.voice-current,
+.voice-total {
+  font-size: 11px;
+  min-width: 34px;
+  text-align: center;
+  color: #666;
+}
+
+.voice-bar {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 2px;
+  touch-action: none;
+}
+
+.voice-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* ===================== */
+/* 다크모드 */
+/* ===================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eaeaea;
+  }
+
+  .top-bar {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .chat-title,
+  .back-btn {
+    color: #eaeaea;
+  }
+
+  .date {
+    color: #888;
+  }
+
+  .name {
+    color: #bdbdbd;
+  }
+
+  .bubble {
+    background: #2a2a2a;
+    color: #f1f1f1;
+  }
+
+  .time {
+    color: #9a9a9a;
+  }
+
+  .photo {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  .voice-bubble {
+    background: #2a2a2a;
+  }
+
+  .voice-btn {
+    background: #444;
+  }
+
+  .voice-bar {
+    background: #555;
+  }
+
+  .voice-bar::-webkit-slider-thumb {
+    background: #ddd;
+  }
+
+  .voice-current,
+  .voice-total {
+    color: #bdbdbd;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+  <!-- 상단바 -->
+  <div class="top-bar">
+    <a href="index.html" class="back-btn">‹</a>
+    <div class="chat-title">강영현</div>
+  </div>
+
+  <!-- 채팅 영역 -->
+  <div class="chat">
+
+    <!-- ===== 날짜 1 ===== -->
+    <div class="date" data-date="2021-07-19"></div>
+
+    <!-- 사진 메시지 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <img class="photo" src="이미지주소" alt="">
+          <div class="time">22:14</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 텍스트 메시지 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">텍스트 메시지</div>
+          <div class="time">22:15</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 날짜 2 ===== -->
+    <div class="date" data-date="2021-07-20"></div>
+
+    <!-- 음성 메시지 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="voice-bubble">
+            <button class="voice-btn" aria-label="음성메세지">
+              <span class="play">
+                <svg viewBox="0 0 24 24">
+                  <polygon points="8,5 19,12 8,19"/>
+                </svg>
+              </span>
+              <span class="pause">
+                <svg viewBox="0 0 24 24">
+                  <rect x="6" y="5" width="4" height="14"/>
+                  <rect x="14" y="5" width="4" height="14"/>
+                </svg>
+              </span>
+            </button>
+
+            <span class="voice-current">0:00</span>
+            <input type="range" class="voice-bar" value="0">
+            <span class="voice-total">0:00</span>
+
+            <audio
+              src="https://raw.githubusercontent.com/ykchive/ykchive.github.io/main/voice/210717.m4a"
+              preload="metadata">
+            </audio>
+          </div>
+
+          <div class="time">09:31</div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- chat 끝 -->
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ===================== */
+  /* 날짜 + 요일 자동 생성 */
+  /* ===================== */
+  document.querySelectorAll('.date').forEach(el => {
+    const raw = el.dataset.date;
+    if (!raw) return;
+
+    const [y, m, d] = raw.split('-').map(Number);
+    const date = new Date(y, m - 1, d); // 월 -1 필수
+    const week = ['일','월','화','수','목','금','토'];
+
+    el.textContent = `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
+  });
+
+
+  /* ===================== */
+  /* 사진 전체보기 (있을 때만) */
+  /* ===================== */
+  const viewer = document.getElementById('photoViewer');
+  const viewerImg = document.getElementById('photoViewerImg');
+  const photos = document.querySelectorAll('.photo');
+
+  let currentIndex = 0;
+  let startX = 0;
+
+  if (viewer && viewerImg && photos.length > 0) {
+
+    photos.forEach((img, i) => {
+      img.addEventListener('click', () => {
+        currentIndex = i;
+        viewerImg.src = img.src;
+        viewer.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    viewer.addEventListener('click', e => {
+      if (e.target === viewer) {
+        viewer.classList.remove('show');
+        document.body.style.overflow = '';
+        viewerImg.src = '';
+      }
+    });
+
+    viewerImg.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    viewerImg.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) < 50) return;
+
+      if (diff > 0 && currentIndex < photos.length - 1) currentIndex++;
+      if (diff < 0 && currentIndex > 0) currentIndex--;
+
+      viewerImg.src = photos[currentIndex].src;
+    });
+  }
+
+
+  /* ===================== */
+  /* 음성 메시지 (있을 때만) */
+  /* ===================== */
+  document.querySelectorAll('.voice-bubble').forEach(bubble => {
+    const audio = bubble.querySelector('audio');
+    const btn   = bubble.querySelector('.voice-btn');
+    const bar   = bubble.querySelector('.voice-bar');
+    const cur   = bubble.querySelector('.voice-current');
+    const total = bubble.querySelector('.voice-total');
+
+    if (!audio || !btn || !bar) return;
+
+    const format = s => {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return `${m}:${sec.toString().padStart(2, '0')}`;
+    };
+
+    audio.addEventListener('loadedmetadata', () => {
+      bar.max = audio.duration;
+      total.textContent = format(audio.duration);
+    });
+
+bar.addEventListener('input', () => {
+  audio.currentTime = bar.value;
+});
+
+btn.addEventListener('click', () => {
+  document.querySelectorAll('audio').forEach(a => {
+    if (a !== audio) a.pause();
+  });
+  document.querySelectorAll('.voice-btn').forEach(b => {
+    if (b !== btn) b.classList.remove('playing');
+  });
+
+  if (audio.paused) {
+    audio.play();
+    btn.classList.add('playing');
+  } else {
+    audio.pause();
+    btn.classList.remove('playing');
+  }
+});
+
+    audio.addEventListener('timeupdate', () => {
+      bar.value = audio.currentTime;
+      cur.textContent = format(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', () => {
+      btn.classList.remove('playing');
+      bar.value = 0;
+      cur.textContent = '0:00';
+    });
+  });
+
+});
+
+</script>
+
+<!-- 사진 전체보기 -->
+<div class="photo-viewer" id="photoViewer">
+  <img id="photoViewerImg" alt="">
+</div>
+
+</body>
+</html>
