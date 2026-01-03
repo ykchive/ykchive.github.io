@@ -941,7 +941,7 @@ searchInput.addEventListener('keydown', e => {
   searchResults = [];
   currentIndex = 0;
 
-  document.querySelectorAll('.bubble, .name').forEach(el => {
+  document.querySelectorAll('.bubble').forEach(el => {
     const text = el.textContent;
     if (!text.toLowerCase().includes(keyword)) return;
 
