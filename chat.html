@@ -53,6 +53,39 @@ body {
 }
 
 /* ===================== */
+/* 상단바 오른쪽 버튼 */
+/* ===================== */
+.top-actions {
+  position: absolute;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #333;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* ===================== */
 /* 날짜 + 구분선 */
 /* ===================== */
 .date {
@@ -230,9 +263,94 @@ body {
 }
 
 /* ===================== */
+/* 검색 모드 상단바 */
+/* ===================== */
+.search-bar {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+  background: inherit;
+}
+
+.top-bar.searching .search-bar {
+  display: flex;
+}
+
+.top-bar.searching .back-btn,
+.top-bar.searching .chat-title,
+.top-bar.searching .top-actions {
+  display: none;
+}
+
+.search-input-wrap {
+  flex: 1;
+  height: 36px;
+  background: #f1f1f4;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 8px;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  stroke: #aaa;
+  stroke-width: 2;
+  fill: none;
+}
+
+.search-input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #111;
+}
+
+.search-input-wrap input::placeholder {
+  color: #aaa;
+}
+
+.cancel-btn {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #007aff;
+  cursor: pointer;
+  padding: 6px;
+}
+
+
+/* ===================== */
 /* 다크모드 */
 /* ===================== */
 @media (prefers-color-scheme: dark) {
+  .search-input-wrap {
+    background: #2a2a2a;
+  }
+
+  .search-input-wrap input {
+    color: #eee;
+  }
+
+  .search-input-wrap input::placeholder {
+    color: #777;
+  }
+
+  .search-icon {
+    stroke: #777;
+  }
+
+  .cancel-btn {
+    color: #4da3ff;
+  }
+
   body {
     background: #121212;
     color: #eaeaea;
@@ -297,6 +415,10 @@ body {
   .photo:active {
     opacity: 0.9;
   }
+
+  .icon-btn svg {
+    stroke: #eaeaea;
+  }
 }
 
 </style>
@@ -304,11 +426,51 @@ body {
 
 <body>
 
+
+
   <!-- 상단바 -->
-  <div class="top-bar">
-    <a href="index.html" class="back-btn">‹</a>
-    <div class="chat-title">강영현</div>
+<div class="top-bar">
+
+  <!-- 기본 모드 -->
+  <a href="index.html" class="back-btn">‹</a>
+  <div class="chat-title">강영현</div>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="searchBtn" aria-label="검색">
+      <svg viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="16.5" y1="16.5" x2="21" y2="21"/>
+      </svg>
+    </button>
+
+    <button class="icon-btn" aria-label="메뉴">
+      <svg viewBox="0 0 24 24">
+        <line x1="4" y1="6" x2="20" y2="6"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
   </div>
+
+  <!-- 검색 모드 -->
+  <div class="search-bar">
+    <div class="search-input-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="16.5" y1="16.5" x2="21" y2="21"/>
+      </svg>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="채팅 검색"
+      >
+    </div>
+    <button class="cancel-btn" id="searchCancel">취소</button>
+  </div>
+
+</div>
+
+
 
   <!-- 채팅 영역 -->
   <div class="chat">
@@ -322,7 +484,7 @@ body {
       <div class="content">
         <div class="name">강영현</div>
         <div class="bubble-row">
-          <img class="photo" src="이미지주소">
+          <img class="photo" src="이미지주소" alt="">
           <div class="time">22:14</div>
         </div>
       </div>
@@ -499,7 +661,6 @@ body {
 
 
 <script>
-
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ===================== */
@@ -510,7 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!raw) return;
 
     const [y, m, d] = raw.split('-').map(Number);
-    const date = new Date(y, m - 1, d); // 월 -1 필수
+    const date = new Date(y, m - 1, d);
     const week = ['일','월','화','수','목','금','토'];
 
     el.textContent = `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
@@ -518,20 +679,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ===================== */
-  /* 사진 전체보기 (있을 때만) */
+  /* 사진 전체보기 */
   /* ===================== */
   const viewer = document.getElementById('photoViewer');
   const viewerImg = document.getElementById('photoViewerImg');
   const photos = document.querySelectorAll('.photo');
 
-  let currentIndex = 0;
+  let photoIndex = 0;
   let startX = 0;
 
-  if (viewer && viewerImg && photos.length > 0) {
-
+  if (viewer && viewerImg && photos.length) {
     photos.forEach((img, i) => {
       img.addEventListener('click', () => {
-        currentIndex = i;
+        photoIndex = i;
         viewerImg.src = img.src;
         viewer.classList.add('show');
         document.body.style.overflow = 'hidden';
@@ -541,8 +701,8 @@ document.addEventListener('DOMContentLoaded', () => {
     viewer.addEventListener('click', e => {
       if (e.target === viewer) {
         viewer.classList.remove('show');
-        document.body.style.overflow = '';
         viewerImg.src = '';
+        document.body.style.overflow = '';
       }
     });
 
@@ -554,16 +714,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const diff = startX - e.changedTouches[0].clientX;
       if (Math.abs(diff) < 50) return;
 
-      if (diff > 0 && currentIndex < photos.length - 1) currentIndex++;
-      if (diff < 0 && currentIndex > 0) currentIndex--;
+      if (diff > 0 && photoIndex < photos.length - 1) photoIndex++;
+      if (diff < 0 && photoIndex > 0) photoIndex--;
 
-      viewerImg.src = photos[currentIndex].src;
+      viewerImg.src = photos[photoIndex].src;
     });
   }
 
 
   /* ===================== */
-  /* 음성 메시지 (있을 때만) */
+  /* 음성 메시지 */
   /* ===================== */
   document.querySelectorAll('.voice-bubble').forEach(bubble => {
     const audio = bubble.querySelector('audio');
@@ -585,26 +745,26 @@ document.addEventListener('DOMContentLoaded', () => {
       total.textContent = format(audio.duration);
     });
 
-bar.addEventListener('input', () => {
-  audio.currentTime = bar.value;
-});
+    bar.addEventListener('input', () => {
+      audio.currentTime = bar.value;
+    });
 
-btn.addEventListener('click', () => {
-  document.querySelectorAll('audio').forEach(a => {
-    if (a !== audio) a.pause();
-  });
-  document.querySelectorAll('.voice-btn').forEach(b => {
-    if (b !== btn) b.classList.remove('playing');
-  });
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('audio').forEach(a => {
+        if (a !== audio) a.pause();
+      });
+      document.querySelectorAll('.voice-btn').forEach(b => {
+        if (b !== btn) b.classList.remove('playing');
+      });
 
-  if (audio.paused) {
-    audio.play();
-    btn.classList.add('playing');
-  } else {
-    audio.pause();
-    btn.classList.remove('playing');
-  }
-});
+      if (audio.paused) {
+        audio.play();
+        btn.classList.add('playing');
+      } else {
+        audio.pause();
+        btn.classList.remove('playing');
+      }
+    });
 
     audio.addEventListener('timeupdate', () => {
       bar.value = audio.currentTime;
@@ -615,6 +775,81 @@ btn.addEventListener('click', () => {
       btn.classList.remove('playing');
       bar.value = 0;
       cur.textContent = '0:00';
+    });
+  });
+
+
+  /* ===================== */
+  /* 상단바 검색 전환 */
+  /* ===================== */
+  const topBar = document.querySelector('.top-bar');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchCancel = document.getElementById('searchCancel');
+  const searchInput = document.getElementById('searchInput');
+
+  searchBtn.addEventListener('click', () => {
+    topBar.classList.add('searching');
+    searchInput.value = '';
+    searchInput.placeholder = '채팅 검색';
+    setTimeout(() => searchInput.focus(), 0);
+  });
+
+  searchCancel.addEventListener('click', () => {
+    topBar.classList.remove('searching');
+    searchInput.blur();
+
+    /* 하이라이트 제거 */
+    document.querySelectorAll('.highlight').forEach(el => {
+      el.outerHTML = el.textContent;
+    });
+  });
+
+  searchInput.addEventListener('input', () => {
+    searchInput.placeholder = searchInput.value ? '' : '채팅 검색';
+  });
+
+
+  /* ===================== */
+  /* 엔터로 채팅 검색 */
+  /* ===================== */
+  let searchResults = [];
+
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+
+    const keyword = searchInput.value.trim().toLowerCase();
+    if (!keyword) return;
+
+    document.querySelectorAll('.highlight').forEach(el => {
+      el.outerHTML = el.textContent;
+    });
+
+    searchResults = [];
+
+    document.querySelectorAll('.bubble, .name').forEach(el => {
+      if (!el.textContent.toLowerCase().includes(keyword)) return;
+
+      const regex = new RegExp(`(${keyword})`, 'gi');
+      el.innerHTML = el.textContent.replace(
+        regex,
+        `<span class="highlight">$1</span>`
+      );
+
+      const msg = el.closest('.message');
+      if (msg && !searchResults.includes(msg)) {
+        searchResults.push(msg);
+      }
+    });
+
+    if (!searchResults.length) {
+      alert('검색 결과가 없습니다.');
+      return;
+    }
+
+    searchResults[0].scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
     });
   });
 
