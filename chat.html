@@ -391,6 +391,9 @@ body {
   stroke: #ccc;
 }
 
+.highlight.active {
+  outline: 2px solid #007aff;
+}
 
 
 /* ===================== */
@@ -506,6 +509,10 @@ body {
 
   .nav-btn.disabled svg {
     stroke: #555;
+  }
+
+  .highlight.active {
+    outline: 2px solid #4da3ff;
   }
 }
 
@@ -748,7 +755,126 @@ body {
   </div> <!-- chat 끝 -->
 
 
+
 <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ===================== */
+  /* 날짜 + 요일 자동 생성 */
+  /* ===================== */
+  document.querySelectorAll('.date').forEach(el => {
+    const raw = el.dataset.date;
+    if (!raw) return;
+
+    const [y, m, d] = raw.split('-').map(Number);
+    const date = new Date(y, m - 1, d);
+    const week = ['일','월','화','수','목','금','토'];
+
+    el.textContent = `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
+  });
+
+
+  /* ===================== */
+  /* 사진 전체보기 */
+  /* ===================== */
+  const viewer = document.getElementById('photoViewer');
+  const viewerImg = document.getElementById('photoViewerImg');
+  const photos = document.querySelectorAll('.photo');
+
+  let photoIndex = 0;
+  let startX = 0;
+
+  if (viewer && viewerImg && photos.length) {
+    photos.forEach((img, i) => {
+      img.addEventListener('click', () => {
+        photoIndex = i;
+        viewerImg.src = img.src;
+        viewer.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    viewer.addEventListener('click', e => {
+      if (e.target === viewer) {
+        viewer.classList.remove('show');
+        viewerImg.src = '';
+        document.body.style.overflow = '';
+      }
+    });
+
+    viewerImg.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    viewerImg.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) < 50) return;
+
+      if (diff > 0 && photoIndex < photos.length - 1) photoIndex++;
+      if (diff < 0 && photoIndex > 0) photoIndex--;
+
+      viewerImg.src = photos[photoIndex].src;
+    });
+  }
+
+
+  /* ===================== */
+  /* 음성 메시지 */
+  /* ===================== */
+  document.querySelectorAll('.voice-bubble').forEach(bubble => {
+    const audio = bubble.querySelector('audio');
+    const btn   = bubble.querySelector('.voice-btn');
+    const bar   = bubble.querySelector('.voice-bar');
+    const cur   = bubble.querySelector('.voice-current');
+    const total = bubble.querySelector('.voice-total');
+
+    if (!audio || !btn || !bar) return;
+
+    const format = s => {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return `${m}:${sec.toString().padStart(2, '0')}`;
+    };
+
+    audio.addEventListener('loadedmetadata', () => {
+      bar.max = audio.duration;
+      total.textContent = format(audio.duration);
+    });
+
+    bar.addEventListener('input', () => {
+      audio.currentTime = bar.value;
+    });
+
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('audio').forEach(a => {
+        if (a !== audio) a.pause();
+      });
+      document.querySelectorAll('.voice-btn').forEach(b => {
+        if (b !== btn) b.classList.remove('playing');
+      });
+
+      if (audio.paused) {
+        audio.play();
+        btn.classList.add('playing');
+      } else {
+        audio.pause();
+        btn.classList.remove('playing');
+      }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      bar.value = audio.currentTime;
+      cur.textContent = format(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', () => {
+      btn.classList.remove('playing');
+      bar.value = 0;
+      cur.textContent = '0:00';
+    });
+  });
+
 
 /* ===================== */
 /* 채팅 검색 */
@@ -764,7 +890,7 @@ const prevBtn     = document.getElementById('prevResult');
 const nextBtn     = document.getElementById('nextResult');
 
 let searchResults = [];
-let currentSearchIndex = 0;
+let currentIndex = 0;
 
 /* ===================== */
 /* 검색 버튼 클릭 */
@@ -772,10 +898,14 @@ let currentSearchIndex = 0;
 searchBtn.addEventListener('click', () => {
   topBar.classList.add('searching');
 
-  // iOS 키보드 즉시 표시 트릭
-  searchInput.readOnly = true;
+  clearHighlights();
+  hideSearchNav();
+
+  searchResults = [];
+  currentIndex = 0;
+
+  searchInput.readOnly = true; // iOS 키보드 트릭
   searchInput.value = '';
-  searchInput.placeholder = '채팅 검색';
   searchInput.focus();
   searchInput.readOnly = false;
 });
@@ -785,26 +915,18 @@ searchBtn.addEventListener('click', () => {
 /* ===================== */
 searchCancel.addEventListener('click', () => {
   topBar.classList.remove('searching');
+  searchInput.value = '';
   searchInput.blur();
 
+  clearHighlights();
   hideSearchNav();
+
   searchResults = [];
-  currentSearchIndex = 0;
-
-  document.querySelectorAll('.highlight').forEach(el => {
-    el.outerHTML = el.textContent;
-  });
+  currentIndex = 0;
 });
 
 /* ===================== */
-/* 입력 시 placeholder */
-/* ===================== */
-searchInput.addEventListener('input', () => {
-  searchInput.placeholder = searchInput.value ? '' : '채팅 검색';
-});
-
-/* ===================== */
-/* 엔터 → 검색 */
+/* 엔터 → 검색 실행 */
 /* ===================== */
 searchInput.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
@@ -813,25 +935,18 @@ searchInput.addEventListener('keydown', e => {
   const keyword = searchInput.value.trim().toLowerCase();
   if (!keyword) return;
 
-  searchInput.blur(); // 키보드 내리기
-
-  // 기존 하이라이트 제거
-  document.querySelectorAll('.highlight').forEach(el => {
-    el.outerHTML = el.textContent;
-  });
+  searchInput.blur();
+  clearHighlights();
 
   searchResults = [];
-  currentSearchIndex = 0;
+  currentIndex = 0;
 
   document.querySelectorAll('.bubble, .name').forEach(el => {
     const text = el.textContent;
     if (!text.toLowerCase().includes(keyword)) return;
 
     const regex = new RegExp(`(${keyword})`, 'gi');
-    el.innerHTML = text.replace(
-      regex,
-      `<span class="highlight">$1</span>`
-    );
+    el.innerHTML = text.replace(regex, `<span class="highlight">$1</span>`);
 
     const msg = el.closest('.message');
     if (msg && !searchResults.includes(msg)) {
@@ -840,57 +955,74 @@ searchInput.addEventListener('keydown', e => {
   });
 
   if (!searchResults.length) {
-    alert('검색 결과가 없습니다.');
     hideSearchNav();
+    alert('검색 결과가 없습니다.');
     return;
   }
 
   showSearchNav();
-  scrollToResult(0);
+  moveToResult(0);
 });
 
 /* ===================== */
 /* 결과 이동 */
 /* ===================== */
-function scrollToResult(index) {
-  currentSearchIndex = index;
+function moveToResult(index) {
+  currentIndex = index;
+
+  document.querySelectorAll('.highlight').forEach(h => {
+    h.classList.remove('active');
+  });
+
+  searchResults[index]
+    .querySelectorAll('.highlight')
+    .forEach(h => h.classList.add('active'));
 
   searchResults[index].scrollIntoView({
     behavior: 'smooth',
     block: 'center'
   });
 
-  updateSearchNav();
+  updateNav();
 }
 
-function updateSearchNav() {
-  searchCount.textContent =
-    `${currentSearchIndex + 1} / ${searchResults.length}`;
+/* ===================== */
+/* 네비 상태 업데이트 */
+/* ===================== */
+function updateNav() {
+  searchCount.textContent = `${currentIndex + 1} / ${searchResults.length}`;
 
-  prevBtn.classList.toggle('disabled', currentSearchIndex === 0);
+  prevBtn.classList.toggle('disabled', currentIndex === 0);
   nextBtn.classList.toggle(
     'disabled',
-    currentSearchIndex === searchResults.length - 1
+    currentIndex === searchResults.length - 1
   );
 }
 
 /* ===================== */
-/* 이전 / 다음 */
+/* 이전 / 다음 버튼 */
 /* ===================== */
 prevBtn.addEventListener('click', () => {
-  if (currentSearchIndex > 0) {
-    scrollToResult(currentSearchIndex - 1);
-  }
+  if (currentIndex > 0) moveToResult(currentIndex - 1);
 });
 
 nextBtn.addEventListener('click', () => {
-  if (currentSearchIndex < searchResults.length - 1) {
-    scrollToResult(currentSearchIndex + 1);
+  if (currentIndex < searchResults.length - 1) {
+    moveToResult(currentIndex + 1);
   }
 });
 
 /* ===================== */
-/* 하단 네비 표시 제어 */
+/* 하이라이트 제거 */
+/* ===================== */
+function clearHighlights() {
+  document.querySelectorAll('.highlight').forEach(el => {
+    el.outerHTML = el.textContent;
+  });
+}
+
+/* ===================== */
+/* 하단 네비 표시 / 숨김 */
 /* ===================== */
 function showSearchNav() {
   searchNav.style.display = 'flex';
@@ -901,6 +1033,8 @@ function hideSearchNav() {
   searchNav.style.display = 'none';
   document.querySelector('.chat').style.paddingBottom = '40px';
 }
+
+});
 
 </script>
 
