@@ -897,20 +897,19 @@ let currentIndex = 0;
 /* ===================== */
 
 searchBtn.addEventListener('click', () => {
-  // 1️⃣ 먼저 focus (사용자 제스처 유지)
+  // 1️⃣ 먼저 검색 상태로 전환
+  topBar.classList.add('searching');
+
+  // 2️⃣ 입력 준비
   searchInput.value = '';
   searchInput.focus();
 
-  // 2️⃣ 그 다음 UI 변경
-  requestAnimationFrame(() => {
-    topBar.classList.add('searching');
+  // 3️⃣ 검색 상태 초기화
+  clearHighlights();
+  hideSearchNav();
 
-    clearHighlights();
-    hideSearchNav();
-
-    searchResults = [];
-    currentIndex = 0;
-  });
+  searchResults = [];
+  currentIndex = 0;
 });
 
 /* ===================== */
