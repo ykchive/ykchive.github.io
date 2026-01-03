@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ===================== */
-  /* 날짜 + 요일 자동 생성 */
+  /* 1. 날짜 + 요일 자동 생성 */
   /* ===================== */
   document.querySelectorAll('.date').forEach(el => {
     const raw = el.dataset.date;
@@ -13,19 +13,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     el.textContent = `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
   });
-});
+
 
   /* ===================== */
-  /* 사진 전체보기 */
+  /* 2. 사진 전체보기 (스와이프 지원) */
   /* ===================== */
-  const viewer = document.querySelector('.photo-viewer');
-  const viewerImg = viewer?.querySelector('img');
+  const viewer = document.getElementById('photoViewer');
+  const viewerImg = document.getElementById('photoViewerImg');
   const photos = document.querySelectorAll('.photo');
 
-  let currentIndex = 0;
-  let startX = 0;
-
-  if (viewer && viewerImg) {
+  if (viewer && viewerImg && photos.length > 0) {
+    let currentIndex = 0;
+    let startX = 0;
 
     photos.forEach((img, i) => {
       img.addEventListener('click', () => {
@@ -37,31 +36,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     viewer.addEventListener('click', e => {
-      if (e.target === viewer) {
+      if (e.target === viewer || e.target === viewerImg) {
         viewer.classList.remove('show');
         document.body.style.overflow = '';
-        viewerImg.src = '';
       }
     });
 
-    viewerImg.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-    });
-
+    viewerImg.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
     viewerImg.addEventListener('touchend', e => {
       const diff = startX - e.changedTouches[0].clientX;
       if (Math.abs(diff) < 50) return;
 
       if (diff > 0 && currentIndex < photos.length - 1) currentIndex++;
-      if (diff < 0 && currentIndex > 0) currentIndex--;
+      else if (diff < 0 && currentIndex > 0) currentIndex--;
 
-      viewerImg.src = photos[currentIndex].src;
+      viewerImg.style.opacity = '0';
+      setTimeout(() => {
+        viewerImg.src = photos[currentIndex].src;
+        viewerImg.style.opacity = '1';
+      }, 100);
     });
   }
 
 
   /* ===================== */
-  /* 음성 메시지 */
+  /* 3. 음성 메시지 제어 */
   /* ===================== */
   document.querySelectorAll('.voice-bubble').forEach(bubble => {
     const audio = bubble.querySelector('audio');
@@ -70,25 +69,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const cur   = bubble.querySelector('.voice-current');
     const total = bubble.querySelector('.voice-total');
 
-    if (!audio || !btn || !bar) return;
-
     const format = s => {
       const m = Math.floor(s / 60);
       const sec = Math.floor(s % 60);
       return `${m}:${sec.toString().padStart(2, '0')}`;
     };
 
-    audio.addEventListener('loadedmetadata', () => {
+    const setMetadata = () => {
       bar.max = audio.duration;
       total.textContent = format(audio.duration);
-    });
+    };
+
+    if (audio.readyState >= 1) setMetadata();
+    else audio.addEventListener('loadedmetadata', setMetadata);
 
     btn.addEventListener('click', () => {
       document.querySelectorAll('audio').forEach(a => {
-        if (a !== audio) a.pause();
-      });
-      document.querySelectorAll('.voice-btn').forEach(b => {
-        if (b !== btn) b.classList.remove('playing');
+        if (a !== audio) {
+          a.pause();
+          const otherBtn = a.closest('.voice-bubble').querySelector('.voice-btn');
+          if(otherBtn) otherBtn.classList.remove('playing');
+        }
       });
 
       if (audio.paused) {
@@ -110,87 +111,60 @@ document.addEventListener('DOMContentLoaded', () => {
       bar.value = 0;
       cur.textContent = '0:00';
     });
+
+    bar.addEventListener('input', () => {
+      audio.currentTime = bar.value;
+    });
   });
 
 
   /* ===================== */
-  /* 채팅 검색 (개선 버전) */
+  /* 4. 메시지 검색 기능 */
   /* ===================== */
-  const topBar      = document.querySelector('.top-bar');
-  const searchBtn   = document.querySelector('.search-btn');
-  const searchInput = document.querySelector('.search-bar input');
-  const cancelBtn   = document.querySelector('.cancel-btn');
-  const bubbles     = [...document.querySelectorAll('.bubble')];
+  const searchOpenBtn = document.getElementById('searchOpenBtn');
+  const searchBar = document.getElementById('searchBar');
+  const searchInput = document.getElementById('searchInput');
+  const searchCloseBtn = document.getElementById('searchCloseBtn');
+  const bubbles = document.querySelectorAll('.bubble');
 
-  let results = [];
-  let current = -1;
+  // 검색 결과 초기화 함수
+  const resetSearch = () => {
+    bubbles.forEach(bubble => {
+      // data-original 속성이 있으면 그것으로 복구, 없으면 현재 텍스트 저장
+      if (bubble.dataset.original) {
+        bubble.innerHTML = bubble.dataset.original;
+      } else {
+        bubble.dataset.original = bubble.innerHTML;
+      }
+    });
+  };
 
-  // 🔹 bubble 원본 HTML 저장
-  const originalHTML = new Map();
-  bubbles.forEach(b => {
-    originalHTML.set(b, b.innerHTML);
-  });
-
-  /* 검색 열기 */
-  searchBtn.addEventListener('click', () => {
-    topBar.classList.add('search-active');
-    searchInput.value = '';
-    searchInput.focus();
-    restoreOriginal();
-  });
-
-  /* 검색 닫기 */
-  cancelBtn.addEventListener('click', () => {
-    topBar.classList.remove('search-active');
-    searchInput.value = '';
-    results = [];
-    current = -1;
-    restoreOriginal();
-  });
-
-  /* Enter → 검색 */
-  searchInput.addEventListener('keydown', e => {
-    if (e.key !== 'Enter') return;
-
-    const keyword = searchInput.value.trim();
-    if (!keyword) return;
-
-    restoreOriginal();
-
-    results = bubbles.filter(b =>
-      b.textContent.includes(keyword)
-    );
-
-    if (!results.length) return;
-
-    results.forEach(b => {
-      const html = originalHTML.get(b);
-      b.innerHTML = html.replace(
-        new RegExp(`(${escapeReg(keyword)})`, 'gi'),
-        '<strong>$1</strong>'
-      );
+  if (searchOpenBtn && searchBar) {
+    searchOpenBtn.addEventListener('click', () => {
+      searchBar.style.display = 'flex';
+      searchInput.focus();
     });
 
-    current = 0;
-    scrollToCurrent();
-  });
+    searchCloseBtn.addEventListener('click', () => {
+      searchBar.style.display = 'none';
+      searchInput.value = '';
+      resetSearch();
+    });
 
-  function scrollToCurrent() {
-    if (current < 0 || current >= results.length) return;
-    results[current].scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
+    searchInput.addEventListener('input', (e) => {
+      const keyword = e.target.value.trim();
+      resetSearch();
+
+      if (keyword.length < 1) return;
+
+      bubbles.forEach(bubble => {
+        const text = bubble.textContent;
+        if (text.includes(keyword)) {
+          const regex = new RegExp(`(${keyword})`, 'gi');
+          bubble.innerHTML = text.replace(regex, `<span class="highlight">$1</span>`);
+        }
+      });
     });
   }
 
-  /* 🔹 원본 복원 */
-  function restoreOriginal() {
-    bubbles.forEach(b => {
-      b.innerHTML = originalHTML.get(b);
-    });
-  }
-
-  /* 🔹 정규식 안전 처리 */
-  function escapeReg(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
+});
