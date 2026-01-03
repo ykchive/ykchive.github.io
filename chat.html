@@ -1002,15 +1002,19 @@ function updateNav() {
 /* ===================== */
 /* 이전 / 다음 버튼 */
 /* ===================== */
-prevBtn.addEventListener('click', () => {
-  if (currentIndex > 0) moveToResult(currentIndex - 1);
-});
+if (prevBtn) {
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) moveToResult(currentIndex - 1);
+  });
+}
 
-nextBtn.addEventListener('click', () => {
-  if (currentIndex < searchResults.length - 1) {
-    moveToResult(currentIndex + 1);
-  }
-});
+if (nextBtn) {
+  nextBtn.addEventListener('click', () => {
+    if (currentIndex < searchResults.length - 1) {
+      moveToResult(currentIndex + 1);
+    }
+  });
+}
 
 /* ===================== */
 /* 하이라이트 제거 */
