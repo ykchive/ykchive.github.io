@@ -895,19 +895,22 @@ let currentIndex = 0;
 /* ===================== */
 /* 검색 버튼 클릭 */
 /* ===================== */
+
 searchBtn.addEventListener('click', () => {
-  topBar.classList.add('searching');
-
-  clearHighlights();
-  hideSearchNav();
-
-  searchResults = [];
-  currentIndex = 0;
-
-  searchInput.readOnly = true; // iOS 키보드 트릭
+  // 1️⃣ 먼저 focus (사용자 제스처 유지)
   searchInput.value = '';
   searchInput.focus();
-  searchInput.readOnly = false;
+
+  // 2️⃣ 그 다음 UI 변경
+  requestAnimationFrame(() => {
+    topBar.classList.add('searching');
+
+    clearHighlights();
+    hideSearchNav();
+
+    searchResults = [];
+    currentIndex = 0;
+  });
 });
 
 /* ===================== */
