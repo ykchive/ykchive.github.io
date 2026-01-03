@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     el.textContent = `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
   });
-
+});
 
   /* ===================== */
   /* 사진 전체보기 */
