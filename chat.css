@@ -1,5 +1,5 @@
 /* ===================== */
-/* 기본 설정 (Light Mode) */
+/* 기본 설정 */
 /* ===================== */
 body {
   margin: 0;
@@ -8,118 +8,95 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
 }
 
-/* 상단바 */
-.top-bar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 52px;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 4px;
-}
+  /* 상단바 */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.chat-title {
+.back-btn {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: 600;
-  color: #111;
-}
-
-/* 검색창 (라이트모드 추가) */
-.search-top {
-  position: fixed;
-  top: 52px;
-  left: 0; right: 0;
-  height: 52px;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  padding: 0 14px;
-  gap: 10px;
-}
-
-.search-top input {
-  flex: 1;
-  height: 34px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 0 12px;
-  font-size: 14px;
-  outline: none;
-}
-
-/* 아이콘 및 버튼 스타일 */
-.icon-btn, .back-btn {
-  background: none;
-  border: none;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  left: 14px;
+  font-size: 28px;
+  font-weight: 300;
+  color: #333;
   cursor: pointer;
-  padding: 0;
-  text-decoration: none;
+  user-select: none;
+  text-decoration: none; /* ← 이거 추가 */
 }
 
-.icon-btn svg, .back-btn svg {
-  width: 24px;
-  height: 24px;
-  fill: #333;
-}
+    .chat-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
 
-.right-icons {
-  display: flex;
-  margin-left: auto;
-}
 
-.search-close {
-  background: none;
-  border: none;
-  color: #666;
-  font-size: 14px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
+/* ===================== */
 /* 날짜 */
+/* ===================== */
 .date {
+  position: relative;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 15px;
+  margin: 30px 0 15px;
   font-size: 12px;
   color: #999;
 }
 
 .date::before {
-  content: attr(data-date);
-  background: rgba(0, 0, 0, 0.1);
-  color: #fff;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 11px;
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -14px;              /* ← chat padding 보정 */
+  width: calc(100% + 28px); /* ← 좌우 padding 포함 */
+  height: 1px;
+  background: #e5e5e5;
 }
 
+/* ===================== */
 /* 채팅 영역 */
-.chat { padding: 0 14px 40px; }
-.message { display: flex; align-items: flex-start; margin-bottom: 18px; }
+/* ===================== */
+.chat {
+  padding: 0 14px 40px; /* ⬅️ 위쪽 padding만 늘림 */
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
 
 .profile {
-  width: 40px; height: 40px;
-  border-radius: 50%; margin-right: 10px; flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
 }
 
-.content { max-width: 85%; }
-.name { font-size: 13px; color: #555; margin-bottom: 4px; }
-.bubble-row { display: flex; align-items: flex-end; }
+.content {
+  max-width: 85%;
+}
+
+.name {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.bubble-row {
+  display: flex;
+  align-items: flex-end;
+}
 
 .bubble {
   background: #ededed;
@@ -127,63 +104,229 @@ body {
   border-radius: 16px;
   font-size: 14px;
   line-height: 1.5;
-  word-break: break-all;
-  white-space: pre-wrap;
 }
 
-.time { font-size: 11px; color: #aaa; margin-left: 6px; white-space: nowrap; }
-
-.photo {
-  max-width: 250px; width: 100%;
-  border-radius: 16px; display: block; cursor: pointer;
+.time {
+  font-size: 11px;
+  color: #aaa;
+  margin-left: 6px;
+  white-space: nowrap;
 }
-
-/* 음성 메시지 */
-.voice-bubble {
-  background: #ededed; border-radius: 16px;
-  padding: 10px 14px; display: flex; align-items: center; gap: 4px; min-width: 200px;
-}
-
-.voice-btn {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: #fff; border: none; display: flex; align-items: center; justify-content: center;
-}
-
-.voice-btn svg { width: 14px; height: 14px; fill: #000; }
-.voice-current, .voice-total { font-size: 11px; min-width: 34px; color: #666; text-align: center; }
-.voice-bar { flex: 1; height: 4px; appearance: none; background: #ccc; border-radius: 2px; }
-.voice-bar::-webkit-slider-thumb { appearance: none; width: 10px; height: 10px; background: #333; border-radius: 50%; }
-
-/* 검색 하이라이트 */
-.highlight { background: #ffeb3b; color: #000; font-weight: bold; }
 
 /* ===================== */
-/* 다크모드 통합 (Dark Mode) */
+/* 사진 메시지 */
+/* ===================== */
+.photo {
+  width: 85%;
+  border-radius: 16px;      /* 말풍선은 둥글게 */
+  display: block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===================== */
+/* 사진 전체보기 */
+/* ===================== */
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.photo-viewer.show {
+  display: flex;
+}
+
+.photo-viewer img {
+  max-width: 92%;
+  max-height: 92%;
+  border-radius: 0;        /* 전체보기는 네모 */
+  object-fit: contain;
+}
+
+    /* ===== 음성 메시지 ===== */
+/* 음성 말풍선 */
+.voice-bubble {
+  background: #ededed;
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 200px;
+}
+
+/* 재생 버튼 */
+.voice-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* SVG 아이콘 */
+.voice-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #000;
+  display: block;
+}
+
+/* 재생 / 일시정지 전환 */
+.voice-btn .pause {
+  display: none;
+}
+.voice-btn.playing .play {
+  display: none;
+}
+.voice-btn.playing .pause {
+  display: inline;
+}
+
+/* 시간 */
+.voice-current,
+.voice-total {
+  font-size: 11px;
+  min-width: 34px;
+  text-align: center;
+  color: #666;
+}
+
+/* 재생바 */
+.voice-bar {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 2px;
+  touch-action: none;
+}
+
+.voice-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* 아이콘 버튼 */
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: #333;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* ===================== */
+/* 다크모드 */
 /* ===================== */
 @media (prefers-color-scheme: dark) {
-  body { background: #121212; color: #eaeaea; }
+  body {
+    background: #121212;
+    color: #eaeaea;
+  }
 
-  .top-bar, .search-top {
+  /* 상단바 */
+  .top-bar {
     background: #1e1e1e;
     border-bottom: 1px solid #2a2a2a;
   }
 
-  .chat-title, .back-btn, .search-top input, .search-close { color: #eaeaea; }
-  .search-top input { background: #2a2a2a; border-color: #444; }
+  .chat-title,
+  .back-btn {
+    color: #eaeaea;
+  }
 
-  .icon-btn svg, .back-btn svg { fill: #eaeaea; }
+  /* 날짜 */
+  .date {
+    color: #888;
+  }
 
-  .date::before { background: rgba(255, 255, 255, 0.18); color: #eee; }
-  .name { color: #bdbdbd; }
-  .bubble, .voice-bubble { background: #2a2a2a; color: #f1f1f1; }
-  .time, .search-count { color: #9a9a9a; }
-  .photo { box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .date::before {
+    background: rgba(255, 255, 255, 0.15);
+  }
 
-  .voice-btn { background: #444; }
-  .voice-btn svg { fill: #fff; }
-  .voice-bar { background: #555; }
-  .voice-bar::-webkit-slider-thumb { background: #ddd; }
-  .voice-current, .voice-total { color: #bdbdbd; }
-  
-  .highlight { background: #fbc02d; color: #000; }
+  /* 이름 / 시간 */
+  .name {
+    color: #bdbdbd;
+  }
+
+  .time {
+    color: #9a9a9a;
+  }
+
+  /* 말풍선 */
+  .bubble {
+    background: #2a2a2a;
+    color: #f1f1f1;
+  }
+
+  /* 사진 */
+  .photo {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 음성 메시지 */
+  .voice-bubble {
+    background: #2a2a2a;
+  }
+
+  .voice-btn {
+    background: #444;
+    color: #fff;
+  }
+
+  .voice-bar {
+    background: #555;
+  }
+
+  .voice-bar::-webkit-slider-thumb {
+    background: #ddd;
+  }
+
+  .voice-current,
+  .voice-total {
+    color: #bdbdbd;
+  }
+
+  /* 아이콘 */
+  .icon-btn svg {
+    stroke: #eaeaea;
+  }
+
+  /* 검색바 (미리 대응) */
+  .search-top {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .search-top input {
+    background: #2a2a2a;
+    border-color: #444;
+    color: #fff;
+  }
+
+  .search-count {
+    color: #aaa;
+  }
 }
