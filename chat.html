@@ -326,6 +326,72 @@ body {
   padding: 6px;
 }
 
+/* 검색창 줌인 방지 (iOS) */
+#searchInput {
+  font-size: 16px;
+}
+
+/* ===================== */
+/* 검색 하이라이트 */
+/* ===================== */
+.highlight {
+  background: #000;
+  color: #fff;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+/* ===================== */
+/* 검색 결과 하단 네비 (카톡 스타일) */
+/* ===================== */
+.search-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  background: #fff;
+  border-top: 1px solid #eee;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  z-index: 1500;
+}
+
+.search-nav span {
+  font-size: 14px;
+  color: #111;
+}
+
+/* 버튼 */
+.nav-btn {
+  border: none;
+  background: transparent;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.nav-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #111;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 비활성 상태 */
+.nav-btn.disabled {
+  pointer-events: none;
+}
+
+.nav-btn.disabled svg {
+  stroke: #ccc;
+}
+
+
 
 /* ===================== */
 /* 다크모드 */
@@ -418,6 +484,28 @@ body {
 
   .icon-btn svg {
     stroke: #eaeaea;
+  }
+
+  .highlight {
+    background: #fff;
+    color: #000;
+  }
+
+  .search-nav {
+    background: #1e1e1e;
+    border-top: 1px solid #2a2a2a;
+  }
+
+  .search-nav span {
+    color: #eee;
+  }
+
+  .nav-btn svg {
+    stroke: #eee;
+  }
+
+  .nav-btn.disabled svg {
+    stroke: #555;
   }
 }
 
@@ -661,199 +749,158 @@ body {
 
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
 
-  /* ===================== */
-  /* 날짜 + 요일 자동 생성 */
-  /* ===================== */
-  document.querySelectorAll('.date').forEach(el => {
-    const raw = el.dataset.date;
-    if (!raw) return;
+/* ===================== */
+/* 채팅 검색 */
+/* ===================== */
+const topBar = document.querySelector('.top-bar');
+const searchBtn = document.getElementById('searchBtn');
+const searchCancel = document.getElementById('searchCancel');
+const searchInput = document.getElementById('searchInput');
 
-    const [y, m, d] = raw.split('-').map(Number);
-    const date = new Date(y, m - 1, d);
-    const week = ['일','월','화','수','목','금','토'];
+const searchNav   = document.getElementById('searchNav');
+const searchCount = document.getElementById('searchCount');
+const prevBtn     = document.getElementById('prevResult');
+const nextBtn     = document.getElementById('nextResult');
 
-    el.textContent = `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
+let searchResults = [];
+let currentSearchIndex = 0;
+
+/* ===================== */
+/* 검색 버튼 클릭 */
+/* ===================== */
+searchBtn.addEventListener('click', () => {
+  topBar.classList.add('searching');
+
+  // iOS 키보드 즉시 표시 트릭
+  searchInput.readOnly = true;
+  searchInput.value = '';
+  searchInput.placeholder = '채팅 검색';
+  searchInput.focus();
+  searchInput.readOnly = false;
+});
+
+/* ===================== */
+/* 검색 취소 */
+/* ===================== */
+searchCancel.addEventListener('click', () => {
+  topBar.classList.remove('searching');
+  searchInput.blur();
+
+  hideSearchNav();
+  searchResults = [];
+  currentSearchIndex = 0;
+
+  document.querySelectorAll('.highlight').forEach(el => {
+    el.outerHTML = el.textContent;
+  });
+});
+
+/* ===================== */
+/* 입력 시 placeholder */
+/* ===================== */
+searchInput.addEventListener('input', () => {
+  searchInput.placeholder = searchInput.value ? '' : '채팅 검색';
+});
+
+/* ===================== */
+/* 엔터 → 검색 */
+/* ===================== */
+searchInput.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+
+  const keyword = searchInput.value.trim().toLowerCase();
+  if (!keyword) return;
+
+  searchInput.blur(); // 키보드 내리기
+
+  // 기존 하이라이트 제거
+  document.querySelectorAll('.highlight').forEach(el => {
+    el.outerHTML = el.textContent;
   });
 
+  searchResults = [];
+  currentSearchIndex = 0;
 
-  /* ===================== */
-  /* 사진 전체보기 */
-  /* ===================== */
-  const viewer = document.getElementById('photoViewer');
-  const viewerImg = document.getElementById('photoViewerImg');
-  const photos = document.querySelectorAll('.photo');
+  document.querySelectorAll('.bubble, .name').forEach(el => {
+    const text = el.textContent;
+    if (!text.toLowerCase().includes(keyword)) return;
 
-  let photoIndex = 0;
-  let startX = 0;
+    const regex = new RegExp(`(${keyword})`, 'gi');
+    el.innerHTML = text.replace(
+      regex,
+      `<span class="highlight">$1</span>`
+    );
 
-  if (viewer && viewerImg && photos.length) {
-    photos.forEach((img, i) => {
-      img.addEventListener('click', () => {
-        photoIndex = i;
-        viewerImg.src = img.src;
-        viewer.classList.add('show');
-        document.body.style.overflow = 'hidden';
-      });
-    });
+    const msg = el.closest('.message');
+    if (msg && !searchResults.includes(msg)) {
+      searchResults.push(msg);
+    }
+  });
 
-    viewer.addEventListener('click', e => {
-      if (e.target === viewer) {
-        viewer.classList.remove('show');
-        viewerImg.src = '';
-        document.body.style.overflow = '';
-      }
-    });
-
-    viewerImg.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-    });
-
-    viewerImg.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) < 50) return;
-
-      if (diff > 0 && photoIndex < photos.length - 1) photoIndex++;
-      if (diff < 0 && photoIndex > 0) photoIndex--;
-
-      viewerImg.src = photos[photoIndex].src;
-    });
+  if (!searchResults.length) {
+    alert('검색 결과가 없습니다.');
+    hideSearchNav();
+    return;
   }
 
-
-  /* ===================== */
-  /* 음성 메시지 */
-  /* ===================== */
-  document.querySelectorAll('.voice-bubble').forEach(bubble => {
-    const audio = bubble.querySelector('audio');
-    const btn   = bubble.querySelector('.voice-btn');
-    const bar   = bubble.querySelector('.voice-bar');
-    const cur   = bubble.querySelector('.voice-current');
-    const total = bubble.querySelector('.voice-total');
-
-    if (!audio || !btn || !bar) return;
-
-    const format = s => {
-      const m = Math.floor(s / 60);
-      const sec = Math.floor(s % 60);
-      return `${m}:${sec.toString().padStart(2, '0')}`;
-    };
-
-    audio.addEventListener('loadedmetadata', () => {
-      bar.max = audio.duration;
-      total.textContent = format(audio.duration);
-    });
-
-    bar.addEventListener('input', () => {
-      audio.currentTime = bar.value;
-    });
-
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('audio').forEach(a => {
-        if (a !== audio) a.pause();
-      });
-      document.querySelectorAll('.voice-btn').forEach(b => {
-        if (b !== btn) b.classList.remove('playing');
-      });
-
-      if (audio.paused) {
-        audio.play();
-        btn.classList.add('playing');
-      } else {
-        audio.pause();
-        btn.classList.remove('playing');
-      }
-    });
-
-    audio.addEventListener('timeupdate', () => {
-      bar.value = audio.currentTime;
-      cur.textContent = format(audio.currentTime);
-    });
-
-    audio.addEventListener('ended', () => {
-      btn.classList.remove('playing');
-      bar.value = 0;
-      cur.textContent = '0:00';
-    });
-  });
-
-
-  /* ===================== */
-  /* 상단바 검색 전환 */
-  /* ===================== */
-  const topBar = document.querySelector('.top-bar');
-  const searchBtn = document.getElementById('searchBtn');
-  const searchCancel = document.getElementById('searchCancel');
-  const searchInput = document.getElementById('searchInput');
-
-  searchBtn.addEventListener('click', () => {
-    topBar.classList.add('searching');
-    searchInput.value = '';
-    searchInput.placeholder = '채팅 검색';
-    setTimeout(() => searchInput.focus(), 0);
-  });
-
-  searchCancel.addEventListener('click', () => {
-    topBar.classList.remove('searching');
-    searchInput.blur();
-
-    /* 하이라이트 제거 */
-    document.querySelectorAll('.highlight').forEach(el => {
-      el.outerHTML = el.textContent;
-    });
-  });
-
-  searchInput.addEventListener('input', () => {
-    searchInput.placeholder = searchInput.value ? '' : '채팅 검색';
-  });
-
-
-  /* ===================== */
-  /* 엔터로 채팅 검색 */
-  /* ===================== */
-  let searchResults = [];
-
-  searchInput.addEventListener('keydown', e => {
-    if (e.key !== 'Enter') return;
-    e.preventDefault();
-
-    const keyword = searchInput.value.trim().toLowerCase();
-    if (!keyword) return;
-
-    document.querySelectorAll('.highlight').forEach(el => {
-      el.outerHTML = el.textContent;
-    });
-
-    searchResults = [];
-
-    document.querySelectorAll('.bubble, .name').forEach(el => {
-      if (!el.textContent.toLowerCase().includes(keyword)) return;
-
-      const regex = new RegExp(`(${keyword})`, 'gi');
-      el.innerHTML = el.textContent.replace(
-        regex,
-        `<span class="highlight">$1</span>`
-      );
-
-      const msg = el.closest('.message');
-      if (msg && !searchResults.includes(msg)) {
-        searchResults.push(msg);
-      }
-    });
-
-    if (!searchResults.length) {
-      alert('검색 결과가 없습니다.');
-      return;
-    }
-
-    searchResults[0].scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
-    });
-  });
-
+  showSearchNav();
+  scrollToResult(0);
 });
+
+/* ===================== */
+/* 결과 이동 */
+/* ===================== */
+function scrollToResult(index) {
+  currentSearchIndex = index;
+
+  searchResults[index].scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  });
+
+  updateSearchNav();
+}
+
+function updateSearchNav() {
+  searchCount.textContent =
+    `${currentSearchIndex + 1} / ${searchResults.length}`;
+
+  prevBtn.classList.toggle('disabled', currentSearchIndex === 0);
+  nextBtn.classList.toggle(
+    'disabled',
+    currentSearchIndex === searchResults.length - 1
+  );
+}
+
+/* ===================== */
+/* 이전 / 다음 */
+/* ===================== */
+prevBtn.addEventListener('click', () => {
+  if (currentSearchIndex > 0) {
+    scrollToResult(currentSearchIndex - 1);
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentSearchIndex < searchResults.length - 1) {
+    scrollToResult(currentSearchIndex + 1);
+  }
+});
+
+/* ===================== */
+/* 하단 네비 표시 제어 */
+/* ===================== */
+function showSearchNav() {
+  searchNav.style.display = 'flex';
+  document.querySelector('.chat').style.paddingBottom = '88px';
+}
+
+function hideSearchNav() {
+  searchNav.style.display = 'none';
+  document.querySelector('.chat').style.paddingBottom = '40px';
+}
 
 </script>
 
@@ -861,6 +908,24 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="photo-viewer" id="photoViewer">
   <img id="photoViewerImg" alt="">
 </div>
+
+<!-- 검색 결과 네비게이션 -->
+<div class="search-nav" id="searchNav">
+  <button id="prevResult" class="nav-btn" aria-label="이전">
+    <svg viewBox="0 0 24 24">
+      <polyline points="6 14 12 8 18 14" />
+    </svg>
+  </button>
+
+  <span id="searchCount">1 / 1</span>
+
+  <button id="nextResult" class="nav-btn" aria-label="다음">
+    <svg viewBox="0 0 24 24">
+      <polyline points="6 10 12 16 18 10" />
+    </svg>
+  </button>
+</div>
+
 
 </body>
 </html>
