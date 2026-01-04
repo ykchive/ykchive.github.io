@@ -60,6 +60,40 @@ body {
   border-radius: 2px;
 }
 
+/* 딤 */
+.dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.dim.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 사이드 메뉴 */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 260px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+  transition: right 0.3s ease;
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.side-menu.open {
+  right: 0;
+}
+
     /* 날짜 */
 .date {
   text-align: center;
