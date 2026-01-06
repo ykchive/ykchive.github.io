@@ -1,144 +1,168 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instagram Style Profile</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<style>
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #fafafa;
-}
+  <title>2021.07.22</title>
 
-.container {
-  max-width: 390px; /* 아이폰 느낌 */
-  margin: auto;
-  background: white;
-}
-
-/* 헤더 */
-.header {
-  padding: 12px;
-  font-weight: bold;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-
-/* 프로필 영역 */
-.profile {
-  display: flex;
-  padding: 16px;
-}
-
-.avatar {
-  width: 86px;
-  height: 86px;
-  border-radius: 50%;
-  background: url("profile.jpg") center/cover;
-}
-
-.stats {
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.stat {
-  text-align: center;
-  font-size: 14px;
-}
-
-/* bio */
-.bio {
-  padding: 0 16px 12px;
-  font-size: 14px;
-}
-
-/* 하이라이트 */
-.highlights {
-  display: flex;
-  gap: 12px;
-  padding: 8px 16px;
-  overflow-x: auto;
-}
-
-.highlight {
-  text-align: center;
-  font-size: 12px;
-}
-
-.highlight div {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  margin-bottom: 4px;
-}
-
-/* 이미지 그리드 */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-}
-
-.grid img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
-</style>
+  <!-- 공용 CSS -->
+  <link rel="stylesheet" href="post.css">
 </head>
-
 <body>
 
-<div class="container">
-
-  <div class="header">minsu</div>
-
-  <div class="profile">
-    <div class="avatar"></div>
-    <div class="stats">
-      <div class="stat"><b>12</b><br>posts</div>
-      <div class="stat"><b>128</b><br>followers</div>
-      <div class="stat"><b>87</b><br>following</div>
-    </div>
+  <!-- 상단바 -->
+  <div class="top-bar">
+    <a href="index.html#toggle" class="back-btn">‹</a>
+    <div class="chat-title">강영현</div>
   </div>
 
-  <div class="bio">
-    <b>민수</b><br>
-    Frontend Student 👨‍💻<br>
-    HTML · CSS · JS
+  <!-- 날짜 -->
+  <div class="date" data-date="2021-07-22"></div>
+
+  <!-- 채팅 -->
+  <div class="chat">
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">2편 보고 왔어요 ㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 07:59</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">저 짐 다 한 15분? 만에 싸고 나온겁니다 ㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:04</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">눈에 보이는 것들 다 그냥 넣었어요 ㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:05</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">넉넉히 15분이지 아마 사실 몇 분 안걸렸을걸요 ㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:05</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">솔직히 헤어롤 그냥 책상 위에 있어서 들고 왔지.. 잘 쓰지는 않아요... ㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:07</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">뺜쮸는 반드시 챙겨야죠.</div>
+          <div class="time">오후 08:08</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">고량주야 방에 있는 것 들고왔죠 ㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:13</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">제 방에 가장 오래된 술은 아마 안동소주일 걸요 ㅋㅋㅋㅋ 친구가 안동출신이라 사준건데 쉽게 손이 잘 안가더라구요.. ㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:16</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">친구 누구냐고요? 익진이요. ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="time">오후 08:18</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">근데 최근에는 술 잘 사지도 않고 잘 마시지도 않아요 ㅋㅋㅋㅋㅋㅋ 너무 걱정 말아요</div>
+          <div class="time">오후 08:20</div>
+        </div>
+      </div>
+    </div>
+
+ <!-- 텍스트 -->
+    <div class="message">
+      <img class="profile" src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" alt="">
+      <div class="content">
+        <div class="name">강영현</div>
+        <div class="bubble-row">
+          <div class="bubble">그럼 전 이제 녹음 다녀올게용!! 이따가 만나용!!!!</div>
+          <div class="time">오후 08:23</div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- chat 끝 -->
+
+  <!-- 이전 / 다음 -->
+  <div class="post-nav">
+    <a href="post-210721.html" class="prev">‹</a>
+    <a href="post-210723.html" class="next">›</a>
   </div>
 
-  <div class="highlights">
-    <div class="highlight">
-      <div></div>
-      Study
-    </div>
-    <div class="highlight">
-      <div></div>
-      Project
-    </div>
-    <div class="highlight">
-      <div></div>
-      Life
-    </div>
-  </div>
-
-  <div class="grid">
-    <img src="p1.jpg">
-    <img src="p2.jpg">
-    <img src="p3.jpg">
-    <img src="p4.jpg">
-    <img src="p5.jpg">
-    <img src="p6.jpg">
-  </div>
-
-</div>
-
+  <!-- 공용 JS -->
+  <script src="post.js"></script>
 </body>
 </html>
