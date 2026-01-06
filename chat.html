@@ -30,14 +30,15 @@ body {
   background: #fff;
   border-bottom: 1px solid #eee;
   z-index: 1000;
+
   display: flex;
   align-items: center;
-  justify-content: center;
-  pointer-events: auto;
+  justify-content: space-between; /* ⭐ 핵심 */
+  padding: 0 14px;
 }
 
 .back-btn {
-  position: absolute;
+  position: static;
   left: 14px;
   font-size: 28px;
   font-weight: 300;
@@ -48,6 +49,7 @@ body {
 }
 
 .chat-title {
+  position: absolute;
   font-size: 16px;
   font-weight: 600;
   color: #111;
@@ -57,7 +59,7 @@ body {
 /* 상단바 오른쪽 버튼 */
 /* ===================== */
 .top-actions {
-  position: absolute;
+  position: static;
   right: 14px;
   display: flex;
   align-items: center;
@@ -88,12 +90,6 @@ body {
   stroke-linecap: round;
 }
 
-  .top-actions,
-.back-btn {
-  position: relative;
-  z-index: 20;
-  pointer-events: auto;
-}
 
 /* ===================== */
 /* 날짜 + 구분선 */
