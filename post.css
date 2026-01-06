@@ -40,6 +40,39 @@ body {
       color: #111;
     }
 
+/* ===================== */
+/* 상단바 오른쪽 버튼 */
+/* ===================== */
+.top-actions {
+  position: absolute;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #333;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+}
+
     /* 날짜 */
 .date {
   text-align: center;
