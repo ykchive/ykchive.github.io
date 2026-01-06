@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Style Profile</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #fafafa;
+}
+
+.container {
+  max-width: 390px; /* 아이폰 느낌 */
+  margin: auto;
+  background: white;
+}
+
+/* 헤더 */
+.header {
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+/* 프로필 영역 */
+.profile {
+  display: flex;
+  padding: 16px;
+}
+
+.avatar {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: url("profile.jpg") center/cover;
+}
+
+.stats {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat {
+  text-align: center;
+  font-size: 14px;
+}
+
+/* bio */
+.bio {
+  padding: 0 16px 12px;
+  font-size: 14px;
+}
+
+/* 하이라이트 */
+.highlights {
+  display: flex;
+  gap: 12px;
+  padding: 8px 16px;
+  overflow-x: auto;
+}
+
+.highlight {
+  text-align: center;
+  font-size: 12px;
+}
+
+.highlight div {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  margin-bottom: 4px;
+}
+
+/* 이미지 그리드 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+}
+
+.grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">minsu</div>
+
+  <div class="profile">
+    <div class="avatar"></div>
+    <div class="stats">
+      <div class="stat"><b>12</b><br>posts</div>
+      <div class="stat"><b>128</b><br>followers</div>
+      <div class="stat"><b>87</b><br>following</div>
+    </div>
+  </div>
+
+  <div class="bio">
+    <b>민수</b><br>
+    Frontend Student 👨‍💻<br>
+    HTML · CSS · JS
+  </div>
+
+  <div class="highlights">
+    <div class="highlight">
+      <div></div>
+      Study
+    </div>
+    <div class="highlight">
+      <div></div>
+      Project
+    </div>
+    <div class="highlight">
+      <div></div>
+      Life
+    </div>
+  </div>
+
+  <div class="grid">
+    <img src="p1.jpg">
+    <img src="p2.jpg">
+    <img src="p3.jpg">
+    <img src="p4.jpg">
+    <img src="p5.jpg">
+    <img src="p6.jpg">
+  </div>
+
+</div>
+
+</body>
+</html>
