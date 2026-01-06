@@ -273,10 +273,12 @@ body {
   padding: 0 14px;
   gap: 10px;
   background: inherit;
+  pointer-events: none;   /* ⭐ 추가 */
 }
 
 .top-bar.searching .search-bar {
   display: flex;
+  pointer-events: auto;   /* ⭐ 추가 */
 }
 
 .top-bar.searching .back-btn,
