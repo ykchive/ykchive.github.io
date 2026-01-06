@@ -395,6 +395,10 @@ body {
   outline: 2px solid #007aff;
 }
 
+.side-list li {
+  cursor: pointer;
+}
+
 
 /* ===================== */
 /* 다크모드 */
@@ -611,6 +615,42 @@ body {
   font-size: 14px;
 }
 
+/* 날짜별 보기 토글 */
+.date-toggle-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.date-toggle .arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.date-toggle.open .arrow {
+  transform: rotate(90deg);
+}
+
+.date-list {
+  list-style: none;
+  padding-left: 14px;
+  margin: 6px 0 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.date-toggle.open .date-list {
+  max-height: 500px; /* 충분히 큰 값 */
+}
+
+.date-list li {
+  padding: 8px 0;
+  font-size: 13px;
+  cursor: pointer;
+}
+
 </style>
 </head>
 
@@ -657,25 +697,28 @@ body {
     </div>
     <button class="cancel-btn" id="searchCancel">취소</button>
   </div>
+</div> <!-- top-bar 끝 -->
 
 
-<!-- 사이드 메뉴 -->
+<!-- ✅ 사이드 메뉴는 body 직계 -->
 <div class="side-menu" id="sideMenu">
   <div class="side-panel">
-
-    <div class="side-profile">
-      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" />
-      <div class="side-name">강영현</div>
-    </div>
-
     <ul class="side-list">
-      <li>사진</li>
-      <li>음성메시지</li>
-      <li>날짜별 보기</li>
+      <li data-link="photo.html">사진</li>
+      <li data-link="voice.html">음성메시지</li>
+
+      <li class="date-toggle">
+        <div class="date-toggle-title">
+          <span class="arrow">›</span>
+          날짜별 보기
+        </div>
+        <ul class="date-list">
+          <li data-date="2021-07-19">2021년 7월 19일</li>
+          <li data-date="2021-05-06">2021년 5월 6일</li>
+        </ul>
+      </li>
     </ul>
   </div>
-</div>
-
 </div>
 
 
@@ -684,7 +727,7 @@ body {
   <div class="chat">
 
     <!-- ===== 날짜 1 ===== -->
-    <div class="date" data-date="2021-07-19"></div>
+<div class="date" id="date-2021-07-19" data-date="2021-07-19"></div>
 
     <!-- 사진 메시지 -->
     <div class="message">
@@ -747,7 +790,7 @@ body {
     </div>
 
     <!-- ===== 날짜 2 ===== -->
-  <div class="date" data-date="2021-05-06"></div>
+<div class="date" id="date-2021-05-06" data-date="2021-05-06"></div>
 
     <!-- 텍스트 -->
     <div class="message">
@@ -868,13 +911,11 @@ body {
   </div> <!-- chat 끝 -->
 
 
-
 <script>
-
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ===================== */
-  /* 날짜 + 요일 자동 생성 */
+  /* 날짜 + 요일 */
   /* ===================== */
   document.querySelectorAll('.date').forEach(el => {
     const raw = el.dataset.date;
@@ -887,50 +928,27 @@ document.addEventListener('DOMContentLoaded', () => {
     el.textContent = `${y}년 ${m}월 ${d}일 ${week[date.getDay()]}요일`;
   });
 
-
   /* ===================== */
   /* 사진 전체보기 */
   /* ===================== */
   const viewer = document.getElementById('photoViewer');
   const viewerImg = document.getElementById('photoViewerImg');
-  const photos = document.querySelectorAll('.photo');
 
-  let photoIndex = 0;
-  let startX = 0;
-
-  if (viewer && viewerImg && photos.length) {
-    photos.forEach((img, i) => {
-      img.addEventListener('click', () => {
-        photoIndex = i;
-        viewerImg.src = img.src;
-        viewer.classList.add('show');
-        document.body.style.overflow = 'hidden';
-      });
+  document.querySelectorAll('.photo').forEach(img => {
+    img.addEventListener('click', () => {
+      viewerImg.src = img.src;
+      viewer.classList.add('show');
+      document.body.style.overflow = 'hidden';
     });
+  });
 
-    viewer.addEventListener('click', e => {
-      if (e.target === viewer) {
-        viewer.classList.remove('show');
-        viewerImg.src = '';
-        document.body.style.overflow = '';
-      }
-    });
-
-    viewerImg.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-    });
-
-    viewerImg.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) < 50) return;
-
-      if (diff > 0 && photoIndex < photos.length - 1) photoIndex++;
-      if (diff < 0 && photoIndex > 0) photoIndex--;
-
-      viewerImg.src = photos[photoIndex].src;
-    });
-  }
-
+  viewer.addEventListener('click', e => {
+    if (e.target === viewer) {
+      viewer.classList.remove('show');
+      viewerImg.src = '';
+      document.body.style.overflow = '';
+    }
+  });
 
   /* ===================== */
   /* 음성 메시지 */
@@ -941,31 +959,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const bar   = bubble.querySelector('.voice-bar');
     const cur   = bubble.querySelector('.voice-current');
     const total = bubble.querySelector('.voice-total');
+    if (!audio) return;
 
-    if (!audio || !btn || !bar) return;
-
-    const format = s => {
-      const m = Math.floor(s / 60);
-      const sec = Math.floor(s % 60);
-      return `${m}:${sec.toString().padStart(2, '0')}`;
-    };
+    const format = s =>
+      `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2,'0')}`;
 
     audio.addEventListener('loadedmetadata', () => {
       bar.max = audio.duration;
       total.textContent = format(audio.duration);
     });
 
-    bar.addEventListener('input', () => {
-      audio.currentTime = bar.value;
-    });
-
     btn.addEventListener('click', () => {
-      document.querySelectorAll('audio').forEach(a => {
-        if (a !== audio) a.pause();
-      });
-      document.querySelectorAll('.voice-btn').forEach(b => {
-        if (b !== btn) b.classList.remove('playing');
-      });
+      document.querySelectorAll('audio').forEach(a => a !== audio && a.pause());
+      document.querySelectorAll('.voice-btn').forEach(b => b !== btn && b.classList.remove('playing'));
 
       if (audio.paused) {
         audio.play();
@@ -988,195 +994,106 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ===================== */
+  /* 검색 */
+  /* ===================== */
+  const topBar = document.querySelector('.top-bar');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchCancel = document.getElementById('searchCancel');
+  const searchInput = document.getElementById('searchInput');
+  const searchNav = document.getElementById('searchNav');
+  const searchCount = document.getElementById('searchCount');
+  const prevBtn = document.getElementById('prevResult');
+  const nextBtn = document.getElementById('nextResult');
 
-/* ===================== */
-/* 채팅 검색 */
-/* ===================== */
-const topBar = document.querySelector('.top-bar');
-const searchBtn = document.getElementById('searchBtn');
-const searchCancel = document.getElementById('searchCancel');
-const searchInput = document.getElementById('searchInput');
+  let results = [];
+  let index = 0;
 
-const searchNav   = document.getElementById('searchNav');
-const searchCount = document.getElementById('searchCount');
-const prevBtn     = document.getElementById('prevResult');
-const nextBtn     = document.getElementById('nextResult');
-
-let searchResults = [];
-let currentIndex = 0;
-
-/* ===================== */
-/* 검색 버튼 클릭 */
-/* ===================== */
-
-searchBtn.addEventListener('click', () => {
-  // 1️⃣ 먼저 검색 상태로 전환
-  topBar.classList.add('searching');
-
-  // 2️⃣ 입력 준비
-  searchInput.value = '';
-  searchInput.focus();
-
-  // 3️⃣ 검색 상태 초기화
-  clearHighlights();
-  hideSearchNav();
-
-  searchResults = [];
-  currentIndex = 0;
-});
-
-/* ===================== */
-/* 검색 취소 */
-/* ===================== */
-searchCancel.addEventListener('click', () => {
-  topBar.classList.remove('searching');
-  searchInput.value = '';
-  searchInput.blur();
-
-  clearHighlights();
-  hideSearchNav();
-
-  searchResults = [];
-  currentIndex = 0;
-});
-
-/* ===================== */
-/* 엔터 → 검색 실행 */
-/* ===================== */
-searchInput.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
-  e.preventDefault();
-
-  const keyword = searchInput.value.trim().toLowerCase();
-  if (!keyword) return;
-
-  searchInput.blur();
-  clearHighlights();
-
-  searchResults = [];
-  currentIndex = 0;
-
-  document.querySelectorAll('.bubble').forEach(el => {
-    const text = el.textContent;
-    if (!text.toLowerCase().includes(keyword)) return;
-
-    const regex = new RegExp(`(${keyword})`, 'gi');
-    el.innerHTML = text.replace(regex, `<span class="highlight">$1</span>`);
-
-    const msg = el.closest('.message');
-    if (msg && !searchResults.includes(msg)) {
-      searchResults.push(msg);
-    }
+  searchBtn.addEventListener('click', () => {
+    topBar.classList.add('searching');
+    searchInput.focus();
+    clear();
   });
 
-  if (!searchResults.length) {
-    hideSearchNav();
-    alert('검색 결과가 없습니다.');
-    return;
+  searchCancel.addEventListener('click', () => {
+    topBar.classList.remove('searching');
+    searchInput.value = '';
+    clear();
+  });
+
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    clear();
+
+    const word = searchInput.value.toLowerCase();
+    document.querySelectorAll('.bubble').forEach(b => {
+      if (!b.textContent.toLowerCase().includes(word)) return;
+      b.innerHTML = b.textContent.replace(
+        new RegExp(word, 'gi'),
+        `<span class="highlight">$&</span>`
+      );
+      results.push(b.closest('.message'));
+    });
+
+    if (!results.length) return alert('검색 결과가 없습니다.');
+    searchNav.style.display = 'flex';
+    move(0);
+  });
+
+  function move(i) {
+    index = i;
+    results[i].scrollIntoView({ behavior:'smooth', block:'center' });
+    searchCount.textContent = `${i+1} / ${results.length}`;
   }
 
-  showSearchNav();
-  moveToResult(0);
-});
+  prevBtn.onclick = () => index > 0 && move(index - 1);
+  nextBtn.onclick = () => index < results.length - 1 && move(index + 1);
 
-/* ===================== */
-/* 결과 이동 */
-/* ===================== */
-function moveToResult(index) {
-  currentIndex = index;
-
-  document.querySelectorAll('.highlight').forEach(h => {
-    h.classList.remove('active');
-  });
-
-  searchResults[index]
-    .querySelectorAll('.highlight')
-    .forEach(h => h.classList.add('active'));
-
-  searchResults[index].scrollIntoView({
-    behavior: 'smooth',
-    block: 'center'
-  });
-
-  updateNav();
-}
-
-/* ===================== */
-/* 네비 상태 업데이트 */
-/* ===================== */
-function updateNav() {
-  searchCount.textContent = `${currentIndex + 1} / ${searchResults.length}`;
-
-  prevBtn.classList.toggle('disabled', currentIndex === 0);
-  nextBtn.classList.toggle(
-    'disabled',
-    currentIndex === searchResults.length - 1
-  );
-}
-
-/* ===================== */
-/* 이전 / 다음 버튼 */
-/* ===================== */
-if (prevBtn) {
-  prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) moveToResult(currentIndex - 1);
-  });
-}
-
-if (nextBtn) {
-  nextBtn.addEventListener('click', () => {
-    if (currentIndex < searchResults.length - 1) {
-      moveToResult(currentIndex + 1);
-    }
-  });
-}
-
-/* ===================== */
-/* 하이라이트 제거 */
-/* ===================== */
-function clearHighlights() {
-  document.querySelectorAll('.highlight').forEach(el => {
-    el.outerHTML = el.textContent;
-  });
-}
-
-/* ===================== */
-/* 하단 네비 표시 / 숨김 */
-/* ===================== */
-function showSearchNav() {
-  searchNav.style.display = 'flex';
-  document.querySelector('.chat').style.paddingBottom = '88px';
-}
-
-function hideSearchNav() {
-  searchNav.style.display = 'none';
-  document.querySelector('.chat').style.paddingBottom = '40px';
-}
-
-});
+  function clear() {
+    results = [];
+    index = 0;
+    searchNav.style.display = 'none';
+    document.querySelectorAll('.highlight').forEach(h => h.outerHTML = h.textContent);
+  }
 
   /* ===================== */
   /* 사이드 메뉴 */
   /* ===================== */
-  const menuBtn  = document.getElementById('menuBtn');
+  const menuBtn = document.getElementById('menuBtn');
   const sideMenu = document.getElementById('sideMenu');
 
-  if (menuBtn && sideMenu) {
-    // 열기
-    menuBtn.addEventListener('click', () => {
-      sideMenu.classList.add('show');
-      document.body.style.overflow = 'hidden';
-    });
+  menuBtn.onclick = () => {
+    sideMenu.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  };
 
-    // 바깥 눌러서 닫기
-    sideMenu.addEventListener('click', e => {
-      if (e.target === sideMenu) {
-        sideMenu.classList.remove('show');
-        document.body.style.overflow = '';
-      }
-    });
-  }
+  sideMenu.onclick = e => {
+    if (e.target === sideMenu) {
+      sideMenu.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+  };
 
+  /* 날짜별 보기 */
+  const dateToggle = document.querySelector('.date-toggle');
+  const dateTitle = document.querySelector('.date-toggle-title');
+  const dateList = document.querySelector('.date-list');
+
+  dateTitle.onclick = () => dateToggle.classList.toggle('open');
+
+  dateList.innerHTML = '';
+  document.querySelectorAll('.date').forEach(d => {
+    const li = document.createElement('li');
+    li.textContent = d.textContent;
+    li.onclick = () => {
+      sideMenu.classList.remove('show');
+      document.body.style.overflow = '';
+      setTimeout(() => d.scrollIntoView({ behavior:'smooth' }), 200);
+    };
+    dateList.appendChild(li);
+  });
+
+});
 </script>
 
 <!-- 사진 전체보기 -->
