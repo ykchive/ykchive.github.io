@@ -538,14 +538,13 @@ body {
       </svg>
     </button>
 
-    <button class="icon-btn" aria-label="메뉴">
-      <svg viewBox="0 0 24 24">
-        <line x1="4" y1="6" x2="20" y2="6"/>
-        <line x1="4" y1="12" x2="20" y2="12"/>
-        <line x1="4" y1="18" x2="20" y2="18"/>
-      </svg>
-    </button>
-  </div>
+    <button class="icon-btn" aria-label="메뉴" id="menuBtn">
+  <svg viewBox="0 0 24 24">
+    <line x1="4" y1="6" x2="20" y2="6"/>
+    <line x1="4" y1="12" x2="20" y2="12"/>
+    <line x1="4" y1="18" x2="20" y2="18"/>
+  </svg>
+</button>
 
   <!-- 검색 모드 -->
   <div class="search-bar">
@@ -1040,6 +1039,18 @@ function hideSearchNav() {
   document.querySelector('.chat').style.paddingBottom = '40px';
 }
 
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const menuBtn = document.getElementById('menuBtn');
+
+  if (!menuBtn) return;
+
+  menuBtn.addEventListener('click', () => {
+    location.href = 'profile.html'; 
+    // ⬆️ 두 번째 HTML 파일명으로 바꿔도 됨
+  });
 });
 
 </script>
