@@ -1074,24 +1074,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* 날짜별 보기 */
-  const dateToggle = document.querySelector('.date-toggle');
-  const dateTitle = document.querySelector('.date-toggle-title');
-  const dateList = document.querySelector('.date-list');
+/* 날짜별 보기 */
+const dateToggle = document.querySelector('.date-toggle');
+const dateTitle  = document.querySelector('.date-toggle-title');
+const dateList   = document.querySelector('.date-list');
+const topBar     = document.querySelector('.top-bar');
 
-  dateTitle.onclick = () => dateToggle.classList.toggle('open');
+dateTitle.onclick = () => dateToggle.classList.toggle('open');
 
-  dateList.innerHTML = '';
-  document.querySelectorAll('.date').forEach(d => {
-    const li = document.createElement('li');
-    li.textContent = d.textContent;
-    li.onclick = () => {
-      sideMenu.classList.remove('show');
-      document.body.style.overflow = '';
-      setTimeout(() => d.scrollIntoView({ behavior:'smooth' }), 200);
-    };
-    dateList.appendChild(li);
-  });
+dateList.innerHTML = '';
+document.querySelectorAll('.date').forEach(d => {
+  const li = document.createElement('li');
+  li.textContent = d.textContent;
+
+  li.onclick = () => {
+    sideMenu.classList.remove('show');
+    document.body.style.overflow = '';
+
+    setTimeout(() => {
+      const topBarHeight = topBar ? topBar.offsetHeight : 0;
+      const y = d.offsetTop - topBarHeight;
+
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }, 200);
+  };
+
+  dateList.appendChild(li);
+});
 
 });
 </script>
