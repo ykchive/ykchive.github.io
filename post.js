@@ -113,3 +113,73 @@ btn.addEventListener('click', () => {
   });
 
 });
+
+
+  /* ===================== */
+  /* 토글메뉴 */
+  /* ===================== */
+function toggleMenu() {
+  document.getElementById('sideMenu').classList.toggle('open');
+  document.getElementById('dim').classList.toggle('show');
+  document.querySelector('.menu-btn').classList.toggle('hide');
+  document.getElementById('searchBox').style.display = 'none';
+}
+
+function toggleMonth(el) {
+  const list = el.nextElementSibling;
+  const isOpen = list.classList.contains('open');
+
+  list.classList.toggle('open', !isOpen);
+  el.classList.toggle('open', !isOpen);
+}
+
+function toggleSearch() {
+  const box = document.getElementById('searchBox');
+  const input = box.querySelector('input');
+
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    input.value = '';
+    filterDates('');
+  } else {
+    box.style.display = 'block';
+    input.focus();
+  }
+}
+
+function filterDates(keyword) {
+  const months = document.querySelectorAll('.month');
+
+  months.forEach(month => {
+    const title = month.querySelector('.month-title');
+    const list = month.querySelector('.date-list');
+    const items = list.querySelectorAll('li');
+
+    let hasMatch = false;
+
+    items.forEach(li => {
+      if (li.textContent.includes(keyword)) {
+        li.style.display = 'block';
+        hasMatch = true;
+      } else {
+        li.style.display = 'none';
+      }
+    });
+
+    if (keyword) {
+      if (hasMatch) {
+        month.style.display = 'block';
+        list.classList.add('open');
+        title.classList.add('open');
+      } else {
+        month.style.display = 'none';
+      }
+    } else {
+      // 검색어 없을 때 초기화
+      month.style.display = 'block';
+      items.forEach(li => li.style.display = 'block');
+      list.classList.remove('open');
+      title.classList.remove('open');
+    }
+  });
+}
