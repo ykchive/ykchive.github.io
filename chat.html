@@ -1041,17 +1041,16 @@ function hideSearchNav() {
 
 });
 
-
-document.addEventListener('DOMContentLoaded', () => {
+  /* ===================== */
+  /* 메뉴 버튼 → 페이지 이동 */
+  /* ===================== */
   const menuBtn = document.getElementById('menuBtn');
 
-  if (!menuBtn) return;
-
-  menuBtn.addEventListener('click', () => {
-    location.href = 'profile.html'; 
-    // ⬆️ 두 번째 HTML 파일명으로 바꿔도 됨
-  });
-});
+  if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+      location.href = 'profile.html'; // 이동할 HTML
+    });
+  }
 
 </script>
 
