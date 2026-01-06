@@ -49,10 +49,13 @@ body {
 }
 
 .chat-title {
-  position: absolute;
+  position: absolute;      /* ⭐ 제목만 예외 */
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 16px;
   font-weight: 600;
   color: #111;
+  pointer-events: none;    /* 클릭 방해 방지 */
 }
 
 /* ===================== */
