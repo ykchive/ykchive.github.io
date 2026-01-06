@@ -516,6 +516,76 @@ body {
   }
 }
 
+/* ===================== */
+/* 사이드 메뉴 */
+/* ===================== */
+.side-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 3000;
+}
+
+.side-menu.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.side-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100%;
+  background: #fff;
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  padding: 20px;
+}
+
+.side-menu.show .side-panel {
+  transform: translateX(0);
+}
+
+.side-header {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.side-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.side-profile img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.side-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.side-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-list li {
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
 </style>
 </head>
 
@@ -538,13 +608,14 @@ body {
       </svg>
     </button>
 
-    <button class="icon-btn" aria-label="메뉴" id="menuBtn">
-  <svg viewBox="0 0 24 24">
-    <line x1="4" y1="6" x2="20" y2="6"/>
-    <line x1="4" y1="12" x2="20" y2="12"/>
-    <line x1="4" y1="18" x2="20" y2="18"/>
-  </svg>
-</button>
+<button class="icon-btn" id="menuBtn" aria-label="메뉴">
+      <svg viewBox="0 0 24 24">
+        <line x1="4" y1="6" x2="20" y2="6"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
+  </div>
 
   <!-- 검색 모드 -->
   <div class="search-bar">
@@ -561,6 +632,26 @@ body {
     </div>
     <button class="cancel-btn" id="searchCancel">취소</button>
   </div>
+
+
+<!-- 사이드 메뉴 -->
+<div class="side-menu" id="sideMenu">
+  <div class="side-panel">
+    <div class="side-header">프로필</div>
+
+    <div class="side-profile">
+      <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" />
+      <div class="side-name">강영현</div>
+    </div>
+
+    <ul class="side-list">
+      <li>사진</li>
+      <li>동영상</li>
+      <li>음성메시지</li>
+      <li>날짜별 보기</li>
+    </ul>
+  </div>
+</div>
 
 </div>
 
@@ -1042,13 +1133,24 @@ function hideSearchNav() {
 });
 
   /* ===================== */
-  /* 메뉴 버튼 → 페이지 이동 */
+  /* 사이드 메뉴 */
   /* ===================== */
-  const menuBtn = document.getElementById('menuBtn');
+  const menuBtn  = document.getElementById('menuBtn');
+  const sideMenu = document.getElementById('sideMenu');
 
-  if (menuBtn) {
+  if (menuBtn && sideMenu) {
+    // 열기
     menuBtn.addEventListener('click', () => {
-      location.href = 'profile.html'; // 이동할 HTML
+      sideMenu.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // 바깥 눌러서 닫기
+    sideMenu.addEventListener('click', e => {
+      if (e.target === sideMenu) {
+        sideMenu.classList.remove('show');
+        document.body.style.overflow = '';
+      }
     });
   }
 
