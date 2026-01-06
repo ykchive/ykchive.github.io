@@ -514,11 +514,39 @@ body {
   .highlight.active {
     outline: 2px solid #4da3ff;
   }
+
+/* 사이드 메뉴 - 다크모드 */
+  .side-menu {
+    background: rgba(0,0,0,0.55);
+  }
+
+  .side-panel {
+    background: #1c1c1e;
+    color: #f2f2f7;
+  }
+
+  .side-header {
+    color: #f2f2f7;
+  }
+
+  .side-name {
+    color: #f2f2f7;
+  }
+
+  .side-list li {
+    border-bottom: 1px solid #2c2c2e;
+    color: #e5e5ea;
+  }
+
+  .side-list li:active {
+    background: #2c2c2e;
+  }
 }
 
 /* ===================== */
 /* 사이드 메뉴 */
 /* ===================== */
+
 .side-menu {
   position: fixed;
   inset: 0;
@@ -534,11 +562,13 @@ body {
   pointer-events: auto;
 }
 
+/* 🔽 여기만 바뀜 */
 .side-panel {
   position: absolute;
   top: 0;
   right: 0;
-  width: 280px;
+  width: 58vw;              /* ✅ 반보다 조금 넓게 */
+  max-width: 360px;         /* ✅ 안정감 */
   height: 100%;
   background: #fff;
   transform: translateX(100%);
@@ -550,12 +580,7 @@ body {
   transform: translateX(0);
 }
 
-.side-header {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
+/* 나머지 그대로 */
 .side-profile {
   display: flex;
   align-items: center;
@@ -637,7 +662,6 @@ body {
 <!-- 사이드 메뉴 -->
 <div class="side-menu" id="sideMenu">
   <div class="side-panel">
-    <div class="side-header">프로필</div>
 
     <div class="side-profile">
       <img src="https://i.postimg.cc/rwQbY2Fc/IMG-7516.png" />
@@ -646,7 +670,6 @@ body {
 
     <ul class="side-list">
       <li>사진</li>
-      <li>동영상</li>
       <li>음성메시지</li>
       <li>날짜별 보기</li>
     </ul>
