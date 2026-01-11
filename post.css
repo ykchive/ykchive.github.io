@@ -67,6 +67,96 @@ body {
 }
 
 
+/* ===================== */
+/* 딤 배경 */
+/* ===================== */
+.dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.dim.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===================== */
+/* 사이드 메뉴 */
+/* ===================== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 260px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+  transition: right 0.3s ease;
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.side-menu.open {
+  right: 0;
+}
+
+/* 상단 */
+.side-header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+}
+
+/* 월 */
+.month-title {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.month-title.open .arrow {
+  transform: rotate(90deg);
+}
+
+/* 날짜 리스트 */
+.date-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 32px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.date-list.open {
+  max-height: 2000px;
+}
+
+.date-list li {
+  padding: 10px 0;
+  font-size: 13px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+
     /* 날짜 */
 .date {
   text-align: center;
