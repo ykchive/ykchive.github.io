@@ -52,8 +52,8 @@ body {
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 24px;
-  height: 18px;
+  width: 20px;      /* ⬅️ 기존 24px → 축소 */
+  height: 14px;     /* ⬅️ 기존 18px → 축소 */
 
   background: none;
   border: none;
@@ -66,11 +66,10 @@ body {
 }
 
 .menu-btn span {
-  height: 2px;
+  height: 1.5px;    /* ⬅️ 기존 2px → 얇게 */
   background: #333;
   border-radius: 2px;
 }
-
 
 /* ===================== */
 /* 딤 배경 */
