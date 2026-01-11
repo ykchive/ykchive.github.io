@@ -41,37 +41,31 @@ body {
     }
 
 /* ===================== */
-/* 상단바 오른쪽 버튼 */
+/* 상단바 메뉴 버튼 */
 /* ===================== */
-.top-actions {
+.menu-btn {
   position: absolute;
   right: 14px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.icon-btn {
-  width: 32px;
-  height: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 18px;
+  background: none;
   border: none;
-  background: transparent;
   padding: 0;
-  cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-tap-highlight-color: transparent;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
-.icon-btn svg {
-  width: 20px;
-  height: 20px;
-  stroke: #333;
-  stroke-width: 2;
-  fill: none;
-  stroke-linecap: round;
+.menu-btn span {
+  display: block;
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
 }
+
 
     /* 날짜 */
 .date {
