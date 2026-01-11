@@ -183,3 +183,16 @@ function filterDates(keyword) {
     }
   });
 }
+
+function toggleMenu() {
+  document.getElementById('sideMenu').classList.toggle('open');
+  document.getElementById('dim').classList.toggle('show');
+}
+
+function toggleMonth(el) {
+  const list = el.nextElementSibling;
+  const isOpen = list.classList.contains('open');
+
+  list.classList.toggle('open', !isOpen);
+  el.classList.toggle('open', !isOpen);
+}
