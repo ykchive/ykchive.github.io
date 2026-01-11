@@ -52,8 +52,8 @@ body {
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;      /* ⬅️ 기존 24px → 축소 */
-  height: 14px;     /* ⬅️ 기존 18px → 축소 */
+  width: 15px;      /* ⬅️ 기존 24px → 축소 */
+  height: 9px;     /* ⬅️ 기존 18px → 축소 */
 
   background: none;
   border: none;
