@@ -8,20 +8,24 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
 }
 
-  /* 상단바 */
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 52px;
-      background: #fff;
-      border-bottom: 1px solid #eee;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+
+/* ===================== */
+/* 상단바 */
+/* ===================== */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .back-btn {
   position: absolute;
@@ -29,16 +33,16 @@ body {
   font-size: 28px;
   font-weight: 300;
   color: #333;
-  cursor: pointer;
+  text-decoration: none;
   user-select: none;
-  text-decoration: none; /* ← 이거 추가 */
 }
 
-    .chat-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #111;
-    }
+.chat-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+
 
 /* ===================== */
 /* 상단바 메뉴 버튼 */
@@ -50,9 +54,11 @@ body {
   transform: translateY(-50%);
   width: 24px;
   height: 18px;
+
   background: none;
   border: none;
   padding: 0;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -60,7 +66,6 @@ body {
 }
 
 .menu-btn span {
-  display: block;
   height: 2px;
   background: #333;
   border-radius: 2px;
@@ -85,6 +90,7 @@ body {
   pointer-events: auto;
 }
 
+
 /* ===================== */
 /* 사이드 메뉴 */
 /* ===================== */
@@ -94,10 +100,12 @@ body {
   right: -260px;
   width: 260px;
   height: 100vh;
+
   background: #fff;
   box-shadow: -2px 0 8px rgba(0,0,0,0.1);
   transition: right 0.3s ease;
   z-index: 999;
+
   overflow-y: auto;
 }
 
@@ -105,7 +113,6 @@ body {
   right: 0;
 }
 
-/* 상단 */
 .side-header {
   height: 56px;
   display: flex;
@@ -115,12 +122,12 @@ body {
   border-bottom: 1px solid #eee;
 }
 
-/* 월 */
 .month-title {
   padding: 10px 16px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+
   display: flex;
   align-items: center;
   gap: 4px;
@@ -135,11 +142,11 @@ body {
   transform: rotate(90deg);
 }
 
-/* 날짜 리스트 */
 .date-list {
   list-style: none;
   margin: 0;
   padding: 0 0 0 32px;
+
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease;
@@ -157,20 +164,22 @@ body {
 }
 
 
-    /* 날짜 */
+/* ===================== */
+/* 날짜 */
+/* ===================== */
 .date {
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 15px;
+  margin: 20px 0 15px;
   font-size: 12px;
   color: #999;
 }
+
 
 /* ===================== */
 /* 채팅 영역 */
 /* ===================== */
 .chat {
-  padding: 0 14px 40px; /* ⬅️ 위쪽 padding만 늘림 */
+  padding: 0 14px 40px;
 }
 
 .message {
@@ -217,16 +226,18 @@ body {
   white-space: nowrap;
 }
 
+
 /* ===================== */
 /* 사진 메시지 */
 /* ===================== */
 .photo {
   width: 85%;
-  border-radius: 16px;      /* 말풍선은 둥글게 */
+  border-radius: 16px;
   display: block;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+
 
 /* ===================== */
 /* 사진 전체보기 */
@@ -248,9 +259,9 @@ body {
 .photo-viewer img {
   max-width: 92%;
   max-height: 92%;
-  border-radius: 0;        /* 전체보기는 네모 */
   object-fit: contain;
 }
+
 
 /* ===================== */
 /* 이전 / 다음 */
@@ -260,7 +271,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 18px 14px 28px;
-  margin-top: 40px;              /* 버튼을 더 아래로 */
+  margin-top: 40px;
   border-top: 1px solid #eee;
   font-size: 14px;
 }
@@ -270,8 +281,10 @@ body {
   text-decoration: none;
 }
 
-    /* ===== 음성 메시지 ===== */
-/* 음성 말풍선 */
+
+/* ===================== */
+/* 음성 메시지 */
+/* ===================== */
 .voice-bubble {
   background: #ededed;
   border-radius: 16px;
@@ -282,7 +295,6 @@ body {
   min-width: 200px;
 }
 
-/* 재생 버튼 */
 .voice-btn {
   width: 26px;
   height: 26px;
@@ -297,26 +309,24 @@ body {
   padding: 0;
 }
 
-/* SVG 아이콘 */
 .voice-btn svg {
   width: 14px;
   height: 14px;
   fill: #000;
-  display: block;
 }
 
-/* 재생 / 일시정지 전환 */
 .voice-btn .pause {
   display: none;
 }
+
 .voice-btn.playing .play {
   display: none;
 }
+
 .voice-btn.playing .pause {
   display: inline;
 }
 
-/* 시간 */
 .voice-current,
 .voice-total {
   font-size: 11px;
@@ -325,14 +335,12 @@ body {
   color: #666;
 }
 
-/* 재생바 */
 .voice-bar {
   flex: 1;
   height: 4px;
   appearance: none;
   background: #ccc;
   border-radius: 2px;
-  touch-action: none;
 }
 
 .voice-bar::-webkit-slider-thumb {
@@ -343,51 +351,6 @@ body {
   border-radius: 50%;
 }
 
-/* 아이콘 버튼 */
-.icon-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.icon-btn svg {
-  width: 18px;
-  height: 18px;
-  stroke: #333;
-  stroke-width: 2;
-  fill: none;
-}
-
-/* 다크모드 */
-@media (prefers-color-scheme: dark) {
-  .icon-btn svg {
-    stroke: #eaeaea;
-  }
-
-  .search-top {
-    background: #1e1e1e;
-    border-bottom: 1px solid #2a2a2a;
-  }
-
-  .search-top input {
-    background: #2a2a2a;
-    border-color: #444;
-    color: #fff;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .search-top .icon-btn svg {
-    stroke: #eaeaea;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .search-count {
-    color: #aaa;
-  }
-}
 
 /* ===================== */
 /* 다크모드 */
@@ -400,12 +363,25 @@ body {
 
   .top-bar {
     background: #1e1e1e;
-    border-bottom: 1px solid #2a2a2a;
+    border-bottom-color: #2a2a2a;
   }
 
   .chat-title,
   .back-btn {
     color: #eaeaea;
+  }
+
+  .menu-btn span {
+    background: #eee;
+  }
+
+  .side-menu {
+    background: #1e1e1e;
+  }
+
+  .side-header,
+  .date-list li {
+    border-bottom-color: #2a2a2a;
   }
 
   .date {
@@ -416,66 +392,35 @@ body {
     color: #bdbdbd;
   }
 
-  .bubble {
+  .bubble,
+  .voice-bubble {
     background: #2a2a2a;
     color: #f1f1f1;
   }
 
-  .time {
+  .time,
+  .voice-current,
+  .voice-total {
     color: #9a9a9a;
   }
 
-  .photo {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  .voice-btn {
+    background: #444;
+  }
+
+  .voice-bar {
+    background: #555;
+  }
+
+  .voice-bar::-webkit-slider-thumb {
+    background: #ddd;
   }
 
   .post-nav {
-    border-top: 1px solid #2a2a2a;
+    border-top-color: #2a2a2a;
   }
 
   .post-nav a {
     color: #bbb;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .voice-bubble {
-    background: #2a2a2a;
-  }
-  .voice-btn {
-    background: #444;
-    color: #fff;
-  }
-  .voice-bar {
-    background: #555;
-  }
-  .voice-bar::-webkit-slider-thumb {
-    background: #ddd;
-  }
-  .voice-current,
-  .voice-total {
-    color: #bdbdbd;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .date {
-    color: #888;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .date {
-    color: #888;
-  }
-
-  .date::before {
-    background: rgba(255, 255, 255, 0.18);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .menu-btn span {
-    background: #eee;
   }
 }
