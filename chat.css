@@ -1,0 +1,653 @@
+/* ===================== */
+/* 기본 설정 */
+/* ===================== */
+body {
+  margin: 0;
+  padding-top: 52px;
+  background: #f7f7f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+}
+
+/* ===================== */
+/* 상단바 */
+/* ===================== */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ⭐ 핵심 */
+  padding: 0 14px;
+}
+
+.back-btn {
+  position: static;
+  left: 14px;
+  font-size: 28px;
+  font-weight: 300;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+
+.chat-title {
+  position: absolute;      /* ⭐ 제목만 예외 */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+  pointer-events: none;    /* 클릭 방해 방지 */
+}
+
+/* ===================== */
+/* 상단바 오른쪽 버튼 */
+/* ===================== */
+.top-actions {
+  position: static;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 10;            /* ⭐ 추가 */
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;   /* ⭐ 추가 */
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #333;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+}
+
+
+/* ===================== */
+/* 날짜 + 구분선 */
+/* ===================== */
+.date {
+  position: relative;
+  text-align: center;
+  margin-top: 36px;
+  margin-bottom: 18px;
+  font-size: 12px;
+  color: #999;
+}
+
+.date::before {
+  content: "";
+  position: absolute;
+  top: -12px;               /* 날짜 위쪽 */
+  left: -14px;              /* chat padding 보정 */
+  width: calc(100% + 28px); /* 화면 꽉 차게 */
+  height: 1px;
+  background: #e5e5e5;
+}
+
+/* ===================== */
+/* 채팅 영역 */
+/* ===================== */
+.chat {
+  padding: 0 14px 40px;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.content {
+  max-width: 85%;
+}
+
+.name {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.bubble-row {
+  display: flex;
+  align-items: flex-end;
+}
+
+.bubble {
+  background: #ededed;
+  padding: 12px 15px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.time {
+  font-size: 11px;
+  color: #aaa;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+/* ===================== */
+/* 사진 메시지 */
+/* ===================== */
+.photo {
+  width: 85%;
+  border-radius: 16px;
+  display: block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===================== */
+/* 사진 전체보기 */
+/* ===================== */
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.photo-viewer.show {
+  display: flex;
+}
+
+.photo-viewer img {
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+}
+
+/* ===================== */
+/* 음성 메시지 */
+/* ===================== */
+.voice-bubble {
+  background: #ededed;
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 200px;
+}
+
+.voice-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.voice-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #000;
+  display: block;
+}
+
+.voice-btn .pause {
+  display: none;
+}
+
+.voice-btn.playing .play {
+  display: none;
+}
+
+.voice-btn.playing .pause {
+  display: inline;
+}
+
+.voice-current,
+.voice-total {
+  font-size: 11px;
+  min-width: 34px;
+  text-align: center;
+  color: #666;
+}
+
+.voice-bar {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 2px;
+  touch-action: none;
+}
+
+.voice-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* ===================== */
+/* 검색 모드 상단바 */
+/* ===================== */
+.search-bar {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+  background: inherit;
+  pointer-events: none;   /* ⭐ 추가 */
+}
+
+.top-bar.searching .search-bar {
+  display: flex;
+  pointer-events: auto;   /* ⭐ 추가 */
+}
+
+.top-bar.searching .back-btn,
+.top-bar.searching .chat-title,
+.top-bar.searching .top-actions {
+  display: none;
+}
+
+.search-input-wrap {
+  flex: 1;
+  height: 36px;
+  background: #f1f1f4;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 8px;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  stroke: #aaa;
+  stroke-width: 2;
+  fill: none;
+}
+
+.search-input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #111;
+}
+
+.search-input-wrap input::placeholder {
+  color: #aaa;
+}
+
+.cancel-btn {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #007aff;
+  cursor: pointer;
+  padding: 6px;
+}
+
+/* 검색창 줌인 방지 (iOS) */
+#searchInput {
+  font-size: 16px;
+}
+
+/* ===================== */
+/* 검색 하이라이트 */
+/* ===================== */
+.highlight {
+  background: #000;
+  color: #fff;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+/* ===================== */
+/* 검색 결과 하단 네비 (카톡 스타일) */
+/* ===================== */
+.search-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  background: #fff;
+  border-top: 1px solid #eee;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  z-index: 1500;
+}
+
+.search-nav span {
+  font-size: 14px;
+  color: #111;
+}
+
+/* 버튼 */
+.nav-btn {
+  border: none;
+  background: transparent;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.nav-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #111;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 비활성 상태 */
+.nav-btn.disabled {
+  pointer-events: none;
+}
+
+.nav-btn.disabled svg {
+  stroke: #ccc;
+}
+
+.highlight.active {
+  outline: 2px solid #007aff;
+}
+
+.side-list li {
+  cursor: pointer;
+}
+
+
+/* ===================== */
+/* 다크모드 */
+/* ===================== */
+@media (prefers-color-scheme: dark) {
+  .search-input-wrap {
+    background: #2a2a2a;
+  }
+
+  .search-input-wrap input {
+    color: #eee;
+  }
+
+  .search-input-wrap input::placeholder {
+    color: #777;
+  }
+
+  .search-icon {
+    stroke: #777;
+  }
+
+  .cancel-btn {
+    color: #4da3ff;
+  }
+
+  body {
+    background: #121212;
+    color: #eaeaea;
+  }
+
+  .top-bar {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .chat-title,
+  .back-btn {
+    color: #eaeaea;
+  }
+
+  .date {
+    color: #888;
+  }
+
+  .name {
+    color: #bdbdbd;
+  }
+
+  .bubble {
+    background: #2a2a2a;
+    color: #f1f1f1;
+  }
+
+  .time {
+    color: #9a9a9a;
+  }
+
+  .photo {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  .voice-bubble {
+    background: #2a2a2a;
+  }
+
+  .voice-btn {
+    background: #444;
+  }
+
+  .voice-bar {
+    background: #555;
+  }
+
+  .voice-bar::-webkit-slider-thumb {
+    background: #ddd;
+  }
+
+  .voice-current,
+  .voice-total {
+    color: #bdbdbd;
+  }
+
+  .date::before {
+    background: #2a2a2a;
+  }
+
+  .photo:active {
+    opacity: 0.9;
+  }
+
+  .icon-btn svg {
+    stroke: #eaeaea;
+  }
+
+  .highlight {
+    background: #fff;
+    color: #000;
+  }
+
+  .search-nav {
+    background: #1e1e1e;
+    border-top: 1px solid #2a2a2a;
+  }
+
+  .search-nav span {
+    color: #eee;
+  }
+
+  .nav-btn svg {
+    stroke: #eee;
+  }
+
+  .nav-btn.disabled svg {
+    stroke: #555;
+  }
+
+  .highlight.active {
+    outline: 2px solid #4da3ff;
+  }
+
+/* 사이드 메뉴 - 다크모드 */
+  .side-menu {
+    background: rgba(0,0,0,0.55);
+  }
+
+  .side-panel {
+    background: #1c1c1e;
+    color: #f2f2f7;
+  }
+
+  .side-header {
+    color: #f2f2f7;
+  }
+
+  .side-name {
+    color: #f2f2f7;
+  }
+
+  .side-list li {
+    border-bottom: 1px solid #2c2c2e;
+    color: #e5e5ea;
+  }
+
+  .side-list li:active {
+    background: #2c2c2e;
+  }
+}
+
+/* ===================== */
+/* 사이드 메뉴 */
+/* ===================== */
+
+.side-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 3000;
+}
+
+.side-menu.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 🔽 여기만 바뀜 */
+.side-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55vw;              /* ✅ 반보다 조금 넓게 */
+  max-width: 380px;         /* ✅ 안정감 */
+  height: 100%;
+  background: #fff;
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  padding: 20px;
+}
+
+.side-menu.show .side-panel {
+  transform: translateX(0);
+}
+
+/* 나머지 그대로 */
+.side-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.side-profile img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.side-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.side-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-list li {
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+/* 날짜별 보기 토글 */
+.date-toggle-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.date-toggle .arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.date-toggle.open .arrow {
+  transform: rotate(90deg);
+}
+
+.date-list {
+  list-style: none;
+  padding-left: 14px;
+  margin: 6px 0 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.date-toggle.open .date-list {
+  max-height: 500px; /* 충분히 큰 값 */
+}
+
+.date-list li {
+  padding: 8px 0;
+  font-size: 13px;
+  cursor: pointer;
+}
