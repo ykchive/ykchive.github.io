@@ -52,12 +52,11 @@ body {
 /* 상단바 오른쪽 버튼 */
 /* ===================== */
 .top-actions {
-  position: static;
-  right: 14px;
+  position: relative;   /* ⭐ 반드시 relative */
   display: flex;
   align-items: center;
   gap: 14px;
-  z-index: 10;            /* ⭐ 추가 */
+  z-index: 20;          /* ⭐ 상단바 최상단 */
 }
 
 .icon-btn {
@@ -71,7 +70,9 @@ body {
   align-items: center;
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
-  pointer-events: auto;   /* ⭐ 추가 */
+  position: relative;
+  z-index: 21;
+  pointer-events: auto
 }
 
 .icon-btn svg {
@@ -272,7 +273,9 @@ body {
   padding: 0 14px;
   gap: 10px;
   background: inherit;
-  pointer-events: none;   /* ⭐ 추가 */
+
+  pointer-events: none;   /* ✅ 중요 */
+  z-index: 1;
 }
 
 .top-bar.searching .search-bar {
